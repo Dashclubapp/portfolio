@@ -2,25 +2,44 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const sidebarLinks = [
-  { href: "/demo/admin", label: "Dashboard", icon: "📊", exact: true },
-  { href: "/demo/admin/evenements", label: "Événements", icon: "📅", exact: false },
-  { href: "/demo/admin/adherents", label: "Adhérents", icon: "👥", exact: false },
-  { href: "/demo/admin/emails", label: "Emails auto", icon: "✉️", exact: false },
-  { href: "/demo/admin/paiements", label: "Paiements", icon: "💳", exact: false },
-  { href: "/demo/admin/boutique", label: "Boutique", icon: "🛒", exact: false },
-  { href: "/demo/admin/parametres", label: "Paramètres", icon: "⚙️", exact: false },
+const SIDEBAR_ITEMS = [
+  { path: "", label: "Dashboard", icon: "📊", exact: true },
+  { path: "/evenements", label: "Événements", icon: "📅", exact: false },
+  { path: "/adherents", label: "Adhérents", icon: "👥", exact: false },
+  { path: "/emails", label: "Emails auto", icon: "✉️", exact: false },
+  { path: "/paiements", label: "Paiements", icon: "💳", exact: false },
+  { path: "/boutique", label: "Boutique", icon: "🛒", exact: false },
+  { path: "/parametres", label: "Paramètres", icon: "⚙️", exact: false },
 ];
 
 function AdminSidebar() {
   const pathname = usePathname();
+  const [adminBase, setAdminBase] = useState("/demo/admin");
+  const [clubBase, setClubBase] = useState("/demo/club");
+  const [isDemoHost, setIsDemoHost] = useState(false);
+
+  useEffect(() => {
+    if (window.location.hostname === "demo.dashclub.app") {
+      setAdminBase("/back");
+      setClubBase("");
+      setIsDemoHost(true);
+    }
+  }, []);
+
+  const sidebarLinks = SIDEBAR_ITEMS.map((item) => ({
+    href: adminBase + item.path,
+    label: item.label,
+    icon: item.icon,
+    exact: item.exact,
+  }));
 
   return (
     <aside className="flex w-56 shrink-0 flex-col border-r border-[#0D1F3C]/10 bg-white">
       {/* Logo */}
       <div className="border-b border-[#0D1F3C]/10 px-6 py-5">
-        <Link href="/demo/admin" className="flex items-center gap-2">
+        <Link href={adminBase} className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0D1F3C]">
             <span className="text-[9px] font-bold text-[#C9A84C]">DC</span>
           </div>
@@ -36,8 +55,8 @@ function AdminSidebar() {
         <ul className="space-y-1">
           {sidebarLinks.map((link) => {
             const isActive = link.exact
-              ? pathname === link.href
-              : pathname.startsWith(link.href);
+              ? pathname === link.href || pathname === "/demo/admin"
+              : pathname.startsWith(link.href) || pathname.startsWith("/demo/admin" + link.href.replace(adminBase, ""));
             return (
               <li key={link.href}>
                 <Link
@@ -60,17 +79,19 @@ function AdminSidebar() {
       {/* Footer links */}
       <div className="border-t border-[#0D1F3C]/10 p-4">
         <Link
-          href="/demo/club"
+          href={clubBase || "/"}
           className="flex items-center gap-2 text-xs text-[#0D1F3C]/40 hover:text-[#0D1F3C]"
         >
           🌐 Voir le site public
         </Link>
-        <Link
-          href="/demo"
-          className="mt-2 flex items-center gap-2 text-xs text-[#0D1F3C]/40 hover:text-[#0D1F3C]"
-        >
-          ← Retour à la démo
-        </Link>
+        {!isDemoHost && (
+          <Link
+            href="/demo"
+            className="mt-2 flex items-center gap-2 text-xs text-[#0D1F3C]/40 hover:text-[#0D1F3C]"
+          >
+            ← Retour à la démo
+          </Link>
+        )}
       </div>
     </aside>
   );

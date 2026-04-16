@@ -5,7 +5,7 @@ const ALLOWED_IPS = [
   '90.47.13.240',
   '2001:4860:7:150f::fc',
 ];
-const DEMO_HOSTS = new Set(['triflow-demo.nanocorp.app']);
+const DEMO_HOSTS = new Set(['demo.dashclub.app']);
 const DEMO_PATH_PREFIX = '/demo';
 const ADMIN_LOGIN_PATH = '/admin/login';
 const NORMALIZED_ALLOWED_IPS = new Set(ALLOWED_IPS.map(normalizeIP));
@@ -158,29 +158,43 @@ export async function middleware(request: NextRequest) {
   }
 
   if (requestTargetsDemoHost) {
-    const clientIP = getClientIP(request);
-    if (!NORMALIZED_ALLOWED_IPS.has(clientIP)) {
-      return new NextResponse(FORBIDDEN_HTML, {
-        status: 403,
-        headers: {
-          'Content-Type': 'text/html; charset=utf-8',
-          'X-Frame-Options': 'DENY',
-          'X-Content-Type-Options': 'nosniff',
-          'Cache-Control': 'no-store',
-        },
-      });
-    }
-
-    if (pathname === DEMO_PATH_PREFIX || pathname.startsWith(`${DEMO_PATH_PREFIX}/`)) {
-      const cleanDemoPath = pathname.slice(DEMO_PATH_PREFIX.length) || '/';
-      return addSecurityHeaders(NextResponse.redirect(new URL(cleanDemoPath, request.url)));
-    }
-
-    if (!pathname.startsWith('/admin') && !pathname.startsWith('/api/admin')) {
+    // /back/* → rewrite to /demo/admin/*
+    if (pathname === '/back' || pathname.startsWith('/back/')) {
+      const adminPath = pathname === '/back'
+        ? '/demo/admin'
+        : `/demo/admin${pathname.slice('/back'.length)}`;
       const rewriteUrl = request.nextUrl.clone();
-      rewriteUrl.pathname = pathname === '/' ? DEMO_PATH_PREFIX : `${DEMO_PATH_PREFIX}${pathname}`;
+      rewriteUrl.pathname = adminPath;
       return addSecurityHeaders(NextResponse.rewrite(rewriteUrl));
     }
+
+    // Canonical redirect: if someone navigates to /demo/club/* on the demo host
+    if (pathname.startsWith('/demo/club')) {
+      const cleanPath = pathname.slice('/demo/club'.length) || '/';
+      return addSecurityHeaders(NextResponse.redirect(new URL(cleanPath, request.url)));
+    }
+
+    // Canonical redirect: if someone navigates to /demo/admin/* on the demo host
+    if (pathname.startsWith('/demo/admin')) {
+      const cleanPath = '/back' + (pathname.slice('/demo/admin'.length) || '');
+      return addSecurityHeaders(NextResponse.redirect(new URL(cleanPath, request.url)));
+    }
+
+    // Canonical redirect: /demo → /
+    if (pathname === '/demo' || pathname.startsWith('/demo/')) {
+      return addSecurityHeaders(NextResponse.redirect(new URL('/', request.url)));
+    }
+
+    // Skip API routes
+    if (pathname.startsWith('/api/')) {
+      return addSecurityHeaders(NextResponse.next());
+    }
+
+    // All other paths → rewrite to /demo/club/*
+    const rewriteUrl = request.nextUrl.clone();
+    rewriteUrl.pathname = pathname === '/' ? '/demo/club' : `/demo/club${pathname}`;
+    return addSecurityHeaders(NextResponse.rewrite(rewriteUrl));
+
   } else {
     // /demo paths are publicly accessible on the main domain — no redirect
     if (pathname === DEMO_PATH_PREFIX || pathname.startsWith(`${DEMO_PATH_PREFIX}/`)) {
