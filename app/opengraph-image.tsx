@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { homeDescription, homeTitle, siteName } from "./seo";
+import { homeTitle, siteName } from "./seo";
 
 export const alt = homeTitle;
 export const size = {
