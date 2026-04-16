@@ -2,6 +2,7 @@ import Link from "next/link";
 import { hasNavyPricingCard, plans } from "./pricing-data";
 import { buildPageMetadata, homeDescription, homeTitle, siteName, siteUrl } from "./seo";
 import { MobileNav } from "@/components/mobile-nav";
+import { FaqSection } from "@/components/faq-section";
 
 export const metadata = buildPageMetadata({
   title: homeTitle,
@@ -55,19 +56,6 @@ function CheckIcon({ variant = "default" }: { variant?: "default" | "featured" |
   );
 }
 
-function PlusIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      className="h-4 w-4"
-    >
-      <path d="M8 3v10M3 8h10" />
-    </svg>
-  );
-}
 
 function LaunchCTA({ className }: { className?: string }) {
   return (
@@ -153,28 +141,23 @@ export default function Home() {
               Votre club sportif mérite un vrai site
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
-              DashClub crée votre site, gère vos inscriptions et organise vos événements — sans développeur, sans galère, dès 19€/mois.
+              DashClub crée votre site, gère vos inscriptions et organise vos événements — sans développeur, dès 19€/mois.
             </p>
-            <ul className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2 text-sm text-white/85">
-              <li className="flex items-center gap-2">
-                <span className="text-[#C9A84C] font-bold">✓</span>
-                <span>Votre domaine personnalisé (monclub.fr) inclus — dès 19€/mois</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-[#C9A84C] font-bold">✓</span>
-                <span>Zéro commission sur vos inscriptions</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-[#C9A84C] font-bold">✓</span>
-                <span>En ligne en 5 jours ouvrés</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-[#C9A84C] font-bold">✓</span>
-                <span>File d&apos;attente automatique incluse</span>
-              </li>
+            <ul className="mt-6 flex flex-col gap-2.5">
+              {[
+                "Site du club créé et hébergé",
+                "Nom de domaine personnalisé inclus",
+                "1ère épreuve organisée sans supplément",
+                "Paiement en ligne intégré",
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#C9A84C] text-[11px] font-bold text-stone-950">✓</span>
+                  {item}
+                </li>
+              ))}
             </ul>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              {/* CTA 1/4 — Hero */}
+            {/* CTA mobile only — sur desktop les boutons sont sous le screenshot */}
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row lg:hidden">
               <LaunchCTA />
               <a
                 className="inline-flex items-center justify-center rounded-full border border-stone-950/10 bg-white/80 px-7 py-4 text-base font-medium text-stone-800 transition hover:border-stone-950/20 hover:bg-white"
@@ -188,29 +171,56 @@ export default function Home() {
           </div>
 
           <div className="relative px-5 pb-8 sm:px-8 lg:pl-0 lg:pr-12 lg:pb-0">
-            {/* Screenshot product — replace dashboard-screenshot.jpg with the real backoffice screenshot when ready */}
-            <div className="relative overflow-hidden rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.35)]">
+            {/* Glow behind screenshot */}
+            <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.18),_transparent_70%)]" />
+            <div className="relative overflow-hidden rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.45)] ring-1 ring-white/10">
+              {/* Browser chrome bar */}
+              <div className="flex items-center gap-1.5 bg-[#1a1a2e] px-4 py-2.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
+                <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
+                <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
+                <span className="ml-3 flex-1 rounded bg-white/8 px-3 py-1 text-[11px] text-white/30">
+                  app.dashclub.fr/back
+                </span>
+              </div>
               <img
                 src="/dashboard-screenshot.jpg"
                 alt="Backoffice DashClub — tableau de bord club sportif"
-                className="w-full rounded-2xl"
+                className="w-full"
                 width={1200}
                 height={780}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                fetchpriority="high"
+                loading="eager"
+                decoding="async"
                 style={{ display: "block" }}
               />
+            </div>
+            {/* CTA desktop — sous le screenshot */}
+            <div className="mt-5 hidden lg:flex gap-3">
+              <LaunchCTA />
+              <a
+                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-7 py-4 text-base font-medium text-white transition hover:bg-white/16"
+                href={demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Voir le site démo →
+              </a>
             </div>
           </div>
         </section>
 
         {/* ── 2. SECTION PROBLÈME ── */}
         <section className="problem-section border-t border-stone-900/10 py-8">
-          <div className="rounded-[2rem] border border-stone-900/10 bg-stone-50/80 px-6 py-12 sm:px-8">
+          <div className="rounded-[2rem] border border-stone-900/10 bg-stone-50/80 px-6 py-7 sm:px-8">
             <h2 className="text-center font-display text-4xl leading-tight text-stone-950 sm:text-5xl">
               Aujourd&apos;hui, gérer votre club c&apos;est...
             </h2>
-            <div className="mt-10 grid gap-5 sm:grid-cols-3">
-              <div className="problem-card flex flex-col items-center gap-4 rounded-[1.5rem] border border-stone-900/8 bg-white p-6 text-center shadow-[0_8px_24px_rgba(41,37,36,0.05)]">
-                <span className="text-4xl" role="img" aria-label="Outil">🛠️</span>
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              <div className="problem-card flex flex-col items-center gap-3 rounded-[1.5rem] border border-stone-900/8 bg-white p-5 text-center shadow-[0_8px_24px_rgba(41,37,36,0.05)]">
+                <span className="text-3xl" role="img" aria-label="Outil">🛠️</span>
                 <h3 className="problem-card-title text-lg font-sans">
                   Un site fragile
                 </h3>
@@ -218,8 +228,8 @@ export default function Home() {
                   Un site WordPress planté que personne ne sait maintenir
                 </p>
               </div>
-              <div className="problem-card flex flex-col items-center gap-4 rounded-[1.5rem] border border-stone-900/8 bg-white p-6 text-center shadow-[0_8px_24px_rgba(41,37,36,0.05)]">
-                <span className="text-4xl" role="img" aria-label="Formulaire">📋</span>
+              <div className="problem-card flex flex-col items-center gap-3 rounded-[1.5rem] border border-stone-900/8 bg-white p-5 text-center shadow-[0_8px_24px_rgba(41,37,36,0.05)]">
+                <span className="text-3xl" role="img" aria-label="Formulaire">📋</span>
                 <h3 className="problem-card-title text-lg font-sans">
                   Des inscriptions bricolées
                 </h3>
@@ -227,8 +237,8 @@ export default function Home() {
                   Des inscriptions gérées par email ou Google Form
                 </p>
               </div>
-              <div className="problem-card flex flex-col items-center gap-4 rounded-[1.5rem] border border-stone-900/8 bg-white p-6 text-center shadow-[0_8px_24px_rgba(41,37,36,0.05)]">
-                <span className="text-4xl" role="img" aria-label="Annonce">📣</span>
+              <div className="problem-card flex flex-col items-center gap-3 rounded-[1.5rem] border border-stone-900/8 bg-white p-5 text-center shadow-[0_8px_24px_rgba(41,37,36,0.05)]">
+                <span className="text-3xl" role="img" aria-label="Annonce">📣</span>
                 <h3 className="problem-card-title text-lg font-sans">
                   Une communication dispersée
                 </h3>
@@ -356,13 +366,6 @@ export default function Home() {
                 ) : null}
 
                 <div className="relative flex flex-1 flex-col">
-                  {plan.featured && (
-                    <div className="mb-2">
-                      <span className="inline-flex rounded-full bg-orange-400 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-950">
-                        {plan.badge ?? "Recommandé"}
-                      </span>
-                    </div>
-                  )}
                   <div className="flex items-center gap-2">
                     <p
                       className={`font-sans text-sm font-bold uppercase tracking-[0.22em] ${
@@ -375,6 +378,11 @@ export default function Home() {
                     >
                       {plan.name}
                     </p>
+                    {plan.featured && (
+                      <span className="inline-flex rounded-full bg-orange-400 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-950">
+                        {plan.badge ?? "Recommandé"}
+                      </span>
+                    )}
                   </div>
                   <div className="mt-4 flex flex-wrap items-end gap-2">
                     <span className="font-display text-5xl leading-none">
@@ -404,7 +412,7 @@ export default function Home() {
                     {plan.landingHook}
                   </p>
 
-                  <ul className="mt-3 flex-1 space-y-3">
+                  <ul className={`${plan.landingBullets[0]?.endsWith(":") ? "mt-1" : "mt-3"} flex-1 space-y-3`}>
                     {!plan.landingBullets[0]?.endsWith(":") && (
                       <li className="px-1 pt-1 pb-0 invisible select-none text-xs font-semibold uppercase tracking-wider">placeholder</li>
                     )}
@@ -704,7 +712,7 @@ export default function Home() {
         </section>
 
 
-        {/* ── 7. FAQ — CSS-only accordion ── */}
+        {/* ── 7. FAQ ── */}
         <section className="border-t border-stone-900/10 py-8">
           <div className="mx-auto max-w-3xl">
             <p className="font-sans text-sm uppercase tracking-[0.34em] text-orange-700">
@@ -713,105 +721,7 @@ export default function Home() {
             <h2 className="mt-3 font-display text-4xl leading-none text-stone-950 sm:text-5xl">
               FAQ
             </h2>
-            <div className="mt-8 space-y-3">
-
-              <details className="group rounded-[1.5rem] border border-stone-900/10 bg-white/82 px-6 shadow-[0_4px_20px_rgba(41,37,36,0.04)] open:pb-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-medium text-stone-950 [&::-webkit-details-marker]:hidden">
-                  <span>Quelle commission prend DashClub sur mes inscriptions ?</span>
-                  <span className="shrink-0 rounded-full border border-stone-900/10 p-1 text-stone-500 transition-transform group-open:rotate-45">
-                    <PlusIcon />
-                  </span>
-                </summary>
-                <p className="pb-1 text-sm leading-7 text-stone-600">
-                  Zéro. DashClub ne prend aucune commission. Seuls les frais Stripe standard s&apos;appliquent (2,9% + 0,30€ par transaction).
-                </p>
-              </details>
-
-              <details className="group rounded-[1.5rem] border border-stone-900/10 bg-white/82 px-6 shadow-[0_4px_20px_rgba(41,37,36,0.04)] open:pb-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-medium text-stone-950 [&::-webkit-details-marker]:hidden">
-                  <span>Est-ce que je peux modifier le contenu moi-même ?</span>
-                  <span className="shrink-0 rounded-full border border-stone-900/10 p-1 text-stone-500 transition-transform group-open:rotate-45">
-                    <PlusIcon />
-                  </span>
-                </summary>
-                <p className="pb-1 text-sm leading-7 text-stone-600">
-                  Oui, via un backoffice simple, sans aucune compétence technique.
-                </p>
-              </details>
-
-              <details className="group rounded-[1.5rem] border border-stone-900/10 bg-white/82 px-6 shadow-[0_4px_20px_rgba(41,37,36,0.04)] open:pb-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-medium text-stone-950 [&::-webkit-details-marker]:hidden">
-                  <span>Combien de temps pour avoir mon site en ligne ?</span>
-                  <span className="shrink-0 rounded-full border border-stone-900/10 p-1 text-stone-500 transition-transform group-open:rotate-45">
-                    <PlusIcon />
-                  </span>
-                </summary>
-                <p className="pb-1 text-sm leading-7 text-stone-600">
-                  Comptez 5 jours ouvrés entre la commande et la mise en ligne.
-                </p>
-              </details>
-
-              <details className="group rounded-[1.5rem] border border-stone-900/10 bg-white/82 px-6 shadow-[0_4px_20px_rgba(41,37,36,0.04)] open:pb-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-medium text-stone-950 [&::-webkit-details-marker]:hidden">
-                  <span>Les paiements d&apos;inscription sont-ils gérés ?</span>
-                  <span className="shrink-0 rounded-full border border-stone-900/10 p-1 text-stone-500 transition-transform group-open:rotate-45">
-                    <PlusIcon />
-                  </span>
-                </summary>
-                <p className="pb-1 text-sm leading-7 text-stone-600">
-                  Oui, les inscriptions en ligne avec paiement sont incluses dans toutes les formules.
-                </p>
-              </details>
-
-              <details className="group rounded-[1.5rem] border border-stone-900/10 bg-white/82 px-6 shadow-[0_4px_20px_rgba(41,37,36,0.04)] open:pb-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-medium text-stone-950 [&::-webkit-details-marker]:hidden">
-                  <span>Puis-je annuler à tout moment ?</span>
-                  <span className="shrink-0 rounded-full border border-stone-900/10 p-1 text-stone-500 transition-transform group-open:rotate-45">
-                    <PlusIcon />
-                  </span>
-                </summary>
-                <p className="pb-1 text-sm leading-7 text-stone-600">
-                  Oui, sans frais ni préavis. L&apos;abonnement est mensuel.
-                </p>
-              </details>
-
-              <details className="group rounded-[1.5rem] border border-stone-900/10 bg-white/82 px-6 shadow-[0_4px_20px_rgba(41,37,36,0.04)] open:pb-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-medium text-stone-950 [&::-webkit-details-marker]:hidden">
-                  <span>Est-ce que mon club garde son nom de domaine ?</span>
-                  <span className="shrink-0 rounded-full border border-stone-900/10 p-1 text-stone-500 transition-transform group-open:rotate-45">
-                    <PlusIcon />
-                  </span>
-                </summary>
-                <p className="pb-1 text-sm leading-7 text-stone-600">
-                  Oui, et mieux encore : si vous avez déjà un domaine (monclub.fr), vous pouvez le connecter à DashClub en quelques minutes — inclus dans toutes nos formules, sans frais supplémentaires. DashClub s&apos;occupe de la configuration technique complète. Si vous n&apos;avez pas encore de domaine, vous disposez d&apos;un sous-domaine gratuit (monclub.dashclub.app).
-                </p>
-              </details>
-
-              <details className="group rounded-[1.5rem] border border-stone-900/10 bg-white/82 px-6 shadow-[0_4px_20px_rgba(41,37,36,0.04)] open:pb-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-medium text-stone-950 [&::-webkit-details-marker]:hidden">
-                  <span>Comment fonctionne le support ?</span>
-                  <span className="shrink-0 rounded-full border border-stone-900/10 p-1 text-stone-500 transition-transform group-open:rotate-45">
-                    <PlusIcon />
-                  </span>
-                </summary>
-                <p className="pb-1 text-sm leading-7 text-stone-600">
-                  Le support est assuré par email avec une réponse sous 48h ouvrées.
-                </p>
-              </details>
-
-              <details className="group rounded-[1.5rem] border border-stone-900/10 bg-white/82 px-6 shadow-[0_4px_20px_rgba(41,37,36,0.04)] open:pb-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-medium text-stone-950 [&::-webkit-details-marker]:hidden">
-                  <span>DashClub fonctionne-t-il pour tous les sports ?</span>
-                  <span className="shrink-0 rounded-full border border-stone-900/10 p-1 text-stone-500 transition-transform group-open:rotate-45">
-                    <PlusIcon />
-                  </span>
-                </summary>
-                <p className="pb-1 text-sm leading-7 text-stone-600">
-                  Oui. DashClub s&apos;adresse à tous les clubs sportifs : course à pied, trail, vélo, natation, triathlon et bien d&apos;autres. La plateforme est conçue pour s&apos;adapter à n&apos;importe quel type de club et de calendrier de saison.
-                </p>
-              </details>
-
-            </div>
+            <FaqSection />
           </div>
         </section>
 

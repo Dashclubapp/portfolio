@@ -91,18 +91,23 @@ function isDemoHost(host: string): boolean {
 
 const ANALYTICS_ORIGIN = 'https://phospho-nanocorp-prod--nanocorp-api-fastapi-app.modal.run';
 
+const IS_DEV = process.env.NODE_ENV === 'development';
+
 const CONTENT_SECURITY_POLICY = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' ${ANALYTICS_ORIGIN}`,
-  "style-src 'self' 'unsafe-inline'",
+  // unsafe-eval requis par Next.js HMR en développement
+  `script-src 'self' 'unsafe-inline'${IS_DEV ? " 'unsafe-eval'" : ''} ${ANALYTICS_ORIGIN}`,
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: https:",
-  "font-src 'self'",
-  `connect-src 'self' ${ANALYTICS_ORIGIN}`,
-  "frame-src 'none'",
+  "font-src 'self' https://fonts.gstatic.com",
+  `connect-src 'self' ${ANALYTICS_ORIGIN} https://api.stripe.com`,
+  // stripe.com pour le checkout Stripe (redirection)
+  "frame-src https://js.stripe.com https://hooks.stripe.com",
   "frame-ancestors 'none'",
   "object-src 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  // stripe.com inclus pour la redirection vers checkout
+  "form-action 'self' https://checkout.stripe.com",
 ].join('; ');
 
 function addSecurityHeaders(response: NextResponse) {

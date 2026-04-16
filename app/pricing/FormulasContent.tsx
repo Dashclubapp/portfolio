@@ -125,21 +125,20 @@ function PlanCard({ plan }: { plan: Plan }) {
       )}
 
       <div className="relative flex-1 flex flex-col">
-        {plan.featured && (
-          <div className="mb-4">
-            <span className="inline-flex rounded-full bg-orange-400 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-950">
+        <div className="flex items-center gap-2">
+          <p
+            className={`font-sans text-[11px] uppercase tracking-[0.34em] ${
+              plan.featured ? 'text-stone-300' : hasNavyCard ? '!text-white' : 'text-stone-500'
+            }`}
+          >
+            {plan.name}
+          </p>
+          {plan.featured && (
+            <span className="inline-flex rounded-full bg-orange-400 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-950">
               Recommandé
             </span>
-          </div>
-        )}
-
-        <p
-          className={`font-sans text-[11px] uppercase tracking-[0.34em] ${
-            plan.featured ? 'text-stone-300' : hasNavyCard ? '!text-white' : 'text-stone-500'
-          }`}
-        >
-          {plan.name}
-        </p>
+          )}
+        </div>
 
         <div className="mt-3 flex flex-wrap items-end gap-2">
           <span className="font-display text-5xl leading-none">{plan.price}</span>
@@ -152,7 +151,7 @@ function PlanCard({ plan }: { plan: Plan }) {
           </span>
         </div>
 
-        <ul className="mt-3 flex-1 space-y-3">
+        <ul className={`${bullets[0]?.endsWith(':') ? 'mt-1' : 'mt-3'} flex-1 space-y-3`}>
           {!bullets[0]?.endsWith(':') && (
             <li className="px-1 pt-1 pb-0 invisible select-none text-xs font-semibold uppercase tracking-wider">placeholder</li>
           )}

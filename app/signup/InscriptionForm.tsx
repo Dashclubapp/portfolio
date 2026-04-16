@@ -185,8 +185,7 @@ function Step1({
     setErrors((prev) => ({ ...prev, [name]: validate(name as keyof ClubErrors, value) }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const newErrors: ClubErrors = {
       club: validate('club', form.club),
       ville: validate('ville', form.ville),
@@ -198,7 +197,7 @@ function Step1({
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
+    <div className="space-y-5">
       <div>
         <label className="mb-1.5 block text-sm font-medium text-white/80">
           Nom du club <span className="text-[#C9A84C]">*</span>
@@ -209,6 +208,7 @@ function Step1({
           value={form.club}
           onChange={handleChange}
           onBlur={handleBlur}
+          onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           placeholder="Ex : USM Triathlon"
           className={`${inputBase} ${errors.club ? 'border-red-400' : 'border-white/20'}`}
         />
@@ -244,6 +244,7 @@ function Step1({
           value={form.ville}
           onChange={handleChange}
           onBlur={handleBlur}
+          onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           placeholder="Ex : Mézy-sur-Seine"
           className={`${inputBase} ${errors.ville ? 'border-red-400' : 'border-white/20'}`}
         />
@@ -251,12 +252,13 @@ function Step1({
       </div>
 
       <button
-        type="submit"
+        type="button"
+        onClick={handleSubmit}
         className="mt-2 w-full rounded-full bg-[#C9A84C] px-7 py-4 text-base font-semibold text-[#0D1F3C] transition hover:-translate-y-0.5 hover:bg-[#d4b460]"
       >
         Continuer →
       </button>
-    </form>
+    </div>
   );
 }
 
@@ -313,8 +315,7 @@ function Step2({
     setErrors((prev) => ({ ...prev, [name]: validate(name as keyof ContactErrors, value) }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const fields: (keyof ContactErrors)[] = ['prenom', 'nom', 'email', 'telephone'];
     const newErrors: ContactErrors = {};
     fields.forEach((f) => {
@@ -327,7 +328,7 @@ function Step2({
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
+    <div className="space-y-5">
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="mb-1.5 block text-sm font-medium text-white/80">
@@ -399,7 +400,8 @@ function Step2({
       </div>
 
       <button
-        type="submit"
+        type="button"
+        onClick={handleSubmit}
         className="mt-2 w-full rounded-full bg-[#C9A84C] px-7 py-4 text-base font-semibold text-[#0D1F3C] transition hover:-translate-y-0.5 hover:bg-[#d4b460]"
       >
         Choisir ma formule →
@@ -412,7 +414,7 @@ function Step2({
       >
         ← Retour
       </button>
-    </form>
+    </div>
   );
 }
 

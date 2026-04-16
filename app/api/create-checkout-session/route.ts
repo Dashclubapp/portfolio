@@ -57,8 +57,8 @@ export async function POST(req: NextRequest) {
   // Normaliser "saison" → "competition" pour rétrocompatibilité
   const normalizedFormule = formule === 'saison' ? 'competition' : formule;
 
-  const priceId = PRICE_IDS[normalizedFormule];
-  if (!priceId) {
+  const rawPriceId = PRICE_IDS[normalizedFormule];
+  if (!rawPriceId) {
     return NextResponse.json(
       {
         error: `Price ID Stripe pour la formule "${normalizedFormule}" non configuré. Veuillez contacter hello@dashclub.fr`,
@@ -67,7 +67,25 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://triflow.nanocorp.app';
+  // Résoudre automatiquement prod_xxx → price_xxx
+  let priceId = rawPriceId;
+  if (rawPriceId.startsWith('prod_')) {
+    try {
+      const prices = await stripe.prices.list({ product: rawPriceId, active: true, type: 'recurring', limit: 1 });
+      if (prices.data.length === 0) {
+        return NextResponse.json(
+          { error: `Aucun tarif récurrent actif trouvé pour le produit ${rawPriceId}. Créez un prix récurrent dans Stripe Dashboard.` },
+          { status: 500 }
+        );
+      }
+      priceId = prices.data[0].id;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Erreur inconnue';
+      return NextResponse.json({ error: `Erreur lors de la résolution du produit : ${message}` }, { status: 500 });
+    }
+  }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dashclub.app';
 
   try {
     const session = await stripe.checkout.sessions.create({

@@ -32,23 +32,23 @@ export default function BienvenueClient() {
       <div className="relative w-full max-w-md space-y-6">
         {/* Header card */}
         <div className="rounded-3xl bg-[#0D1F3C] border border-[#C9A84C]/20 p-8 text-center shadow-[0_20px_80px_rgba(0,0,0,0.5)]">
-          <div className="text-5xl mb-4">🎉</div>
+          <div className="text-5xl mb-4">🚀</div>
           <h1 className="text-2xl font-bold text-white mb-2">
-            Bienvenue sur DashClub !
+            Encore quelques étapes…
           </h1>
+          <p className="text-sm text-white/60 mb-1">
+            Le nouveau site DashClub sera bientôt en ligne !
+          </p>
           {data?.formule && (
             <p className="text-sm text-white/60 mb-1">
-              Votre abonnement <strong className="text-[#C9A84C]">{data.formule}</strong> est actif.
+              Votre abonnement <strong className="text-[#C9A84C]">{data.formule}</strong> est enregistré.
             </p>
           )}
 
           {/* Confirmations */}
           <div className="mt-5 space-y-2 text-left">
             <CheckItem>
-              Votre site est en ligne
-              {siteUrl ? (
-                <span className="ml-1">: <a href={siteUrl} target="_blank" rel="noopener noreferrer" className="text-[#C9A84C] underline hover:text-[#D4B860]">{data?.slug}.dashclub.app</a></span>
-              ) : null}
+              Votre paiement a bien été reçu
             </CheckItem>
             <CheckItem>
               {data?.email
@@ -64,9 +64,9 @@ export default function BienvenueClient() {
           <p className="text-xs font-bold text-white/40 uppercase tracking-widest mb-4">Prochaines étapes</p>
           <div className="space-y-3">
             {[
-              { n: 1, text: "Connectez votre compte Stripe pour encaisser les inscriptions", href: "/admin/stripe", cta: "Connecter Stripe →" },
-              { n: 2, text: "Personnalisez votre site (logo, couleurs, description)", href: "/admin/club", cta: "Personnaliser →" },
-              { n: 3, text: "Créez votre premier événement", href: "/admin/evenements/nouveau", cta: "Créer →" },
+              { n: 1, text: "Notre équipe vous contacte sous 24h pour recueillir vos contenus", href: null, cta: null },
+              { n: 2, text: "Votre site de club sera mis en ligne sous 5 jours ouvrés", href: null, cta: null },
+              { n: 3, text: "Vous recevrez vos accès backoffice par email dès l'ouverture", href: null, cta: null },
             ].map((step) => (
               <div key={step.n} className="flex items-start gap-3">
                 <div className="w-6 h-6 rounded-full bg-[#C9A84C]/20 flex items-center justify-center text-xs text-[#C9A84C] font-bold shrink-0 mt-0.5">
@@ -82,10 +82,10 @@ export default function BienvenueClient() {
 
         {/* CTA */}
         <Link
-          href="/admin"
+          href="/"
           className="block w-full rounded-2xl bg-[#C9A84C] px-6 py-4 text-center text-base font-bold text-[#0D1F3C] hover:bg-[#D4B860] transition shadow-[0_8px_32px_rgba(201,168,76,0.3)]"
         >
-          Accéder à mon backoffice →
+          Retour à l&apos;accueil →
         </Link>
 
         <p className="text-center text-xs text-white/30">
