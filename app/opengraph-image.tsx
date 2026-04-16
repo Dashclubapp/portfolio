@@ -16,58 +16,32 @@ export default function OpenGraphImage() {
           display: "flex",
           height: "100%",
           width: "100%",
-          background: "#0D1F3C",
-          color: "#FFFFFF",
-          fontFamily: "sans-serif",
           position: "relative",
           overflow: "hidden",
+          fontFamily: "sans-serif",
         }}
       >
-        {/* Background geometric shapes */}
-        <div
+        {/* Background photo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://www.dashclub.app/triathlon-hero.jpg"
           style={{
             position: "absolute",
-            top: 0,
-            right: 0,
-            width: 500,
-            height: 500,
-            background: "#152E55",
-            borderRadius: "0 0 0 100%",
-            display: "flex",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
           }}
+          alt=""
         />
+
+        {/* Dark overlay */}
         <div
           style={{
             position: "absolute",
-            bottom: -80,
-            right: -80,
-            width: 280,
-            height: 280,
-            background: "#1A3A6B",
-            borderRadius: "50%",
-            display: "flex",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: -60,
-            right: -60,
-            width: 200,
-            height: 200,
-            background: "#0A1929",
-            borderRadius: "50%",
-            display: "flex",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            width: 350,
-            height: 80,
-            background: "#112244",
+            inset: 0,
+            background: "linear-gradient(135deg, rgba(13,31,60,0.82) 0%, rgba(21,46,85,0.65) 60%, rgba(13,31,60,0.85) 100%)",
             display: "flex",
           }}
         />
@@ -77,84 +51,46 @@ export default function OpenGraphImage() {
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
+            justifyContent: "center",
             padding: "72px",
             width: "100%",
             position: "relative",
-            zIndex: 1,
+            gap: 24,
           }}
         >
-          {/* Top: Site name */}
+          {/* Gold accent line */}
+          <div style={{ width: 180, height: 4, background: "#C9A84C", borderRadius: 2, display: "flex" }} />
+
+          {/* Site name */}
           <div
             style={{
+              fontSize: 80,
+              fontWeight: 900,
+              lineHeight: 1,
+              color: "#FFFFFF",
               display: "flex",
-              alignItems: "center",
-              gap: 16,
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 52,
-                height: 52,
-                background: "#C9A84C",
-                borderRadius: 12,
-                fontSize: 28,
-                fontWeight: 900,
-                color: "#0D1F3C",
-              }}
-            >
-              D
-            </div>
-            <span
-              style={{
-                fontSize: 28,
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                color: "#FFFFFF",
-                textTransform: "uppercase",
-              }}
-            >
-              {siteName}
-            </span>
+            {siteName}
           </div>
 
-          {/* Middle: Main headline */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 20, maxWidth: 820 }}>
-            {/* Gold accent line */}
-            <div style={{ width: 220, height: 4, background: "#C9A84C", borderRadius: 2, display: "flex" }} />
-
-            <div
-              style={{
-                fontSize: 72,
-                fontWeight: 900,
-                lineHeight: 1.05,
-                color: "#FFFFFF",
-              }}
-            >
-              DashClub
-            </div>
-            <div
-              style={{
-                fontSize: 34,
-                lineHeight: 1.3,
-                color: "#BDD0E8",
-                fontWeight: 400,
-              }}
-            >
-              {homeDescription}
-            </div>
+          {/* Subtitle */}
+          <div
+            style={{
+              fontSize: 36,
+              lineHeight: 1.3,
+              color: "#BDD0E8",
+              fontWeight: 400,
+              maxWidth: 700,
+              display: "flex",
+            }}
+          >
+            Site web professionnel pour votre club sportif
           </div>
 
-          {/* Bottom: Key selling points */}
-          <div style={{ display: "flex", gap: 16 }}>
-            {[
-              "À partir de 19€/mois",
-              "Zéro commission",
-              "Paiements Stripe intégrés",
-            ].map((item) => (
+          {/* Pills */}
+          <div style={{ display: "flex", gap: 16, marginTop: 8 }}>
+            {["À partir de 19€/mois", "Zéro commission", "Paiements Stripe intégrés"].map((item) => (
               <div
                 key={item}
                 style={{
@@ -164,7 +100,7 @@ export default function OpenGraphImage() {
                   border: "1px solid #C9A84C",
                   color: "#C9A84C",
                   fontSize: 22,
-                  padding: "12px 22px",
+                  padding: "10px 22px",
                   fontWeight: 500,
                 }}
               >

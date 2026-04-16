@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const siteName = "DashClub";
 export const siteUrl = "https://dashclub.app";
-export const ogImagePath = "/triathlon-hero.jpg";
+export const ogImagePath = "/opengraph-image";
 export const ogImageUrl = new URL(ogImagePath, siteUrl).toString();
 
 export const homeTitle = "DashClub — Dashboard pour clubs sportifs";
