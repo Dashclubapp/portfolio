@@ -96,7 +96,7 @@ export default function Home() {
 
       <MobileNav />
 
-      <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 pt-6 sm:px-8 lg:px-12 lg:pb-24">
+      <div className="relative mx-auto w-full max-w-7xl px-5 pb-10 pt-6 sm:px-8 lg:px-12 lg:pb-16">
 
         {/* ── HEADER ── */}
         <header className="desktop-site-header flex flex-col gap-5 rounded-[2rem] border border-stone-900/10 bg-white/72 px-5 py-5 backdrop-blur-sm sm:px-6 lg:flex-row lg:items-center lg:justify-between">
@@ -138,7 +138,7 @@ export default function Home() {
 
         {/* ── 1. HERO ── */}
         <section
-          className="relative grid gap-10 overflow-hidden rounded-[2rem] py-14 lg:grid-cols-[1.04fr_0.96fr] lg:items-center lg:gap-16 lg:py-20"
+          className="relative grid gap-10 overflow-hidden rounded-[2rem] py-10 lg:grid-cols-[1.04fr_0.96fr] lg:items-center lg:gap-16 lg:py-14"
           style={{
             backgroundColor: "#0D1F3C",
             backgroundImage:
@@ -203,7 +203,7 @@ export default function Home() {
         </section>
 
         {/* ── 2. SECTION PROBLÈME ── */}
-        <section className="problem-section border-t border-stone-900/10 py-14">
+        <section className="problem-section border-t border-stone-900/10 py-8">
           <div className="rounded-[2rem] border border-stone-900/10 bg-stone-50/80 px-6 py-12 sm:px-8">
             <h2 className="text-center font-display text-4xl leading-tight text-stone-950 sm:text-5xl">
               Aujourd&apos;hui, gérer votre club c&apos;est...
@@ -244,7 +244,7 @@ export default function Home() {
         </section>
 
         {/* ── 6. SECTION ÉTAPES / PRODUIT ── */}
-        <section id="produit" className="border-t border-stone-900/10 py-14">
+        <section id="produit" className="border-t border-stone-900/10 py-8">
           <div className="mb-10 max-w-2xl">
             <p className="font-sans text-sm uppercase tracking-[0.34em] text-orange-700">
               Comment ça marche
@@ -320,53 +320,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── 3. PREUVE SOCIALE ── */}
-        <section className="border-t border-stone-900/10 py-14">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="font-sans text-sm uppercase tracking-[0.34em] text-orange-700">
-              Ils nous font confiance
-            </p>
-            <h2 className="mt-3 font-display text-4xl leading-none text-stone-950 sm:text-5xl">
-              Ils ont lancé leur site avec DashClub
-            </h2>
-          </div>
-          <div className="testimonials-grid mt-10 grid items-stretch gap-5 lg:grid-cols-2">
-            {/* [À REMPLACER] Témoignage 1 — Marc D., Président du TC Bordeaux Métropole */}
-            <blockquote className="testimonial-card flex h-auto flex-col overflow-visible rounded-[1.9rem] border border-stone-900/10 bg-white/82 p-7 shadow-[0_20px_50px_rgba(41,37,36,0.06)]">
-              <svg viewBox="0 0 32 24" fill="none" className="mb-4 h-7 w-auto text-orange-300" aria-hidden="true">
-                <path d="M0 24V14.4C0 6.4 4.8 1.6 14.4 0l1.6 3.2C11.2 4.4 8.8 6.8 8 10.4h6.4V24H0Zm17.6 0V14.4C17.6 6.4 22.4 1.6 32 0l1.6 3.2c-4.8 1.2-7.2 3.6-8 7.2H32V24H17.6Z" fill="currentColor" />
-              </svg>
-              <p className="flex-1 text-base leading-8 text-stone-700">
-                En 4 jours on avait notre site en ligne et nos premières inscriptions. Je n&apos;y connais rien en informatique — ça n&apos;a pas été un problème.
-              </p>
-              <footer className="mt-5 border-t border-stone-900/8 pt-4">
-                <p className="font-semibold text-stone-950">Marc D.</p>
-                <p className="text-sm text-stone-500">Président du TC Bordeaux Métropole</p>
-              </footer>
-            </blockquote>
-            {/* [À REMPLACER] Témoignage 2 — Sophie L., Trésorière d'un club sportif à Annecy */}
-            <blockquote className="testimonial-card flex h-auto flex-col overflow-visible rounded-[1.9rem] border border-stone-900/10 bg-white/82 p-7 shadow-[0_20px_50px_rgba(41,37,36,0.06)]">
-              <svg viewBox="0 0 32 24" fill="none" className="mb-4 h-7 w-auto text-orange-300" aria-hidden="true">
-                <path d="M0 24V14.4C0 6.4 4.8 1.6 14.4 0l1.6 3.2C11.2 4.4 8.8 6.8 8 10.4h6.4V24H0Zm17.6 0V14.4C17.6 6.4 22.4 1.6 32 0l1.6 3.2c-4.8 1.2-7.2 3.6-8 7.2H32V24H17.6Z" fill="currentColor" />
-              </svg>
-              <p className="flex-1 text-base leading-8 text-stone-700">
-                Fini les Google Forms et les virements à vérifier à la main. Tout est automatisé, je gagne facilement 3h par semaine.
-              </p>
-              <footer className="mt-5 border-t border-stone-900/8 pt-4">
-                <p className="font-semibold text-stone-950">Sophie L.</p>
-                <p className="text-sm text-stone-500">Trésorière d&apos;un club sportif à Annecy</p>
-              </footer>
-            </blockquote>
-          </div>
-          <div className="mt-8 text-center">
-            <p className="inline-flex items-center gap-2 rounded-full border border-stone-900/10 bg-white/88 px-6 py-3 text-lg font-semibold text-stone-950 shadow-[0_8px_24px_rgba(41,37,36,0.07)]">
-              🚀 <span id="clubs-count">12</span>&nbsp;clubs déjà sur DashClub
-            </p>
-          </div>
-        </section>
-
         {/* ── 5. TARIFS ── */}
-        <section id="offres" className="border-t border-stone-900/10 py-14">
+        <section id="offres" className="border-t border-stone-900/10 py-8">
           {/* Anchor #abonnement preserved */}
           <span id="abonnement" className="invisible absolute" aria-hidden="true" />
 
@@ -734,8 +689,53 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── 3. PREUVE SOCIALE ── */}
+        <section className="border-t border-stone-900/10 py-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-sans text-sm uppercase tracking-[0.34em] text-orange-700">
+              Ils nous font confiance
+            </p>
+            <h2 className="mt-3 font-display text-4xl leading-none text-stone-950 sm:text-5xl">
+              Ils ont lancé leur site avec DashClub
+            </h2>
+          </div>
+          <div className="testimonials-grid mt-10 grid items-stretch gap-5 lg:grid-cols-2">
+            {/* [À REMPLACER] Témoignage 1 — Marc D., Président du TC Bordeaux Métropole */}
+            <blockquote className="testimonial-card flex h-auto flex-col overflow-visible rounded-[1.9rem] border border-stone-900/10 bg-white/82 p-7 shadow-[0_20px_50px_rgba(41,37,36,0.06)]">
+              <svg viewBox="0 0 32 24" fill="none" className="mb-4 h-7 w-auto text-orange-300" aria-hidden="true">
+                <path d="M0 24V14.4C0 6.4 4.8 1.6 14.4 0l1.6 3.2C11.2 4.4 8.8 6.8 8 10.4h6.4V24H0Zm17.6 0V14.4C17.6 6.4 22.4 1.6 32 0l1.6 3.2c-4.8 1.2-7.2 3.6-8 7.2H32V24H17.6Z" fill="currentColor" />
+              </svg>
+              <p className="flex-1 text-base leading-8 text-stone-700">
+                En 4 jours on avait notre site en ligne et nos premières inscriptions. Je n&apos;y connais rien en informatique — ça n&apos;a pas été un problème.
+              </p>
+              <footer className="mt-5 border-t border-stone-900/8 pt-4">
+                <p className="font-semibold text-stone-950">Marc D.</p>
+                <p className="text-sm text-stone-500">Président du TC Bordeaux Métropole</p>
+              </footer>
+            </blockquote>
+            {/* [À REMPLACER] Témoignage 2 — Sophie L., Trésorière d'un club sportif à Annecy */}
+            <blockquote className="testimonial-card flex h-auto flex-col overflow-visible rounded-[1.9rem] border border-stone-900/10 bg-white/82 p-7 shadow-[0_20px_50px_rgba(41,37,36,0.06)]">
+              <svg viewBox="0 0 32 24" fill="none" className="mb-4 h-7 w-auto text-orange-300" aria-hidden="true">
+                <path d="M0 24V14.4C0 6.4 4.8 1.6 14.4 0l1.6 3.2C11.2 4.4 8.8 6.8 8 10.4h6.4V24H0Zm17.6 0V14.4C17.6 6.4 22.4 1.6 32 0l1.6 3.2c-4.8 1.2-7.2 3.6-8 7.2H32V24H17.6Z" fill="currentColor" />
+              </svg>
+              <p className="flex-1 text-base leading-8 text-stone-700">
+                Fini les Google Forms et les virements à vérifier à la main. Tout est automatisé, je gagne facilement 3h par semaine.
+              </p>
+              <footer className="mt-5 border-t border-stone-900/8 pt-4">
+                <p className="font-semibold text-stone-950">Sophie L.</p>
+                <p className="text-sm text-stone-500">Trésorière d&apos;un club sportif à Annecy</p>
+              </footer>
+            </blockquote>
+          </div>
+          <div className="mt-8 text-center">
+            <p className="inline-flex items-center gap-2 rounded-full border border-stone-900/10 bg-white/88 px-6 py-3 text-lg font-semibold text-stone-950 shadow-[0_8px_24px_rgba(41,37,36,0.07)]">
+              🚀 <span id="clubs-count">12</span>&nbsp;clubs déjà sur DashClub
+            </p>
+          </div>
+        </section>
+
         {/* ── 7. FAQ — CSS-only accordion ── */}
-        <section className="border-t border-stone-900/10 py-14">
+        <section className="border-t border-stone-900/10 py-8">
           <div className="mx-auto max-w-3xl">
             <p className="font-sans text-sm uppercase tracking-[0.34em] text-orange-700">
               Questions fréquentes
@@ -833,46 +833,21 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── CTA 4/4 — Before footer ── */}
-        <section className="border-t border-stone-900/10 py-14">
-          <div className="rounded-[2.3rem] border border-stone-900/10 bg-stone-950 px-8 py-12 text-center text-white shadow-[0_28px_70px_rgba(28,25,23,0.18)]">
-            <p className="font-display text-4xl leading-tight text-white sm:text-5xl lg:text-6xl">
-              Le site du club tourne. La saison sportive aussi.
-            </p>
-            <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-stone-300">
-              Commencez à 19€/mois TTC, gardez vos recettes et faites évoluer
-              l&apos;outil à mesure que le club grandit.
-            </p>
-            <a
-              href="/signup"
-              className="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-semibold text-stone-950 transition hover:-translate-y-0.5 hover:bg-stone-100"
-            >
-              Lancer mon site club →
-            </a>
-          </div>
-        </section>
 
         {/* ── DEMO SECTION ── */}
-        <section
-          style={{ backgroundColor: "#152E55" }}
-          className="py-[60px] px-4"
-        >
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-2xl font-bold text-white leading-snug">
-              🏆 Vous voulez voir à quoi ressemble votre futur site ?
+        <section className="border-t border-stone-900/10 py-8">
+          <div className="rounded-[2rem] border border-[#1F3C6B] bg-[linear-gradient(135deg,#152E55_0%,#0D1F3C_100%)] px-8 py-8 text-center">
+            <p className="font-display text-2xl leading-tight text-white sm:text-3xl">
+              Vous voulez voir à quoi ressemble votre futur site ?
             </p>
-            <p
-              className="mt-4 text-base text-white leading-7"
-              style={{ opacity: 0.85 }}
-            >
-              Découvrez l&apos;exemple du FC Démo — un vrai site club construit
-              avec DashClub.
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-white/70">
+              Découvrez l&apos;exemple de l&apos;USM Triathlon — un vrai site club construit avec DashClub.
             </p>
             <a
               href={demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="demo-cta-btn mt-8 inline-flex items-center justify-center rounded-[8px] px-8 py-[14px] text-base font-bold transition"
+              className="mt-6 inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-7 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/16"
             >
               Voir le site démo →
             </a>

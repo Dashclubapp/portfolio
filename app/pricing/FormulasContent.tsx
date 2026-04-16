@@ -368,6 +368,24 @@ export default function FormulasContent() {
           </div>
         </section>
 
+        {/* Competitor differentiation block */}
+        <section className="mt-8 rounded-[2rem] border border-stone-900/10 bg-white/84 px-6 py-6 shadow-[0_8px_32px_rgba(41,37,36,0.06)] sm:px-8 sm:py-7">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-6">
+            <div className="shrink-0 text-2xl">🌐</div>
+            <div>
+              <p className="font-sans text-[11px] uppercase tracking-[0.3em] text-orange-700">
+                Domaine personnalisé — inclus dès 19€/mois
+              </p>
+              <p className="mt-2 text-base leading-7 text-stone-700">
+                Connectez votre domaine existant (monclub.fr) — inclus dans toutes les formules, sans frais supplémentaires. DashClub s&apos;occupe de la configuration technique complète.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-stone-500">
+                Wix et WordPress proposent le domaine custom en supplément. DashClub l&apos;inclut dès 19€/mois avec en plus la gestion des inscriptions, Stripe intégré et zéro commission.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Comparison table */}
         <section className="mt-10 rounded-[2.4rem] border border-stone-900/10 bg-white/84 p-4 shadow-[0_28px_80px_rgba(41,37,36,0.08)] sm:p-6">
           <div className="max-w-2xl">
@@ -452,23 +470,6 @@ export default function FormulasContent() {
           </div>
         </section>
 
-        {/* Competitor differentiation block */}
-        <section className="mt-8 rounded-[2rem] border border-stone-900/10 bg-white/84 px-6 py-6 shadow-[0_8px_32px_rgba(41,37,36,0.06)] sm:px-8 sm:py-7">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-6">
-            <div className="shrink-0 text-2xl">🌐</div>
-            <div>
-              <p className="font-sans text-[11px] uppercase tracking-[0.3em] text-orange-700">
-                Domaine personnalisé — inclus dès 19€/mois
-              </p>
-              <p className="mt-2 text-base leading-7 text-stone-700">
-                Connectez votre domaine existant (monclub.fr) — inclus dans toutes les formules, sans frais supplémentaires. DashClub s&apos;occupe de la configuration technique complète.
-              </p>
-              <p className="mt-3 text-sm leading-6 text-stone-500">
-                Wix et WordPress proposent le domaine custom en supplément. DashClub l&apos;inclut dès 19€/mois avec en plus la gestion des inscriptions, Stripe intégré et zéro commission.
-              </p>
-            </div>
-          </div>
-        </section>
       </div>
 
     </main>
