@@ -45,7 +45,7 @@ function CheckIcon({ variant = 'default' }: { variant?: 'default' | 'featured' |
       stroke="currentColor"
       strokeWidth={1.8}
       className={`mt-0.5 h-5 w-5 shrink-0 ${
-        variant === 'featured' ? 'text-orange-300' : variant === 'navy' ? '!text-white' : 'text-emerald-600'
+        variant === 'featured' ? 'text-orange-400' : variant === 'navy' ? '!text-white' : 'text-orange-600'
       }`}
       aria-hidden="true"
     >
@@ -55,10 +55,10 @@ function CheckIcon({ variant = 'default' }: { variant?: 'default' | 'featured' |
         r="8.2"
         className={
           variant === 'featured'
-            ? 'fill-white/10 stroke-white/20'
+            ? 'fill-orange-900/40 stroke-orange-500/40'
             : variant === 'navy'
               ? 'fill-white/10 stroke-white/25'
-              : 'fill-emerald-100 stroke-emerald-200'
+              : 'fill-orange-100 stroke-orange-200'
         }
       />
       <path d="m6.5 10 2.2 2.3 4.8-5" />
@@ -152,31 +152,30 @@ function PlanCard({ plan }: { plan: Plan }) {
           </span>
         </div>
 
-        <ul className="mt-6 flex-1 space-y-2.5">
+        <ul className="mt-3 flex-1 space-y-3">
+          {!bullets[0]?.endsWith(':') && (
+            <li className="px-1 pt-1 pb-0 invisible select-none text-xs font-semibold uppercase tracking-wider">placeholder</li>
+          )}
           {bullets.map((bullet, i) => {
             const isHeader = bullet.endsWith(':');
-            return (
-              <li key={i} className={`flex items-start gap-3 text-sm leading-6 ${hasNavyCard ? '!text-white' : ''}`}>
-                {!isHeader && (
-                  <CheckIcon
-                    variant={plan.featured ? 'featured' : hasNavyCard ? 'navy' : 'default'}
-                  />
-                )}
-                <span
-                  className={
-                    isHeader
-                      ? `font-medium text-xs uppercase tracking-wider ${
-                          plan.featured ? 'text-orange-300' : hasNavyCard ? '!text-white' : 'text-stone-500'
-                        }`
-                      : plan.featured
-                        ? 'text-stone-200'
-                        : hasNavyCard
-                          ? '!text-white'
-                          : 'text-stone-700'
-                  }
-                >
+            return isHeader ? (
+              <li key={i} className="px-1 pt-1 pb-0">
+                <span className={`text-xs font-semibold uppercase tracking-wider ${
+                  plan.featured ? 'text-orange-300' : hasNavyCard ? 'text-white/50' : 'text-stone-400'
+                }`}>
                   {bullet}
                 </span>
+              </li>
+            ) : (
+              <li key={i} className={`flex items-start gap-3 rounded-[1.2rem] px-4 py-3 text-sm leading-6 ${
+                plan.featured
+                  ? 'border border-[#C9A84C]/40 bg-[#C9A84C]/10 text-stone-100'
+                  : hasNavyCard
+                    ? 'bg-white/10 !text-white'
+                    : 'bg-stone-50 text-stone-800'
+              }`}>
+                <CheckIcon variant={plan.featured ? 'featured' : hasNavyCard ? 'navy' : 'default'} />
+                <span className={hasNavyCard ? '!text-white' : undefined}>{bullet}</span>
               </li>
             );
           })}
@@ -184,8 +183,6 @@ function PlanCard({ plan }: { plan: Plan }) {
 
         <a
           href={plan.checkoutHref}
-          target="_blank"
-          rel="noopener noreferrer"
           className={`mt-7 inline-flex w-full items-center justify-center rounded-full px-5 py-3.5 text-sm font-semibold transition hover:-translate-y-0.5 ${
             plan.featured
               ? 'bg-orange-400 text-stone-950 hover:bg-orange-300'
@@ -194,7 +191,7 @@ function PlanCard({ plan }: { plan: Plan }) {
                 : 'bg-stone-950 text-white hover:bg-stone-800'
           }`}
         >
-          Démarrer
+          {plan.detailCta}
         </a>
       </div>
     </div>

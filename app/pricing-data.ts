@@ -36,9 +36,7 @@ export const plans: Plan[] = [
       "Paiement en ligne via Stripe",
       "Site du club créé et hébergé",
       "Domaine custom (monclub.fr) inclus",
-      "Base éditoriale incluse",
       "1ère épreuve organisée sans supplément",
-      "Zéro commission sur les inscriptions",
     ],
     landingCta: "Démarrer",
     description:
@@ -62,12 +60,11 @@ export const plans: Plan[] = [
     checkoutHref: "/signup?formule=competition",
     landingHook: "Pour les clubs avec un calendrier.",
     landingBullets: [
+      "Tout Essentiel, plus :",
       "Jusqu'à 3 événements par saison",
       "File d'attente automatique",
-      "Emails automatiques aux inscrits (J-7, J-1, débrief...)",
       "Remboursement en 1 clic",
-      "Domaine personnalisé inclus",
-      "Zéro commission sur les inscriptions",
+      "Emails automatiques aux inscrits (J-7, J-1, débrief...)",
     ],
     landingCta: "Choisir Compétition",
     description:
@@ -102,12 +99,11 @@ export const plans: Plan[] = [
     checkoutHref: "/signup?formule=illimite",
     landingHook: "Pour les clubs qui veulent tout automatiser.",
     landingBullets: [
-      "Tout Compétition",
-      "Domaine custom (monclub.fr) inclus",
+      "Tout Compétition, plus :",
       "Épreuves illimitées",
       "Gestion des adhérents et licences",
       "Bilan de saison exportable en PDF",
-      "Boutique en ligne — vendez maillots, équipements et produits directement depuis votre site club",
+      "Boutique en ligne",
     ],
     landingCta: "Choisir Illimité",
     description:

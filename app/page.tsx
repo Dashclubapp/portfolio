@@ -337,11 +337,11 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 xl:grid-cols-3">
+          <div className="mt-10 grid items-stretch gap-5 xl:grid-cols-3">
             {plans.map((plan) => (
               <article
                 key={plan.id}
-                className={`relative overflow-hidden rounded-[2rem] border p-6 shadow-[0_24px_60px_rgba(41,37,36,0.08)] sm:p-7 ${
+                className={`relative flex flex-col overflow-hidden rounded-[2rem] border p-6 shadow-[0_24px_60px_rgba(41,37,36,0.08)] sm:p-7 ${
                   plan.featured
                     ? "border-orange-400/50 bg-stone-950 text-white"
                     : hasNavyPricingCard(plan.id)
@@ -355,23 +355,27 @@ export default function Home() {
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.14),_transparent_28%),radial-gradient(circle_at_bottom_left,_rgba(96,165,250,0.14),_transparent_32%)]" />
                 ) : null}
 
-                <div className="relative">
-                  {plan.featured ? (
-                    <div className="inline-flex rounded-full bg-orange-400 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-950">
-                      {plan.badge ?? "Le plus choisi"}
+                <div className="relative flex flex-1 flex-col">
+                  {plan.featured && (
+                    <div className="mb-2">
+                      <span className="inline-flex rounded-full bg-orange-400 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-950">
+                        {plan.badge ?? "Recommandé"}
+                      </span>
                     </div>
-                  ) : null}
-                  <p
-                    className={`mt-5 font-sans text-[11px] uppercase tracking-[0.34em] ${
-                      plan.featured
-                        ? "text-stone-300"
-                        : hasNavyPricingCard(plan.id)
-                          ? "!text-white"
-                          : "text-stone-500"
-                    }`}
-                  >
-                    {plan.name}
-                  </p>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <p
+                      className={`font-sans text-sm font-bold uppercase tracking-[0.22em] ${
+                        plan.featured
+                          ? "text-white"
+                          : hasNavyPricingCard(plan.id)
+                            ? "!text-white"
+                            : "text-stone-800"
+                      }`}
+                    >
+                      {plan.name}
+                    </p>
+                  </div>
                   <div className="mt-4 flex flex-wrap items-end gap-2">
                     <span className="font-display text-5xl leading-none">
                       {plan.price}
@@ -400,32 +404,46 @@ export default function Home() {
                     {plan.landingHook}
                   </p>
 
-                  <ul className="mt-6 space-y-3">
-                    {plan.landingBullets.map((bullet) => (
-                      <li
-                        key={bullet}
-                        className={`flex items-start gap-3 rounded-[1.2rem] px-4 py-3 text-sm leading-6 ${
-                          plan.featured
-                            ? "bg-white/8 text-stone-100"
-                            : hasNavyPricingCard(plan.id)
-                              ? "bg-white/10 !text-white"
-                              : "bg-stone-50 text-stone-800"
-                        }`}
-                      >
-                        <CheckIcon
-                          variant={
+                  <ul className="mt-3 flex-1 space-y-3">
+                    {!plan.landingBullets[0]?.endsWith(":") && (
+                      <li className="px-1 pt-1 pb-0 invisible select-none text-xs font-semibold uppercase tracking-wider">placeholder</li>
+                    )}
+                    {plan.landingBullets.map((bullet) => {
+                      const isHeader = bullet.endsWith(":");
+                      return isHeader ? (
+                        <li key={bullet} className="px-1 pt-1 pb-0">
+                          <span className={`text-xs font-semibold uppercase tracking-wider ${
+                            plan.featured ? "text-orange-300" : hasNavyPricingCard(plan.id) ? "text-white/50" : "text-stone-400"
+                          }`}>
+                            {bullet}
+                          </span>
+                        </li>
+                      ) : (
+                        <li
+                          key={bullet}
+                          className={`flex items-start gap-3 rounded-[1.2rem] px-4 py-3 text-sm leading-6 ${
                             plan.featured
-                              ? "featured"
+                              ? "border border-[#C9A84C]/40 bg-[#C9A84C]/10 text-stone-100"
                               : hasNavyPricingCard(plan.id)
-                                ? "navy"
-                                : "default"
-                          }
-                        />
-                        <span className={hasNavyPricingCard(plan.id) ? "!text-white" : undefined}>
-                          {bullet}
-                        </span>
-                      </li>
-                    ))}
+                                ? "bg-white/10 !text-white"
+                                : "bg-stone-50 text-stone-800"
+                          }`}
+                        >
+                          <CheckIcon
+                            variant={
+                              plan.featured
+                                ? "featured"
+                                : hasNavyPricingCard(plan.id)
+                                  ? "navy"
+                                  : "default"
+                            }
+                          />
+                          <span className={hasNavyPricingCard(plan.id) ? "!text-white" : undefined}>
+                            {bullet}
+                          </span>
+                        </li>
+                      );
+                    })}
                   </ul>
 
                   <a
@@ -438,28 +456,24 @@ export default function Home() {
                           : "bg-stone-950 text-white hover:bg-stone-800"
                     }`}
                   >
-                    {plan.landingCta}
+                    Choisir
                   </a>
-                  <p
-                    className={`mt-3 text-center text-xs ${
-                      plan.featured
-                        ? "text-stone-500"
-                        : hasNavyPricingCard(plan.id)
-                          ? "!text-white"
-                          : "text-stone-400"
-                    }`}
-                  >
-                    Sans engagement · Résiliable à tout moment
-                  </p>
                 </div>
               </article>
             ))}
           </div>
 
-          <p className="mt-6 text-center text-sm text-[#8A96A8]">
-            Sans engagement · Zéro commission DashClub sur les paiements reçus (des frais Stripe
-            peuvent être appliqués)
-          </p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+            {["Sans engagement", "Résiliable à tout moment", "Zéro commission sur vos paiements"].map((item) => (
+              <span
+                key={item}
+                className="inline-flex items-center gap-1.5 rounded-full border border-stone-900/10 bg-white/80 px-4 py-2 text-sm font-medium text-stone-700 shadow-[0_2px_8px_rgba(41,37,36,0.06)]"
+              >
+                <span className="text-[#C9A84C] font-bold">✓</span>
+                {item}
+              </span>
+            ))}
+          </div>
 
           <div className="mx-auto mt-4 max-w-[680px] rounded-[12px] border-l-[3px] border-l-[#C9A84C] bg-[rgba(201,168,76,0.08)] px-4 py-4 sm:px-7 sm:py-6">
             <p className="text-base font-semibold text-[#0D1F3C]">
@@ -689,50 +703,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── 3. PREUVE SOCIALE ── */}
-        <section className="border-t border-stone-900/10 py-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="font-sans text-sm uppercase tracking-[0.34em] text-orange-700">
-              Ils nous font confiance
-            </p>
-            <h2 className="mt-3 font-display text-4xl leading-none text-stone-950 sm:text-5xl">
-              Ils ont lancé leur site avec DashClub
-            </h2>
-          </div>
-          <div className="testimonials-grid mt-10 grid items-stretch gap-5 lg:grid-cols-2">
-            {/* [À REMPLACER] Témoignage 1 — Marc D., Président du TC Bordeaux Métropole */}
-            <blockquote className="testimonial-card flex h-auto flex-col overflow-visible rounded-[1.9rem] border border-stone-900/10 bg-white/82 p-7 shadow-[0_20px_50px_rgba(41,37,36,0.06)]">
-              <svg viewBox="0 0 32 24" fill="none" className="mb-4 h-7 w-auto text-orange-300" aria-hidden="true">
-                <path d="M0 24V14.4C0 6.4 4.8 1.6 14.4 0l1.6 3.2C11.2 4.4 8.8 6.8 8 10.4h6.4V24H0Zm17.6 0V14.4C17.6 6.4 22.4 1.6 32 0l1.6 3.2c-4.8 1.2-7.2 3.6-8 7.2H32V24H17.6Z" fill="currentColor" />
-              </svg>
-              <p className="flex-1 text-base leading-8 text-stone-700">
-                En 4 jours on avait notre site en ligne et nos premières inscriptions. Je n&apos;y connais rien en informatique — ça n&apos;a pas été un problème.
-              </p>
-              <footer className="mt-5 border-t border-stone-900/8 pt-4">
-                <p className="font-semibold text-stone-950">Marc D.</p>
-                <p className="text-sm text-stone-500">Président du TC Bordeaux Métropole</p>
-              </footer>
-            </blockquote>
-            {/* [À REMPLACER] Témoignage 2 — Sophie L., Trésorière d'un club sportif à Annecy */}
-            <blockquote className="testimonial-card flex h-auto flex-col overflow-visible rounded-[1.9rem] border border-stone-900/10 bg-white/82 p-7 shadow-[0_20px_50px_rgba(41,37,36,0.06)]">
-              <svg viewBox="0 0 32 24" fill="none" className="mb-4 h-7 w-auto text-orange-300" aria-hidden="true">
-                <path d="M0 24V14.4C0 6.4 4.8 1.6 14.4 0l1.6 3.2C11.2 4.4 8.8 6.8 8 10.4h6.4V24H0Zm17.6 0V14.4C17.6 6.4 22.4 1.6 32 0l1.6 3.2c-4.8 1.2-7.2 3.6-8 7.2H32V24H17.6Z" fill="currentColor" />
-              </svg>
-              <p className="flex-1 text-base leading-8 text-stone-700">
-                Fini les Google Forms et les virements à vérifier à la main. Tout est automatisé, je gagne facilement 3h par semaine.
-              </p>
-              <footer className="mt-5 border-t border-stone-900/8 pt-4">
-                <p className="font-semibold text-stone-950">Sophie L.</p>
-                <p className="text-sm text-stone-500">Trésorière d&apos;un club sportif à Annecy</p>
-              </footer>
-            </blockquote>
-          </div>
-          <div className="mt-8 text-center">
-            <p className="inline-flex items-center gap-2 rounded-full border border-stone-900/10 bg-white/88 px-6 py-3 text-lg font-semibold text-stone-950 shadow-[0_8px_24px_rgba(41,37,36,0.07)]">
-              🚀 <span id="clubs-count">12</span>&nbsp;clubs déjà sur DashClub
-            </p>
-          </div>
-        </section>
 
         {/* ── 7. FAQ — CSS-only accordion ── */}
         <section className="border-t border-stone-900/10 py-8">
@@ -744,6 +714,18 @@ export default function Home() {
               FAQ
             </h2>
             <div className="mt-8 space-y-3">
+
+              <details className="group rounded-[1.5rem] border border-stone-900/10 bg-white/82 px-6 shadow-[0_4px_20px_rgba(41,37,36,0.04)] open:pb-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-medium text-stone-950 [&::-webkit-details-marker]:hidden">
+                  <span>Quelle commission prend DashClub sur mes inscriptions ?</span>
+                  <span className="shrink-0 rounded-full border border-stone-900/10 p-1 text-stone-500 transition-transform group-open:rotate-45">
+                    <PlusIcon />
+                  </span>
+                </summary>
+                <p className="pb-1 text-sm leading-7 text-stone-600">
+                  Zéro. DashClub ne prend aucune commission. Seuls les frais Stripe standard s&apos;appliquent (2,9% + 0,30€ par transaction).
+                </p>
+              </details>
 
               <details className="group rounded-[1.5rem] border border-stone-900/10 bg-white/82 px-6 shadow-[0_4px_20px_rgba(41,37,36,0.04)] open:pb-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-medium text-stone-950 [&::-webkit-details-marker]:hidden">
