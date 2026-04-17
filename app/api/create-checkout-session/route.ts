@@ -30,7 +30,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    httpClient: Stripe.createFetchHttpClient(),
+  });
 
   let body: {
     formule: string;

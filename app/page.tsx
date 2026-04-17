@@ -89,20 +89,18 @@ export default function Home() {
 
         {/* ── HEADER ── */}
         <header className="desktop-site-header flex flex-col gap-5 rounded-[2rem] border border-stone-900/10 bg-white/72 px-5 py-5 backdrop-blur-sm sm:px-6 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-4">
-            <a href="#top" className="inline-flex items-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo-dashclub-real.svg"
-                alt="DashClub"
-                height={44}
-                style={{ height: "44px", width: "auto" }}
-              />
-            </a>
+          <a href="#top" className="inline-flex items-center gap-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-dashclub-real.svg"
+              alt="DashClub"
+              height={44}
+              style={{ height: "44px", width: "auto" }}
+            />
             <span className="text-xl font-bold tracking-[0.08em] text-[#C9A84C] sm:text-2xl">
               DashClub
             </span>
-          </div>
+          </a>
           <nav className="flex flex-wrap items-center gap-3 text-sm text-stone-700">
             <a className="rounded-full px-3 py-2 transition hover:bg-stone-900/5" href="#produit">
               Le produit
@@ -198,8 +196,7 @@ export default function Home() {
               />
             </div>
             {/* CTA desktop — sous le screenshot */}
-            <div className="mt-5 hidden lg:flex gap-3">
-              <LaunchCTA />
+            <div className="mt-5 hidden lg:flex justify-center">
               <a
                 className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-7 py-4 text-base font-medium text-white transition hover:bg-white/16"
                 href={demoUrl}
@@ -324,10 +321,6 @@ export default function Home() {
             </article>
           </div>
 
-          {/* CTA 2/4 — After #produit */}
-          <div className="mt-10 text-center">
-            <LaunchCTA />
-          </div>
         </section>
 
         {/* ── 5. TARIFS ── */}
