@@ -147,14 +147,15 @@ export default function Home() {
             </p>
             <ul className="mt-6 flex flex-col gap-2.5">
               {[
-                "Site du club créé et hébergé",
-                "Domaine custom (monclub.fr) inclus",
-                "1ère épreuve organisée sans supplément",
-                "Paiement en ligne via Stripe",
+                { text: "Site du club créé et hébergé" },
+                { text: "Domaine personnalisé (monclub.fr) inclus" },
+                { text: "1ère épreuve organisée sans supplément" },
+                { text: "Paiement en ligne via Stripe" },
               ].map((item) => (
-                <li key={item} className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm">
+                <li key={item.text} className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm">
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#C9A84C] text-[11px] font-bold text-stone-950">✓</span>
-                  {item}
+                  {item.text}
+                  {item.badge ?? null}
                 </li>
               ))}
             </ul>
@@ -176,17 +177,8 @@ export default function Home() {
             {/* Glow behind screenshot */}
             <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.18),_transparent_70%)]" />
             <div className="relative overflow-hidden rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.45)] ring-1 ring-white/10">
-              {/* Browser chrome bar */}
-              <div className="flex items-center gap-1.5 bg-[#1a1a2e] px-4 py-2.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
-                <span className="ml-3 flex-1 rounded bg-white/8 px-3 py-1 text-[11px] text-white/30">
-                  app.dashclub.fr/back
-                </span>
-              </div>
               <Image
-                src="/dashboard-screenshot.jpg"
+                src="/dashboard-screenshot.svg"
                 alt="Backoffice DashClub — tableau de bord club sportif"
                 className="w-full"
                 width={1200}

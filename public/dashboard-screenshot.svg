@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780" font-family="Inter, system-ui, -apple-system, sans-serif">
+
+  <!-- Background -->
+  <rect width="1200" height="780" fill="#fafaf9"/>
+
+  <!-- ══ SIDEBAR ═══════════════════════════════════════════════════════════ -->
+  <rect width="224" height="780" fill="#ffffff"/>
+  <line x1="224" y1="0" x2="224" y2="780" stroke="#e7e5e4" stroke-width="1"/>
+
+  <!-- Logo -->
+  <rect x="0" y="0" width="224" height="64" fill="#fff"/>
+  <line x1="0" y1="64" x2="224" y2="64" stroke="#f5f5f4" stroke-width="1"/>
+  <text x="18" y="30" font-size="9" font-weight="700" fill="#C9A84C" letter-spacing="1.6">DASHCLUB</text>
+  <text x="18" y="50" font-size="13" font-weight="700" fill="#1c1917">Club Triathlon Côte d'Azur</text>
+
+  <!-- Dashboard (active) -->
+  <rect x="10" y="76" width="204" height="32" rx="7" fill="#f5f5f4"/>
+  <text x="30" y="97" font-size="14">🏠</text>
+  <text x="52" y="97" font-size="12" fill="#1c1917" font-weight="600">Tableau de bord</text>
+
+  <!-- Section Contenu -->
+  <text x="20" y="128" font-size="9" font-weight="700" fill="#a8a29e" letter-spacing="1.4">CONTENU</text>
+  <text x="30" y="150" font-size="13">📝</text><text x="52" y="150" font-size="12" fill="#57534e">Actualités</text>
+  <text x="30" y="174" font-size="13">📅</text><text x="52" y="174" font-size="12" fill="#57534e">Événements</text>
+  <text x="30" y="198" font-size="13">🏊</text><text x="52" y="198" font-size="12" fill="#57534e">Entraînements</text>
+  <text x="30" y="222" font-size="13">🏆</text><text x="52" y="222" font-size="12" fill="#57534e">Résultats</text>
+
+  <!-- Section Site -->
+  <text x="20" y="252" font-size="9" font-weight="700" fill="#a8a29e" letter-spacing="1.4">SITE</text>
+  <text x="30" y="274" font-size="13">📄</text><text x="52" y="274" font-size="12" fill="#57534e">Pages</text>
+  <text x="30" y="298" font-size="13">🤝</text><text x="52" y="298" font-size="12" fill="#57534e">Partenaires</text>
+  <text x="30" y="322" font-size="13">✉️</text><text x="52" y="322" font-size="12" fill="#57534e">Demandes reçues</text>
+  <rect x="182" y="311" width="18" height="16" rx="8" fill="#f59e0b"/>
+  <text x="191" y="323" font-size="9" fill="#fff" font-weight="700" text-anchor="middle">2</text>
+
+  <!-- Section Configuration -->
+  <text x="20" y="352" font-size="9" font-weight="700" fill="#a8a29e" letter-spacing="1.4">CONFIGURATION</text>
+  <text x="30" y="374" font-size="13">⚙️</text><text x="52" y="374" font-size="12" fill="#57534e">Infos du club</text>
+  <text x="30" y="398" font-size="13">🎨</text><text x="52" y="398" font-size="12" fill="#57534e">Couleurs &amp; style</text>
+  <text x="30" y="422" font-size="13">🔗</text><text x="52" y="422" font-size="12" fill="#57534e">Menus</text>
+  <text x="30" y="446" font-size="13">👥</text><text x="52" y="446" font-size="12" fill="#57534e">Équipe admin</text>
+
+  <!-- User bottom -->
+  <line x1="0" y1="738" x2="224" y2="738" stroke="#f5f5f4" stroke-width="1"/>
+  <circle cx="22" cy="758" r="14" fill="#e7e5e4"/>
+  <text x="22" y="763" font-size="11" fill="#78716c" text-anchor="middle" font-weight="600">MD</text>
+  <text x="42" y="754" font-size="12" font-weight="600" fill="#44403c">Marc Dupont</text>
+  <text x="42" y="769" font-size="11" fill="#a8a29e">Se déconnecter</text>
+
+  <!-- ══ MAIN CONTENT ═══════════════════════════════════════════════════════ -->
+
+  <!-- Header -->
+  <text x="248" y="36" font-size="20" font-weight="700" fill="#1c1917">Bonjour, Marc 👋</text>
+  <text x="248" y="56" font-size="12" fill="#78716c">Tableau de bord de votre site club</text>
+
+  <!-- ── Actions rapides ── -->
+  <text x="248" y="88" font-size="9" font-weight="700" fill="#a8a29e" letter-spacing="1.3">ACTIONS FRÉQUENTES</text>
+  <rect x="248" y="98" width="166" height="58" rx="10" fill="#eff6ff"/>
+  <text x="331" y="120" font-size="18" text-anchor="middle">📝</text>
+  <text x="331" y="143" font-size="10" font-weight="600" fill="#1d4ed8" text-anchor="middle">Nouvelle actualité</text>
+
+  <rect x="424" y="98" width="166" height="58" rx="10" fill="#faf5ff"/>
+  <text x="507" y="120" font-size="18" text-anchor="middle">📅</text>
+  <text x="507" y="143" font-size="10" font-weight="600" fill="#7e22ce" text-anchor="middle">Nouvel événement</text>
+
+  <rect x="600" y="98" width="166" height="58" rx="10" fill="#f0fdf4"/>
+  <text x="683" y="120" font-size="18" text-anchor="middle">🏊</text>
+  <text x="683" y="143" font-size="10" font-weight="600" fill="#15803d" text-anchor="middle">Entraînements</text>
+
+  <rect x="776" y="98" width="166" height="58" rx="10" fill="#fffbeb"/>
+  <text x="859" y="120" font-size="18" text-anchor="middle">🏆</text>
+  <text x="859" y="143" font-size="10" font-weight="600" fill="#b45309" text-anchor="middle">Ajouter un résultat</text>
+
+  <!-- ── Stats ── -->
+  <text x="248" y="186" font-size="9" font-weight="700" fill="#a8a29e" letter-spacing="1.3">EN UN COUP D'ŒIL</text>
+
+  <rect x="248" y="196" width="126" height="66" rx="9" fill="#fff" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="311" y="232" font-size="24" font-weight="700" fill="#1c1917" text-anchor="middle">12</text>
+  <text x="311" y="250" font-size="10" fill="#78716c" text-anchor="middle">Actualités publiées</text>
+
+  <rect x="384" y="196" width="126" height="66" rx="9" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
+  <text x="447" y="232" font-size="24" font-weight="700" fill="#b45309" text-anchor="middle">3</text>
+  <text x="447" y="250" font-size="10" fill="#78716c" text-anchor="middle">Brouillons</text>
+
+  <rect x="520" y="196" width="126" height="66" rx="9" fill="#fff" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="583" y="232" font-size="24" font-weight="700" fill="#1c1917" text-anchor="middle">4</text>
+  <text x="583" y="250" font-size="10" fill="#78716c" text-anchor="middle">Événements à venir</text>
+
+  <rect x="656" y="196" width="126" height="66" rx="9" fill="#fff" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="719" y="232" font-size="24" font-weight="700" fill="#1c1917" text-anchor="middle">8</text>
+  <text x="719" y="250" font-size="10" fill="#78716c" text-anchor="middle">Entraînements actifs</text>
+
+  <rect x="792" y="196" width="126" height="66" rx="9" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
+  <text x="855" y="232" font-size="24" font-weight="700" fill="#b45309" text-anchor="middle">2</text>
+  <text x="855" y="250" font-size="10" fill="#78716c" text-anchor="middle">Messages non lus</text>
+
+  <!-- ══ GRAPHIQUE — Inscriptions par événement ══════════════════════════════ -->
+  <rect x="248" y="284" width="690" height="224" rx="10" fill="#fff" stroke="#e7e5e4" stroke-width="1"/>
+
+  <text x="268" y="308" font-size="12" font-weight="600" fill="#1c1917">Inscriptions par événement</text>
+  <text x="268" y="323" font-size="10" fill="#a8a29e">Saison 2026 — 4 épreuves actives</text>
+
+  <!-- Grille horizontale -->
+  <line x1="310" y1="460" x2="910" y2="460" stroke="#f5f5f4" stroke-width="1"/>
+  <line x1="310" y1="422" x2="910" y2="422" stroke="#f5f5f4" stroke-width="1"/>
+  <line x1="310" y1="384" x2="910" y2="384" stroke="#f5f5f4" stroke-width="1"/>
+  <line x1="310" y1="346" x2="910" y2="346" stroke="#f5f5f4" stroke-width="1"/>
+
+  <!-- Labels axe Y -->
+  <text x="304" y="464" font-size="9" fill="#a8a29e" text-anchor="end">0</text>
+  <text x="304" y="426" font-size="9" fill="#a8a29e" text-anchor="end">50</text>
+  <text x="304" y="388" font-size="9" fill="#a8a29e" text-anchor="end">100</text>
+  <text x="304" y="350" font-size="9" fill="#a8a29e" text-anchor="end">150</text>
+
+  <!-- Barres groupées: Sprint / Olympique / L par événement -->
+  <!-- Légende -->
+  <rect x="268" y="336" width="10" height="10" rx="2" fill="#6366f1"/>
+  <text x="282" y="345" font-size="9" fill="#57534e">Sprint</text>
+  <rect x="330" y="336" width="10" height="10" rx="2" fill="#C9A84C"/>
+  <text x="344" y="345" font-size="9" fill="#57534e">Olympique</text>
+  <rect x="410" y="336" width="10" height="10" rx="2" fill="#10b981"/>
+  <text x="424" y="345" font-size="9" fill="#57534e">Longue distance</text>
+
+  <!-- Événement 1: Triathlon Côte d'Azur -->
+  <rect x="340" y="364" width="28" height="96" rx="4" fill="#6366f1"/>
+  <rect x="372" y="384" width="28" height="76" rx="4" fill="#C9A84C"/>
+  <rect x="404" y="422" width="28" height="38" rx="4" fill="#10b981"/>
+  <text x="386" y="476" font-size="9" fill="#78716c" text-anchor="middle">Triathlon CA</text>
+
+  <!-- Événement 2: Trail des Crêtes -->
+  <rect x="500" y="394" width="28" height="66" rx="4" fill="#6366f1"/>
+  <rect x="532" y="406" width="28" height="54" rx="4" fill="#C9A84C"/>
+  <text x="530" y="476" font-size="9" fill="#78716c" text-anchor="middle">Trail Crêtes</text>
+
+  <!-- Événement 3: Duathlon Sophia -->
+  <rect x="650" y="376" width="28" height="84" rx="4" fill="#6366f1"/>
+  <rect x="682" y="396" width="28" height="64" rx="4" fill="#C9A84C"/>
+  <text x="675" y="476" font-size="9" fill="#78716c" text-anchor="middle">Duathlon Sophia</text>
+
+  <!-- Événement 4: Cyclosportive -->
+  <rect x="800" y="402" width="28" height="58" rx="4" fill="#C9A84C"/>
+  <rect x="832" y="416" width="28" height="44" rx="4" fill="#10b981"/>
+  <text x="825" y="476" font-size="9" fill="#78716c" text-anchor="middle">Cyclosportive</text>
+
+  <!-- ══ COL DROITE: Prochains événements ════════════════════════════════════ -->
+  <rect x="952" y="284" width="224" height="224" rx="10" fill="#fff" stroke="#e7e5e4" stroke-width="1"/>
+
+  <text x="968" y="308" font-size="11" font-weight="600" fill="#1c1917">Prochains événements</text>
+  <text x="1164" y="308" font-size="10" fill="#a8a29e" text-anchor="end">Voir tout →</text>
+
+  <line x1="952" y1="318" x2="1176" y2="318" stroke="#f5f5f4" stroke-width="1"/>
+
+  <!-- Ev 1 -->
+  <rect x="968" y="328" width="40" height="34" rx="6" fill="#fafaf9" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="988" y="342" font-size="10" font-weight="700" fill="#44403c" text-anchor="middle">14</text>
+  <text x="988" y="355" font-size="9" fill="#a8a29e" text-anchor="middle">juin</text>
+  <text x="1016" y="340" font-size="11" font-weight="500" fill="#1c1917">Triathlon Côte d'Azur</text>
+  <text x="1016" y="354" font-size="10" fill="#a8a29e">Nice · 3 distances</text>
+  <line x1="952" y1="372" x2="1176" y2="372" stroke="#f5f5f4" stroke-width="1"/>
+
+  <!-- Ev 2 -->
+  <rect x="968" y="382" width="40" height="34" rx="6" fill="#fafaf9" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="988" y="396" font-size="10" font-weight="700" fill="#44403c" text-anchor="middle">29</text>
+  <text x="988" y="409" font-size="9" fill="#a8a29e" text-anchor="middle">juin</text>
+  <text x="1016" y="394" font-size="11" font-weight="500" fill="#1c1917">Trail des Crêtes</text>
+  <text x="1016" y="408" font-size="10" fill="#a8a29e">Valbonne · 15km / 30km</text>
+  <line x1="952" y1="426" x2="1176" y2="426" stroke="#f5f5f4" stroke-width="1"/>
+
+  <!-- Ev 3 -->
+  <rect x="968" y="436" width="40" height="34" rx="6" fill="#fafaf9" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="988" y="450" font-size="10" font-weight="700" fill="#44403c" text-anchor="middle">12</text>
+  <text x="988" y="463" font-size="9" fill="#a8a29e" text-anchor="middle">juil.</text>
+  <text x="1016" y="448" font-size="11" font-weight="500" fill="#1c1917">Duathlon d'été Sophia</text>
+  <text x="1016" y="462" font-size="10" fill="#a8a29e">Sophia Antipolis</text>
+  <line x1="952" y1="480" x2="1176" y2="480" stroke="#f5f5f4" stroke-width="1"/>
+
+  <!-- Ev 4 -->
+  <rect x="968" y="490" width="40" height="34" rx="6" fill="#fafaf9" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="988" y="504" font-size="10" font-weight="700" fill="#44403c" text-anchor="middle">20</text>
+  <text x="988" y="517" font-size="9" fill="#a8a29e" text-anchor="middle">sept.</text>
+  <text x="1016" y="502" font-size="11" font-weight="500" fill="#1c1917">Cyclosportive Estérel</text>
+  <text x="1016" y="516" font-size="10" fill="#a8a29e">Fréjus · 80km / 130km</text>
+
+  <!-- ══ BAS: Actualités + Distances ════════════════════════════════════════ -->
+
+  <!-- Actualités -->
+  <rect x="248" y="524" width="460" height="224" rx="10" fill="#fff" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="266" y="548" font-size="11" font-weight="600" fill="#1c1917">Dernières actualités</text>
+  <text x="696" y="548" font-size="10" fill="#a8a29e" text-anchor="end">Voir tout →</text>
+  <line x1="248" y1="558" x2="708" y2="558" stroke="#f5f5f4" stroke-width="1"/>
+
+  <text x="266" y="578" font-size="11" font-weight="500" fill="#1c1917">Résultats Triathlon de Cannes 2026</text>
+  <rect x="630" y="565" width="44" height="16" rx="8" fill="#f0fdf4"/>
+  <text x="652" y="577" font-size="9" font-weight="600" fill="#15803d" text-anchor="middle">Publié</text>
+  <line x1="248" y1="592" x2="708" y2="592" stroke="#f5f5f4" stroke-width="1"/>
+
+  <text x="266" y="612" font-size="11" font-weight="500" fill="#1c1917">Préparation saison été — nos conseils</text>
+  <rect x="630" y="599" width="44" height="16" rx="8" fill="#f0fdf4"/>
+  <text x="652" y="611" font-size="9" font-weight="600" fill="#15803d" text-anchor="middle">Publié</text>
+  <line x1="248" y1="626" x2="708" y2="626" stroke="#f5f5f4" stroke-width="1"/>
+
+  <text x="266" y="646" font-size="11" font-weight="500" fill="#1c1917">Stage altitude — inscription ouverte</text>
+  <rect x="622" y="633" width="54" height="16" rx="8" fill="#f5f5f4"/>
+  <text x="649" y="645" font-size="9" font-weight="600" fill="#78716c" text-anchor="middle">Brouillon</text>
+  <line x1="248" y1="660" x2="708" y2="660" stroke="#f5f5f4" stroke-width="1"/>
+
+  <text x="266" y="680" font-size="11" font-weight="500" fill="#1c1917">Bienvenue à nos nouveaux membres</text>
+  <rect x="630" y="667" width="44" height="16" rx="8" fill="#f0fdf4"/>
+  <text x="652" y="679" font-size="9" font-weight="600" fill="#15803d" text-anchor="middle">Publié</text>
+  <line x1="248" y1="694" x2="708" y2="694" stroke="#f5f5f4" stroke-width="1"/>
+
+  <text x="266" y="714" font-size="11" font-weight="500" fill="#1c1917">Championnat régional — compte rendu</text>
+  <rect x="630" y="701" width="44" height="16" rx="8" fill="#f0fdf4"/>
+  <text x="652" y="713" font-size="9" font-weight="600" fill="#15803d" text-anchor="middle">Publié</text>
+
+  <!-- Distances section -->
+  <rect x="718" y="524" width="458" height="224" rx="10" fill="#fff" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="736" y="548" font-size="11" font-weight="600" fill="#1c1917">Distances — Triathlon Côte d'Azur</text>
+  <text x="1164" y="548" font-size="10" fill="#a8a29e" text-anchor="end">+ Ajouter</text>
+  <line x1="718" y1="558" x2="1176" y2="558" stroke="#f5f5f4" stroke-width="1"/>
+
+  <!-- Distance 1 : Sprint -->
+  <rect x="736" y="568" width="130" height="80" rx="8" fill="#fafaf9" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="752" y="586" font-size="11" font-weight="600" fill="#1c1917">Sprint</text>
+  <rect x="800" y="574" width="44" height="14" rx="7" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="822" y="585" font-size="8" font-weight="600" fill="#15803d" text-anchor="middle">35.00 €</text>
+  <text x="752" y="604" font-size="9" fill="#78716c">750m · 20km · 5km</text>
+  <text x="752" y="618" font-size="9" fill="#78716c">120 places</text>
+  <rect x="752" y="628" width="36" height="13" rx="4" fill="#f5f3ff"/>
+  <text x="770" y="638" font-size="8" font-weight="600" fill="#7e22ce" text-anchor="middle">Stripe ✓</text>
+
+  <!-- Distance 2 : Olympique -->
+  <rect x="876" y="568" width="130" height="80" rx="8" fill="#fafaf9" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="892" y="586" font-size="11" font-weight="600" fill="#1c1917">Olympique</text>
+  <rect x="960" y="574" width="34" height="14" rx="7" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="977" y="585" font-size="8" font-weight="600" fill="#15803d" text-anchor="middle">55 €</text>
+  <text x="892" y="604" font-size="9" fill="#78716c">1.5km · 40km · 10km</text>
+  <text x="892" y="618" font-size="9" fill="#78716c">200 places</text>
+  <rect x="892" y="628" width="36" height="13" rx="4" fill="#f5f3ff"/>
+  <text x="910" y="638" font-size="8" font-weight="600" fill="#7e22ce" text-anchor="middle">Stripe ✓</text>
+
+  <!-- Distance 3 : L -->
+  <rect x="1016" y="568" width="142" height="80" rx="8" fill="#fafaf9" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="1032" y="586" font-size="11" font-weight="600" fill="#1c1917">Longue distance</text>
+  <rect x="1032" y="598" width="34" height="14" rx="7" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="1049" y="609" font-size="8" font-weight="600" fill="#15803d" text-anchor="middle">85 €</text>
+  <text x="1032" y="626" font-size="9" fill="#78716c">3km · 80km · 20km</text>
+  <rect x="1032" y="638" width="36" height="13" rx="4" fill="#f5f3ff"/>
+  <text x="1050" y="648" font-size="8" font-weight="600" fill="#7e22ce" text-anchor="middle">Stripe ✓</text>
+
+  <!-- Lien parcours -->
+  <rect x="736" y="658" width="420" height="76" rx="8" fill="#fafaf9" stroke="#e7e5e4" stroke-width="1"/>
+  <text x="754" y="678" font-size="10" font-weight="600" fill="#1c1917">Parcours Sprint — détail</text>
+  <text x="754" y="695" font-size="9" fill="#78716c">Tour de la baie de Nice · 220m dénivelé</text>
+  <rect x="754" y="706" width="90" height="16" rx="4" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1"/>
+  <text x="799" y="718" font-size="9" fill="#0369a1" text-anchor="middle">🔗 Voir sur Komoot</text>
+  <rect x="852" y="706" width="72" height="16" rx="4" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="888" y="718" font-size="9" fill="#15803d" text-anchor="middle">📷 Photo</text>
+
+</svg>
