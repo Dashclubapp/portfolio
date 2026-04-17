@@ -137,7 +137,7 @@ export default function ComparePage() {
         </div>
 
         {/* Domaine block */}
-        <section className="mt-8 rounded-[2rem] border border-stone-900/10 px-6 py-6 shadow-[0_8px_32px_rgba(41,37,36,0.06)] sm:px-8 sm:py-7" style={{ backgroundColor: 'rgba(255,255,255,0.84)' }}>
+        <div className="mt-8 rounded-[2rem] border border-stone-900/10 px-6 py-6 shadow-[0_8px_32px_rgba(41,37,36,0.06)] sm:px-8 sm:py-7" style={{ backgroundColor: 'rgba(255,255,255,0.84)' }}>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-6">
             <div className="shrink-0 text-2xl">🌐</div>
             <div>
@@ -152,7 +152,7 @@ export default function ComparePage() {
               </p>
             </div>
           </div>
-        </section>
+        </div>
 
         {/* CTA */}
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
