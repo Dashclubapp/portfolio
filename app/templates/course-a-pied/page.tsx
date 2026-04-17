@@ -73,7 +73,7 @@ export default function CourseAPiedTemplate() {
           <p className="text-sm font-semibold uppercase tracking-[0.3em]" style={{ color: C.accent }}>
             Votre ville · Depuis 20XX
           </p>
-          <h1 className="mt-4 font-serif text-5xl font-bold leading-tight sm:text-6xl">
+          <h1 className="mt-4 font-serif text-5xl font-bold leading-tight sm:text-6xl" style={{ color: C.accent }}>
             Club Running<br />Demo
           </h1>
           <p className="mt-4 max-w-xl text-xl" style={{ color: 'rgba(255,255,255,0.8)' }}>
