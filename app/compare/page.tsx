@@ -48,7 +48,7 @@ function renderValue(value: ComparisonValue) {
 
 export default function ComparePage() {
   return (
-    <main className="relative overflow-hidden bg-[#f6f1e8] text-stone-950">
+    <main className="relative overflow-hidden text-stone-950" style={{ backgroundColor: '#f6f1e8' }}>
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(223,111,54,0.14),_transparent_26%),linear-gradient(180deg,_rgba(255,255,255,0.86),_rgba(246,241,232,1))]" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 pb-24 pt-5 sm:px-8 lg:px-12">
@@ -137,7 +137,7 @@ export default function ComparePage() {
         </div>
 
         {/* Domaine block */}
-        <section className="mt-8 rounded-[2rem] border border-stone-900/10 bg-white/84 px-6 py-6 shadow-[0_8px_32px_rgba(41,37,36,0.06)] sm:px-8 sm:py-7">
+        <section className="mt-8 rounded-[2rem] border border-stone-900/10 px-6 py-6 shadow-[0_8px_32px_rgba(41,37,36,0.06)] sm:px-8 sm:py-7" style={{ backgroundColor: 'rgba(255,255,255,0.84)' }}>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-6">
             <div className="shrink-0 text-2xl">🌐</div>
             <div>
