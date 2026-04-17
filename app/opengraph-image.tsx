@@ -21,27 +21,12 @@ export default function OpenGraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        {/* Background photo */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="https://www.dashclub.app/triathlon-hero.jpg"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center",
-          }}
-          alt=""
-        />
-
-        {/* Dark overlay */}
+        {/* Background gradient */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(135deg, rgba(13,31,60,0.82) 0%, rgba(21,46,85,0.65) 60%, rgba(13,31,60,0.85) 100%)",
+            background: "linear-gradient(135deg, #0D1F3C 0%, #1E3F6E 60%, #0D1F3C 100%)",
             display: "flex",
           }}
         />

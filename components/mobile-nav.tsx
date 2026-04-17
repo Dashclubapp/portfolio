@@ -101,16 +101,16 @@ export function MobileNav() {
               >
                 Le produit
               </a>
-              <a
-                className="border-b border-white/10 px-[18px] py-[18px] text-center text-base text-white"
-                href="#offres"
-                onClick={closeMenu}
-              >
-                Tarifs
-              </a>
               <Link
                 className="border-b border-white/10 px-[18px] py-[18px] text-center text-base text-white"
                 href="/pricing"
+                onClick={closeMenu}
+              >
+                Tarifs
+              </Link>
+              <Link
+                className="border-b border-white/10 px-[18px] py-[18px] text-center text-base text-white"
+                href="/compare"
                 onClick={closeMenu}
               >
                 Comparer

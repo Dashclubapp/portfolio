@@ -751,8 +751,8 @@ export default function InscriptionForm() {
 
       <div className="relative mx-auto w-full max-w-2xl px-5 py-10 sm:px-8">
         {/* Header */}
-        <header className="mb-10 flex items-center justify-between">
-          <Link href="/" className="inline-block">
+        <header className="mb-10 flex items-center justify-between gap-4">
+          <Link href="/" className="inline-block shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo-dashclub-real.svg"
@@ -760,12 +760,26 @@ export default function InscriptionForm() {
               style={{ height: '36px', width: 'auto' }}
             />
           </Link>
-          <Link
-            href="/"
-            className="rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white/60 transition hover:border-white/30 hover:text-white/80"
-          >
-            ← Accueil
-          </Link>
+          <nav className="flex items-center gap-2 text-sm">
+            <Link
+              href="/#offres"
+              className="rounded-full px-3 py-2 text-white/50 transition hover:text-white/80"
+            >
+              Tarifs
+            </Link>
+            <Link
+              href="/pricing"
+              className="rounded-full px-3 py-2 text-white/50 transition hover:text-white/80"
+            >
+              Comparer
+            </Link>
+            <Link
+              href="/"
+              className="rounded-full border border-white/15 px-4 py-2 font-medium text-white/60 transition hover:border-white/30 hover:text-white/80"
+            >
+              ← Accueil
+            </Link>
+          </nav>
         </header>
 
         {/* Step indicator */}
