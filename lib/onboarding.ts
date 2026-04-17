@@ -204,54 +204,58 @@ export async function sendWelcomeEmail(params: {
   <div class="container">
     <div class="header">
       <h1>DashClub</h1>
-      <p>Votre site club est en ligne 🚀</p>
+      <p>Paiement confirmé — votre site est en préparation ✅</p>
     </div>
     <div class="body">
-      <div class="greeting">Bonjour ${prenom} ${nom},</div>
+      <div class="greeting">Bonjour ${prenom},</div>
       <p class="intro">
-        Votre site DashClub est maintenant en ligne !<br>
-        Voici tout ce dont vous avez besoin pour commencer.
+        Merci pour votre confiance ! Votre paiement a bien été reçu.<br><br>
+        Votre site <strong>${club}</strong> est maintenant en cours de préparation par l'équipe DashClub. Voici ce qui va se passer dans les prochaines heures.
       </p>
 
-      <div class="info-box">
-        <div class="label">URL de votre site</div>
-        <div class="value">🌐 <a href="${siteUrl}">${siteUrl}</a></div>
-        <div class="label">Accès backoffice</div>
-        <div class="value">🔐 <a href="${siteUrl}/admin">${siteUrl}/admin</a></div>
-      </div>
-
-      <div class="creds-box">
-        <div class="creds-label">🔑 Activez votre accès</div>
-        <div class="creds-value" style="font-family:sans-serif;font-size:13px;">Cliquez sur le bouton ci-dessous pour créer votre mot de passe.<br>Ce lien est valable <strong style="color:#C9A84C">72 heures</strong>.</div>
-      </div>
-
-      <a href="${setupUrl}" class="cta-btn">Créer mon mot de passe →</a>
-
-      <div class="section-title">Prochaines étapes</div>
+      <div class="section-title">Ce que nous préparons pour vous</div>
 
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-content">
-          <strong>Connectez votre compte Stripe</strong> pour recevoir les paiements de vos membres<br>
-          <a href="${siteUrl}/admin/stripe">→ Configurer Stripe Connect</a>
+          <strong>Création de votre environnement</strong><br>
+          Provisionnement de l'hébergement dédié à votre club. <em style="color:#888">En cours…</em>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <strong>Créez votre premier événement</strong><br>
-          <a href="${siteUrl}/admin/evenements/nouveau">→ Créer un événement</a>
+          <strong>Génération de votre site</strong><br>
+          Mise en place du modèle de site aux couleurs de <strong>${club}</strong>. <em style="color:#888">Sous 24h</em>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <strong>Découvrez votre guide de démarrage</strong><br>
-          <a href="https://dashclub.app/guide">→ Guide de démarrage</a>
+          <strong>Création de votre backoffice</strong><br>
+          Votre espace d'administration pour gérer membres, événements et paiements. <em style="color:#888">Sous 24h</em>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Mise en ligne & domaine personnalisé</strong><br>
+          Activation de votre domaine et ouverture publique de votre site. <em style="color:#888">Sous 5 jours</em>
         </div>
       </div>
 
-      <div class="support">
+      <div class="creds-box" style="margin-top:28px;">
+        <div class="creds-label">🔑 Préparez votre accès dès maintenant</div>
+        <div class="creds-value" style="font-family:sans-serif;font-size:13px;line-height:1.6;">
+          Créez votre mot de passe en cliquant ci-dessous.<br>
+          Vous pourrez accéder à votre backoffice dès que votre site sera prêt.<br>
+          <strong style="color:#C9A84C">Ce lien est valable 72 heures.</strong>
+        </div>
+      </div>
+
+      <a href="${setupUrl}" class="cta-btn" style="margin-top:16px;">Créer mon mot de passe →</a>
+
+      <div class="support" style="margin-top:24px;">
         <strong>Des questions ?</strong><br>
         Répondez à cet email ou écrivez-nous à <a href="mailto:hello@dashclub.app">hello@dashclub.app</a><br>
         Nous répondons sous 24h ouvrées.
@@ -269,30 +273,27 @@ export async function sendWelcomeEmail(params: {
   const text = `
 Bonjour ${prenom},
 
-Votre site DashClub est maintenant en ligne ! 🚀
+Merci pour votre confiance ! Votre paiement a bien été reçu.
 
-🌐 URL de votre site : ${siteUrl}
-🔐 Accès backoffice : ${siteUrl}/admin
+Votre site ${club} est en cours de préparation par l'équipe DashClub.
 
-🔑 Créez votre mot de passe (lien valable 72h) :
-   ${setupUrl}
+--- Ce que nous préparons pour vous ---
 
-⚡ Votre site est en ligne. Vous pouvez le personnaliser dès votre première connexion.
+1️⃣ Création de votre environnement (en cours…)
+2️⃣ Génération de votre site (sous 24h)
+3️⃣ Création de votre backoffice (sous 24h)
+4️⃣ Mise en ligne & domaine personnalisé (sous 5 jours)
 
---- Prochaines étapes ---
+--- Préparez votre accès ---
 
-1️⃣ Connectez votre compte Stripe pour recevoir les paiements
-   → ${siteUrl}/admin/stripe
+Créez votre mot de passe dès maintenant (lien valable 72h) :
+${setupUrl}
 
-2️⃣ Créez votre premier événement
-   → ${siteUrl}/admin/evenements/nouveau
-
-3️⃣ Découvrez votre guide de démarrage
-   → https://dashclub.app/guide
+Vous pourrez accéder à votre backoffice dès que votre site sera prêt.
 
 --- Support ---
-Des questions ? Répondez à cet email ou écrivez-nous à hello@dashclub.app
-Réponse sous 24h.
+Des questions ? Écrivez-nous à hello@dashclub.app
+Nous répondons sous 24h ouvrées.
 
 À bientôt sur DashClub !
 L'équipe DashClub
