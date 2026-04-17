@@ -146,10 +146,10 @@ export default function Home() {
             </p>
             <ul className="mt-6 flex flex-col gap-2.5">
               {[
+                "Paiement en ligne via Stripe",
                 "Site du club créé et hébergé",
-                "Nom de domaine personnalisé inclus",
+                "Domaine custom (monclub.fr) inclus",
                 "1ère épreuve organisée sans supplément",
-                "Paiement en ligne intégré",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm">
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#C9A84C] text-[11px] font-bold text-stone-950">✓</span>
