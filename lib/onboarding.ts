@@ -1,5 +1,4 @@
 import { query } from './db';
-import bcrypt from 'bcryptjs';
 import { randomBytes } from 'crypto';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
