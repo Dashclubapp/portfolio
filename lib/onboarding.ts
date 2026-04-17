@@ -1,5 +1,8 @@
 import { query } from './db';
 import { randomBytes } from 'crypto';
+import { createNeonProject } from './provisioning/neon';
+import { createSubdomain } from './provisioning/cloudflare';
+import { createVercelProject } from './provisioning/vercel';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -107,7 +110,7 @@ export async function createAdminUser(params: {
   return { setupToken };
 }
 
-// ─── Provision club site ──────────────────────────────────────────────────────
+// ─── Provision club infrastructure (Neon + Vercel + Cloudflare) ──────────────
 
 export async function provisionClubSite(params: {
   clubId: number;
@@ -115,49 +118,63 @@ export async function provisionClubSite(params: {
   club: string;
   sport: string;
   ville: string;
-}): Promise<void> {
-  const { clubId, slug, club, sport, ville } = params;
+  email: string;
+  nom: string;
+  prenom: string;
+  formule: string;
+  adminTempPassword: string;
+}): Promise<{ siteUrl: string }> {
+  const { clubId, slug, club, sport, ville, email, nom, prenom, formule, adminTempPassword } = params;
+  const domain = `${slug}.dashclub.app`;
+  const siteUrl = `https://${domain}`;
 
-  // Create subdomain record
+  // 1. Create Neon DB
+  console.log(`[provision] Creating Neon DB for slug=${slug}`);
+  const neon = await createNeonProject(slug);
+  console.log(`[provision] Neon projectId=${neon.projectId}`);
+
+  // 2. Create Cloudflare subdomain
+  console.log(`[provision] Creating Cloudflare CNAME ${slug}.dashclub.app`);
+  await createSubdomain(slug);
+
+  // 3. Deploy club-starter on Vercel
+  const jwtSecret = randomBytes(32).toString('hex');
+  console.log(`[provision] Creating Vercel project dashclub-${slug}`);
+  const vercel = await createVercelProject({
+    slug,
+    domain,
+    envVars: [
+      { key: 'DATABASE_URL',          value: neon.databaseUrl },
+      { key: 'DIRECT_URL',            value: neon.directUrl },
+      { key: 'NEXT_PUBLIC_SITE_URL',  value: siteUrl, type: 'plain' },
+      { key: 'JWT_SECRET',            value: jwtSecret },
+      { key: 'RESEND_API_KEY',        value: process.env.RESEND_API_KEY ?? '' },
+      { key: 'RESEND_FROM',           value: `${club} <noreply@dashclub.app>`, type: 'plain' },
+      { key: 'STRIPE_SECRET_KEY',     value: process.env.STRIPE_SECRET_KEY ?? '' },
+      // Seed variables — used once during build to initialize the DB
+      { key: 'CLUB_NAME',             value: club, type: 'plain' },
+      { key: 'CLUB_EMAIL',            value: email, type: 'plain' },
+      { key: 'CLUB_SPORT',            value: sport, type: 'plain' },
+      { key: 'CLUB_CITY',             value: ville, type: 'plain' },
+      { key: 'ADMIN_EMAIL',           value: email, type: 'plain' },
+      { key: 'ADMIN_NAME',            value: `${prenom} ${nom}`, type: 'plain' },
+      { key: 'ADMIN_TEMP_PASSWORD',   value: adminTempPassword },
+      { key: 'DASHCLUB_FORMULE',      value: formule, type: 'plain' },
+    ],
+  });
+  console.log(`[provision] Vercel project created, url=${vercel.projectUrl}`);
+
+  // 4. Save domain record in Portfolio DB
   await query(
-    `INSERT INTO club_domains (club_id, subdomain, custom_domain, created_at, activated_at)
-     VALUES ($1, $2, NULL, NOW(), NOW())
-     ON CONFLICT (subdomain) DO NOTHING`,
-    [clubId, slug]
+    `INSERT INTO club_domains (club_id, subdomain, custom_domain, created_at, activated_at, vercel_project_id, neon_project_id)
+     VALUES ($1, $2, NULL, NOW(), NOW(), $3, $4)
+     ON CONFLICT (subdomain) DO UPDATE SET
+       vercel_project_id = EXCLUDED.vercel_project_id,
+       neon_project_id   = EXCLUDED.neon_project_id`,
+    [clubId, slug, vercel.projectId, neon.projectId]
   );
 
-  // Create default pages
-  const pages = [
-    {
-      slug: 'accueil',
-      titre: `Bienvenue sur le site de ${club}`,
-      contenu: `Bienvenue sur le site officiel de **${club}** — votre club de ${sport || 'sport'} à ${ville || 'votre ville'}.\n\nRetrouvez ici toutes nos actualités, événements et informations pratiques.`,
-    },
-    {
-      slug: 'evenements',
-      titre: 'Événements',
-      contenu: `Retrouvez tous les événements de ${club}.\n\n[CTA] Créer un événement → /admin/evenements/nouveau`,
-    },
-    {
-      slug: 'contact',
-      titre: 'Contact',
-      contenu: `Contactez ${club}.\n\nUtilisez le formulaire ci-dessous pour nous envoyer un message. Nous vous répondrons dans les plus brefs délais.`,
-    },
-    {
-      slug: 'agenda',
-      titre: 'Agenda',
-      contenu: `L'agenda de ${club} — tous nos événements et compétitions à venir.`,
-    },
-  ];
-
-  for (const page of pages) {
-    await query(
-      `INSERT INTO club_pages (club_id, slug, titre, contenu, publie)
-       VALUES ($1, $2, $3, $4, true)
-       ON CONFLICT DO NOTHING`,
-      [clubId, page.slug, page.titre, page.contenu]
-    );
-  }
+  return { siteUrl };
 }
 
 // ─── Send welcome email ───────────────────────────────────────────────────────
@@ -167,8 +184,11 @@ export async function sendWelcomeEmail(params: {
   prenom: string;
   club: string;
   setupToken: string;
+  siteUrl?: string;
+  adminTempPassword?: string;
 }): Promise<void> {
-  const { email, prenom, club, setupToken } = params;
+  const { email, prenom, club, setupToken, siteUrl, adminTempPassword } = params;
+  const backOfficeUrl = siteUrl ? `${siteUrl}/admin` : undefined;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dashclub.app';
   const setupUrl = `${baseUrl}/setup-password/${setupToken}`;
 
@@ -249,6 +269,21 @@ export async function sendWelcomeEmail(params: {
         </div>
       </div>
 
+      ${backOfficeUrl ? `
+      <div class="creds-box" style="margin-top:28px;">
+        <div class="creds-label">🚀 Votre backoffice est prêt</div>
+        <div class="creds-label" style="margin-top:12px;">Adresse</div>
+        <div class="creds-value">${backOfficeUrl}</div>
+        <div class="creds-label">Email</div>
+        <div class="creds-value">${email}</div>
+        <div class="creds-label">Mot de passe temporaire</div>
+        <div class="creds-value">${adminTempPassword}</div>
+        <div class="creds-value" style="font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px;">
+          Changez ce mot de passe dès votre première connexion.
+        </div>
+      </div>
+      <a href="${backOfficeUrl}" class="cta-btn" style="margin-top:8px;">Accéder à mon backoffice →</a>
+      ` : `
       <div class="creds-box" style="margin-top:28px;">
         <div class="creds-label">🔑 Préparez votre accès dès maintenant</div>
         <div class="creds-value" style="font-family:sans-serif;font-size:13px;line-height:1.6;">
@@ -257,8 +292,8 @@ export async function sendWelcomeEmail(params: {
           <strong style="color:#C9A84C">Ce lien est valable 72 heures.</strong>
         </div>
       </div>
-
       <a href="${setupUrl}" class="cta-btn" style="margin-top:16px;">Créer mon mot de passe →</a>
+      `}
 
       <div class="section-title" style="margin-top:28px;">Ressources utiles</div>
 
@@ -425,12 +460,24 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
     const { setupToken } = await createAdminUser({ clubId, email, nom, prenom });
     console.log(`[onboarding] admin user created`);
 
-    // D. Provision club site (pages + domain record)
-    await provisionClubSite({ clubId, slug, club, sport, ville });
-    console.log(`[onboarding] site provisioned`);
+    // D. Generate temp password for the club-starter seed
+    const adminTempPassword = randomBytes(10).toString('base64url') + 'A1!';
 
-    // E. Send welcome email with magic link
-    await sendWelcomeEmail({ email, prenom, club, setupToken });
+    // E. Provision infrastructure (Neon + Vercel + Cloudflare)
+    let siteUrl: string | undefined;
+    try {
+      const result = await provisionClubSite({
+        clubId, slug, club, sport, ville, email, nom, prenom, formule, adminTempPassword,
+      });
+      siteUrl = result.siteUrl;
+      console.log(`[onboarding] infrastructure provisioned, siteUrl=${siteUrl}`);
+    } catch (provErr) {
+      console.error(`[onboarding] Infrastructure provisioning failed (non-blocking):`, provErr);
+      // Continue — the welcome email is sent regardless, team will provision manually
+    }
+
+    // F. Send welcome email with magic link + back office URL
+    await sendWelcomeEmail({ email, prenom, club, setupToken, siteUrl, adminTempPassword });
     console.log(`[onboarding] welcome email sent`);
 
     // E2. Schedule follow-up email sequence (J+1, J+3, J+5)

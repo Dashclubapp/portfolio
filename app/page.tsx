@@ -155,7 +155,6 @@ export default function Home() {
                 <li key={item.text} className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm">
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#C9A84C] text-[11px] font-bold text-stone-950">✓</span>
                   {item.text}
-                  {item.badge ?? null}
                 </li>
               ))}
             </ul>
