@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { hasNavyPricingCard, plans } from "./pricing-data";
 import { buildPageMetadata, homeDescription, homeTitle, siteName, siteUrl } from "./seo";
 import { MobileNav } from "@/components/mobile-nav";
@@ -183,17 +184,13 @@ export default function Home() {
                   app.dashclub.fr/back
                 </span>
               </div>
-              <img
+              <Image
                 src="/dashboard-screenshot.jpg"
                 alt="Backoffice DashClub — tableau de bord club sportif"
                 className="w-full"
                 width={1200}
                 height={780}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                fetchpriority="high"
-                loading="eager"
-                decoding="async"
+                priority
                 style={{ display: "block" }}
               />
             </div>

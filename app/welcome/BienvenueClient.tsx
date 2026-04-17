@@ -22,7 +22,6 @@ export default function BienvenueClient() {
     setData({});
   }, [sessionId]);
 
-  const siteUrl = data?.slug ? `https://${data.slug}.dashclub.app` : null;
 
   return (
     <div className="min-h-screen bg-[#0a1628] flex items-center justify-center p-4">
