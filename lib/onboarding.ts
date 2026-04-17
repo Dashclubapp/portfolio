@@ -13,6 +13,10 @@ export interface ClubData {
   ville: string;
   formule: string;
   slug: string;
+  website_url?: string;
+  instagram_url?: string;
+  facebook_url?: string;
+  social_placement?: string;
   stripeSubscriptionId?: string;
   stripeCustomerId?: string;
 }
@@ -53,8 +57,8 @@ async function subdomainExists(slug: string): Promise<boolean> {
 export async function createClubInDB(data: ClubData): Promise<number> {
   // Upsert: if same email already exists (e.g. webhook retry), update instead
   const rows = await query<{ id: number }>(
-    `INSERT INTO clubs (nom_club, sport, ville, nom_responsable, prenom_responsable, email, telephone, formule, stripe_subscription_id, stripe_customer_id, onboarding_status)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'pending')
+    `INSERT INTO clubs (nom_club, sport, ville, nom_responsable, prenom_responsable, email, telephone, formule, stripe_subscription_id, stripe_customer_id, onboarding_status, website_url, instagram_url, facebook_url, social_placement)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'pending', $11, $12, $13, $14)
      ON CONFLICT (email) DO UPDATE SET
        onboarding_status = EXCLUDED.onboarding_status,
        stripe_subscription_id = COALESCE(EXCLUDED.stripe_subscription_id, clubs.stripe_subscription_id),
@@ -71,6 +75,10 @@ export async function createClubInDB(data: ClubData): Promise<number> {
       data.formule,
       data.stripeSubscriptionId ?? null,
       data.stripeCustomerId ?? null,
+      data.website_url ?? null,
+      data.instagram_url ?? null,
+      data.facebook_url ?? null,
+      data.social_placement ?? 'footer',
     ]
   );
   return rows[0].id;
@@ -252,8 +260,27 @@ export async function sendWelcomeEmail(params: {
 
       <a href="${setupUrl}" class="cta-btn" style="margin-top:16px;">Créer mon mot de passe →</a>
 
+      <div class="section-title" style="margin-top:28px;">Ressources utiles</div>
+
+      <div class="step">
+        <div class="step-num">📖</div>
+        <div class="step-content">
+          <strong>Documentation & guides pas à pas</strong><br>
+          DNS, Stripe, création d'événement — tout est expliqué :<br>
+          <a href="${baseUrl}/docs">→ Accéder à la documentation</a>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">❓</div>
+        <div class="step-content">
+          <strong>FAQ</strong><br>
+          Réponses aux questions les plus fréquentes :<br>
+          <a href="${baseUrl}/faq">→ Consulter la FAQ</a>
+        </div>
+      </div>
+
       <div class="support" style="margin-top:24px;">
-        <strong>Des questions ?</strong><br>
+        <strong>Besoin d'aide ?</strong><br>
         Répondez à cet email ou écrivez-nous à <a href="mailto:hello@dashclub.app">hello@dashclub.app</a><br>
         Nous répondons sous 24h ouvrées.
       </div>
@@ -287,6 +314,11 @@ Créez votre mot de passe dès maintenant (lien valable 72h) :
 ${setupUrl}
 
 Vous pourrez accéder à votre backoffice dès que votre site sera prêt.
+
+--- Ressources utiles ---
+
+📖 Documentation & guides : ${baseUrl}/docs
+❓ FAQ : ${baseUrl}/faq
 
 --- Support ---
 Des questions ? Écrivez-nous à hello@dashclub.app
@@ -361,12 +393,18 @@ export interface OnboardingPayload {
   sport: string;
   ville: string;
   formule: string;
+  website_url?: string;
+  instagram_url?: string;
+  facebook_url?: string;
+  social_placement?: string;
   stripeSubscriptionId?: string;
   stripeCustomerId?: string;
 }
 
 export async function handleSuccessfulSubscription(payload: OnboardingPayload): Promise<void> {
-  const { nom, prenom, email, telephone, club, sport, ville, formule, stripeSubscriptionId, stripeCustomerId } = payload;
+  const { nom, prenom, email, telephone, club, sport, ville, formule,
+          website_url, instagram_url, facebook_url, social_placement,
+          stripeSubscriptionId, stripeCustomerId } = payload;
 
   console.log(`[onboarding] Starting for club="${club}" email="${email}"`);
 
@@ -377,6 +415,7 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
   // B. Create club in DB
   const clubId = await createClubInDB({
     nom, prenom, email, telephone, club, sport, ville, formule, slug,
+    website_url, instagram_url, facebook_url, social_placement,
     stripeSubscriptionId, stripeCustomerId,
   });
   console.log(`[onboarding] clubId=${clubId}`);

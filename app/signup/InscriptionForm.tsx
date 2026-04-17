@@ -10,6 +10,10 @@ type ClubData = {
   club: string;
   sport: string;
   ville: string;
+  website_url?: string;
+  instagram_url?: string;
+  facebook_url?: string;
+  social_placement?: 'header' | 'footer' | 'hero';
 };
 
 type ContactData = {
@@ -132,6 +136,38 @@ function StepIndicator({ step }: { step: 1 | 2 | 3 | 4 }) {
 
 // ── Shared UI ──────────────────────────────────────────────────────────────
 
+function SocialToggle({
+  label, icon, value, placeholder, onChange,
+}: {
+  label: string; icon: string; value: string; placeholder: string; onChange: (v: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => { setOpen((v) => !v); if (open) onChange(''); }}
+        className="flex w-full items-center gap-3 rounded-xl border border-white/10 px-3 py-2.5 text-left transition hover:border-white/20"
+      >
+        <span className="text-base">{icon}</span>
+        <span className="flex-1 text-sm text-white/70">{label}</span>
+        <span className={`flex h-5 w-9 items-center rounded-full transition-colors ${open ? 'bg-[#C9A84C]' : 'bg-white/15'}`}>
+          <span className={`mx-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${open ? 'translate-x-4' : ''}`} />
+        </span>
+      </button>
+      {open && (
+        <input
+          type="url"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="mt-2 w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/50"
+        />
+      )}
+    </div>
+  );
+}
+
 function CheckIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" className="mt-0.5 h-4 w-4 shrink-0 text-[#C9A84C]">
@@ -249,6 +285,64 @@ function Step1({
           className={`${inputBase} ${errors.ville ? 'border-red-400' : 'border-white/20'}`}
         />
         {errors.ville && <p className="mt-1 text-xs text-red-400">{errors.ville}</p>}
+      </div>
+
+      {/* ── Réseaux sociaux & site existant ── */}
+      <div className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+        <p className="text-xs font-semibold uppercase tracking-widest text-white/40">
+          Présence en ligne (optionnel)
+        </p>
+
+        <SocialToggle
+          label="J'ai déjà un site web"
+          icon="🌐"
+          value={form.website_url ?? ''}
+          placeholder="https://monclub.fr"
+          onChange={(v) => setForm((prev) => ({ ...prev, website_url: v }))}
+        />
+        <SocialToggle
+          label="J'ai un compte Instagram"
+          icon="📸"
+          value={form.instagram_url ?? ''}
+          placeholder="https://instagram.com/monclub"
+          onChange={(v) => setForm((prev) => ({ ...prev, instagram_url: v }))}
+        />
+        <SocialToggle
+          label="J'ai une page Facebook"
+          icon="👥"
+          value={form.facebook_url ?? ''}
+          placeholder="https://facebook.com/monclub"
+          onChange={(v) => setForm((prev) => ({ ...prev, facebook_url: v }))}
+        />
+
+        {(form.instagram_url || form.facebook_url) && (
+          <div>
+            <p className="mb-2 text-xs font-medium text-white/50">
+              Où afficher vos liens sociaux sur le site ?
+            </p>
+            <div className="grid grid-cols-3 gap-2">
+              {([
+                { value: 'header', label: 'En-tête', desc: 'Dans le menu' },
+                { value: 'footer', label: 'Pied de page', desc: 'En bas du site' },
+                { value: 'hero', label: 'Hero', desc: 'Sous le titre' },
+              ] as const).map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setForm((prev) => ({ ...prev, social_placement: opt.value }))}
+                  className={`rounded-xl border px-3 py-2 text-left text-xs transition ${
+                    (form.social_placement ?? 'footer') === opt.value
+                      ? 'border-[#C9A84C] bg-[#C9A84C]/10 text-white'
+                      : 'border-white/15 text-white/50 hover:border-white/30'
+                  }`}
+                >
+                  <div className="font-semibold">{opt.label}</div>
+                  <div className="mt-0.5 text-white/40">{opt.desc}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <button
@@ -556,6 +650,10 @@ function Step4({
           sport: club.sport,
           ville: club.ville,
           telephone: contact.telephone,
+          website_url: club.website_url ?? '',
+          instagram_url: club.instagram_url ?? '',
+          facebook_url: club.facebook_url ?? '',
+          social_placement: club.social_placement ?? 'footer',
         }),
       });
 

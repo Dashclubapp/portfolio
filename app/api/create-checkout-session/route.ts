@@ -43,6 +43,10 @@ export async function POST(req: NextRequest) {
     sport?: string;
     ville?: string;
     telephone?: string;
+    website_url?: string;
+    instagram_url?: string;
+    facebook_url?: string;
+    social_placement?: string;
   };
   try {
     body = await req.json();
@@ -50,7 +54,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Corps de requête invalide' }, { status: 400 });
   }
 
-  const { formule, email, nom, prenom, club, sport, ville, telephone } = body;
+  const { formule, email, nom, prenom, club, sport, ville, telephone,
+          website_url, instagram_url, facebook_url, social_placement } = body;
 
   if (!formule || !email || !nom || !club) {
     return NextResponse.json({ error: 'Champs requis manquants' }, { status: 400 });
@@ -108,6 +113,10 @@ export async function POST(req: NextRequest) {
         ville: ville ?? '',
         telephone: telephone ?? '',
         formule: normalizedFormule,
+        website_url: website_url ?? '',
+        instagram_url: instagram_url ?? '',
+        facebook_url: facebook_url ?? '',
+        social_placement: social_placement ?? 'footer',
       },
       subscription_data: {
         metadata: { nom, prenom, club, sport: sport ?? '', ville: ville ?? '', telephone: telephone ?? '' },

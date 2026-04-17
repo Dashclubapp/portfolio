@@ -209,6 +209,14 @@ export async function middleware(request: NextRequest) {
     // Admin routes are accessible on the main domain — JWT protection below
   }
 
+  // Docs protection — require dashclub_access cookie (disabled in dev)
+  if (!IS_DEV && pathname.startsWith('/docs') && !pathname.startsWith('/docs/acces-requis')) {
+    const docsAccess = request.cookies.get('dashclub_access')?.value;
+    if (!docsAccess) {
+      return addSecurityHeaders(NextResponse.redirect(new URL('/docs/acces-requis', request.url)));
+    }
+  }
+
   // Admin route protection (JWT check) — works on both demo host and main domain
   if (
     pathname.startsWith('/admin') &&

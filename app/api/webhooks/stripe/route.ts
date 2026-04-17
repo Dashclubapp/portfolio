@@ -74,6 +74,10 @@ export async function POST(req: NextRequest) {
     sport: metadata.sport ?? '',
     ville: metadata.ville ?? '',
     formule: metadata.formule ?? 'essentiel',
+    website_url: metadata.website_url ?? '',
+    instagram_url: metadata.instagram_url ?? '',
+    facebook_url: metadata.facebook_url ?? '',
+    social_placement: metadata.social_placement ?? 'footer',
     stripeSubscriptionId:
       typeof subscription === 'object' && subscription !== null ? subscription.id : undefined,
     stripeCustomerId:
