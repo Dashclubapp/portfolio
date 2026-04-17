@@ -26,7 +26,7 @@ export function SiteHeader() {
           Comparer
         </Link>
         <Link
-          href="/signup"
+          href="/register"
           className="inline-flex items-center justify-center rounded-full bg-stone-950 px-5 py-3 font-medium text-white transition hover:-translate-y-0.5 hover:bg-stone-800"
         >
           Lancer mon site club →

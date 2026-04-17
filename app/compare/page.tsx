@@ -157,7 +157,7 @@ export default function ComparePage() {
         {/* CTA */}
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <Link
-            href="/signup"
+            href="/register"
             className="inline-flex items-center justify-center rounded-full bg-stone-950 px-7 py-4 text-base font-semibold text-white transition hover:-translate-y-0.5 hover:bg-stone-800"
           >
             Lancer mon site club →

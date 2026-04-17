@@ -43,6 +43,8 @@ export async function POST(req: NextRequest) {
     sport?: string;
     ville?: string;
     telephone?: string;
+    current_domain?: string;
+    want_new_domain?: boolean;
     website_url?: string;
     instagram_url?: string;
     facebook_url?: string;
@@ -55,6 +57,7 @@ export async function POST(req: NextRequest) {
   }
 
   const { formule, email, nom, prenom, club, sport, ville, telephone,
+          current_domain, want_new_domain,
           website_url, instagram_url, facebook_url, social_placement } = body;
 
   if (!formule || !email || !nom || !club) {
@@ -100,10 +103,10 @@ export async function POST(req: NextRequest) {
       payment_method_types: ['card'],
       customer_email: email,
       line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
+        { price: priceId, quantity: 1 },
+        ...(want_new_domain && process.env.STRIPE_PRICE_DOMAIN
+          ? [{ price: process.env.STRIPE_PRICE_DOMAIN, quantity: 1 }]
+          : []),
       ],
       metadata: {
         nom,
@@ -113,6 +116,8 @@ export async function POST(req: NextRequest) {
         ville: ville ?? '',
         telephone: telephone ?? '',
         formule: normalizedFormule,
+        current_domain: current_domain ?? '',
+        want_new_domain: want_new_domain ? '1' : '0',
         website_url: website_url ?? '',
         instagram_url: instagram_url ?? '',
         facebook_url: facebook_url ?? '',
@@ -122,7 +127,7 @@ export async function POST(req: NextRequest) {
         metadata: { nom, prenom, club, sport: sport ?? '', ville: ville ?? '', telephone: telephone ?? '' },
       },
       success_url: `${siteUrl}/welcome?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${siteUrl}/signup`,
+      cancel_url: `${siteUrl}/register`,
     });
 
     return NextResponse.json({ url: session.url });

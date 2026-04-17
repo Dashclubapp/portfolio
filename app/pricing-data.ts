@@ -30,7 +30,7 @@ export const plans: Plan[] = [
     price: "19€",
     period: "/mois TTC",
     billingProductId: "03f2b3b2-b6d7-4d62-bd8a-d1790110e454",
-    checkoutHref: "/signup?formule=essentiel",
+    checkoutHref: "/register?formule=essentiel",
     landingHook: "Pour démarrer proprement.",
     landingBullets: [
       "Paiement en ligne via Stripe",
@@ -57,7 +57,7 @@ export const plans: Plan[] = [
     price: "49€",
     period: "/mois TTC",
     billingProductId: "d72faa87-48a1-40a3-b715-28fdb2e20c4f",
-    checkoutHref: "/signup?formule=competition",
+    checkoutHref: "/register?formule=competition",
     landingHook: "Pour les clubs avec un calendrier.",
     landingBullets: [
       "Tout Essentiel, plus :",
@@ -96,7 +96,7 @@ export const plans: Plan[] = [
     price: "99€",
     period: "/mois TTC",
     billingProductId: "fe8af9b6-81ae-4c54-9578-55a77f9ff2cd",
-    checkoutHref: "/signup?formule=illimite",
+    checkoutHref: "/register?formule=illimite",
     landingHook: "Pour les clubs qui veulent tout automatiser.",
     landingBullets: [
       "Tout Compétition, plus :",
@@ -133,7 +133,7 @@ export const plans: Plan[] = [
 ];
 
 export const featuredPlanCheckoutHref =
-  plans.find((plan) => plan.featured)?.checkoutHref ?? "/signup";
+  plans.find((plan) => plan.featured)?.checkoutHref ?? "/register";
 
 export type ComparisonValue = boolean | string;
 

@@ -61,7 +61,7 @@ function CheckIcon({ variant = "default" }: { variant?: "default" | "featured" |
 function LaunchCTA({ className }: { className?: string }) {
   return (
     <a
-      href="/signup"
+      href="/register"
       className={`inline-flex items-center justify-center rounded-full bg-stone-950 px-7 py-4 text-base font-semibold text-white transition hover:-translate-y-0.5 hover:bg-stone-800 ${className ?? ""}`}
     >
       Lancer mon site club →
@@ -118,7 +118,7 @@ export default function Home() {
               Comparer
             </Link>
             <a
-              href="/signup"
+              href="/register"
               className="inline-flex items-center justify-center rounded-full bg-stone-950 px-5 py-3 font-medium text-white transition hover:-translate-y-0.5 hover:bg-stone-800"
             >
               Lancer mon site club →

@@ -153,7 +153,7 @@ export default function DemoEntryPage() {
             Démarrez en 5 minutes — site public, gestion des événements et paiements inclus.
           </p>
           <Link
-            href="/signup"
+            href="/register"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#C9A84C] px-8 py-4 text-base font-semibold text-[#0D1F3C] shadow-lg transition hover:-translate-y-0.5 hover:bg-[#e2c170]"
           >
             Démarrer avec DashClub →

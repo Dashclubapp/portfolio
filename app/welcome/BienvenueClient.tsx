@@ -12,21 +12,9 @@ interface SessionData {
 
 const TASKS = [
   {
-    icon: "⚙️",
-    title: "Création de votre environnement",
-    desc: "Provisionnement de l'infrastructure d'hébergement dédiée à votre club.",
-    delay: "En cours",
-  },
-  {
-    icon: "🎨",
-    title: "Génération de votre site",
-    desc: "Mise en place du modèle de site aux couleurs de votre club, avec vos pages par défaut.",
-    delay: "Sous 24h",
-  },
-  {
-    icon: "🔐",
-    title: "Création de votre backoffice",
-    desc: "Configuration de votre espace d'administration pour gérer membres, événements et paiements.",
+    icon: "🌐",
+    title: "Mise en place du domaine personnalisé",
+    desc: "Configuration et activation de votre nom de domaine dédié.",
     delay: "Sous 24h",
   },
   {
@@ -36,10 +24,16 @@ const TASKS = [
     delay: "Sous 48h",
   },
   {
-    icon: "🌐",
-    title: "Mise en ligne & domaine",
-    desc: "Activation de votre domaine personnalisé et ouverture publique de votre site.",
-    delay: "Sous 5 jours",
+    icon: "🎨",
+    title: "Génération de votre site",
+    desc: "Mise en place du modèle de site aux couleurs de votre club, avec vos pages par défaut.",
+    delay: "Sous 72h",
+  },
+  {
+    icon: "🔐",
+    title: "Création de votre backoffice",
+    desc: "Configuration de votre espace d'administration pour gérer membres, événements et paiements.",
+    delay: "Sous 72h",
   },
 ];
 
@@ -116,6 +110,9 @@ export default function BienvenueClient() {
               </div>
             ))}
           </div>
+          <p className="mt-5 text-[11px] text-white/25 leading-relaxed border-t border-white/[0.05] pt-4">
+            * Les délais indiqués sont donnés à titre indicatif et peuvent évoluer selon la complexité du projet (reprise d&apos;un site existant, récupération d&apos;un nom de domaine en cours, configuration Stripe spécifique, etc.).
+          </p>
         </div>
 
         {/* Info banner */}

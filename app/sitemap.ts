@@ -13,7 +13,7 @@ const publicPages = [
     priority: 0.8,
   },
   {
-    path: "/signup",
+    path: "/register",
     changeFrequency: "monthly" as const,
     priority: 0.7,
   },
