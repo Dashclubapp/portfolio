@@ -162,8 +162,7 @@ export async function sendWelcomeEmail(params: {
   slug: string;
   setupToken: string;
 }): Promise<void> {
-  const { email, nom, prenom, club, slug, setupToken } = params;
-  const siteUrl = `https://${slug}.dashclub.app`;
+  const { email, prenom, club, slug: _slug, setupToken } = params;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dashclub.app';
   const setupUrl = `${baseUrl}/setup-password/${setupToken}`;
 
