@@ -58,8 +58,17 @@ export default function CourseAPiedTemplate() {
       </nav>
 
       {/* Hero */}
-      <section className="relative overflow-hidden px-6 py-28 text-white" style={{ backgroundColor: C.bg }}>
-        <div className="absolute inset-0 opacity-15" style={{ backgroundImage: `radial-gradient(circle at 15% 70%, ${C.accent}, transparent 45%), radial-gradient(circle at 85% 20%, #0a3d2b, transparent 40%)` }} />
+      <section
+        className="relative overflow-hidden px-6 py-28 text-white"
+        style={{
+          backgroundColor: C.bg,
+          backgroundImage: `linear-gradient(135deg, rgba(27,67,50,0.82) 0%, rgba(27,67,50,0.60) 60%, rgba(27,67,50,0.85) 100%), url('/running-hero.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 15% 70%, ${C.accent}, transparent 45%)` }} />
         <div className="relative mx-auto max-w-5xl">
           <p className="text-sm font-semibold uppercase tracking-[0.3em]" style={{ color: C.accent }}>
             Votre ville · Depuis 20XX

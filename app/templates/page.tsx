@@ -10,6 +10,7 @@ const TEMPLATES = [
     colors: { bg: '#0D1F3C', accent: '#C9A84C', light: '#F8F6F1' },
     desc: 'Adapté aux clubs multisport avec calendrier de courses, gestion des épreuves (sprint, olympique, LD) et adhésions FFC/FFTri.',
     emoji: '🏊‍♂️🚴‍♂️🏃‍♂️',
+    image: '/triathlon-hero.jpg',
   },
   {
     href: '/templates/course-a-pied',
@@ -18,6 +19,7 @@ const TEMPLATES = [
     colors: { bg: '#1B4332', accent: '#52B788', light: '#F0FDF4' },
     desc: 'Idéal pour les clubs running et trail. Calendrier de sorties, résultats de course, groupes de niveau et inscriptions en ligne.',
     emoji: '🏃‍♂️🌲⏱️',
+    image: '/running-hero.jpg',
   },
 ];
 
@@ -44,12 +46,17 @@ export default function TemplatesIndex() {
               href={t.href}
               className="group overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm transition hover:shadow-lg hover:-translate-y-1"
             >
-              {/* Color band */}
+              {/* Color band with photo */}
               <div
-                className="flex h-24 items-center justify-center text-4xl"
-                style={{ backgroundColor: t.colors.bg }}
+                className="relative flex h-32 items-center justify-center text-4xl overflow-hidden"
+                style={{
+                  backgroundColor: t.colors.bg,
+                  backgroundImage: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('${t.image}')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center center',
+                }}
               >
-                <span className="tracking-widest">{t.emoji}</span>
+                <span className="relative z-10 tracking-widest drop-shadow">{t.emoji}</span>
               </div>
               <div className="p-6">
                 <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: t.colors.accent }}>
