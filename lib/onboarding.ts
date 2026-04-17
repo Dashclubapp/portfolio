@@ -156,13 +156,11 @@ export async function provisionClubSite(params: {
 
 export async function sendWelcomeEmail(params: {
   email: string;
-  nom: string;
   prenom: string;
   club: string;
-  slug: string;
   setupToken: string;
 }): Promise<void> {
-  const { email, prenom, club, slug: _slug, setupToken } = params;
+  const { email, prenom, club, setupToken } = params;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dashclub.app';
   const setupUrl = `${baseUrl}/setup-password/${setupToken}`;
 
@@ -393,7 +391,7 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
     console.log(`[onboarding] site provisioned`);
 
     // E. Send welcome email with magic link
-    await sendWelcomeEmail({ email, nom, prenom, club, slug, setupToken });
+    await sendWelcomeEmail({ email, prenom, club, setupToken });
     console.log(`[onboarding] welcome email sent`);
 
     // E2. Schedule follow-up email sequence (J+1, J+3, J+5)
