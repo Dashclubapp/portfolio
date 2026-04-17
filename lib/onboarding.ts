@@ -1,5 +1,6 @@
 import { query } from './db';
 import bcrypt from 'bcryptjs';
+import { randomBytes } from 'crypto';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -83,23 +84,20 @@ export async function createAdminUser(params: {
   email: string;
   nom: string;
   prenom: string;
-}): Promise<{ tempPassword: string }> {
-  // Generate a random 10-char password
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
-  const tempPassword = Array.from({ length: 10 }, () =>
-    chars[Math.floor(Math.random() * chars.length)]
-  ).join('');
-
-  const passwordHash = await bcrypt.hash(tempPassword, 10);
+}): Promise<{ setupToken: string }> {
+  const setupToken = randomBytes(32).toString('hex');
+  const expiresAt = new Date(Date.now() + 72 * 60 * 60 * 1000); // 72h
 
   await query(
-    `INSERT INTO club_admin_users (club_id, email, nom, prenom, password_hash)
-     VALUES ($1, $2, $3, $4, $5)
-     ON CONFLICT DO NOTHING`,
-    [params.clubId, params.email, params.nom, params.prenom, passwordHash]
+    `INSERT INTO club_admin_users (club_id, email, nom, prenom, setup_token, setup_token_expires_at)
+     VALUES ($1, $2, $3, $4, $5, $6)
+     ON CONFLICT (email) DO UPDATE SET
+       setup_token = EXCLUDED.setup_token,
+       setup_token_expires_at = EXCLUDED.setup_token_expires_at`,
+    [params.clubId, params.email, params.nom, params.prenom, setupToken, expiresAt]
   );
 
-  return { tempPassword };
+  return { setupToken };
 }
 
 // ─── Provision club site ──────────────────────────────────────────────────────
@@ -163,12 +161,14 @@ export async function sendWelcomeEmail(params: {
   prenom: string;
   club: string;
   slug: string;
-  tempPassword: string;
+  setupToken: string;
 }): Promise<void> {
-  const { email, nom, prenom, club, slug, tempPassword } = params;
+  const { email, nom, prenom, club, slug, setupToken } = params;
   const siteUrl = `https://${slug}.dashclub.app`;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dashclub.app';
+  const setupUrl = `${baseUrl}/setup-password/${setupToken}`;
 
-  const subject = `🎉 Bienvenue sur DashClub — votre site ${club} est en ligne`;
+  const subject = `🎉 Bienvenue sur DashClub — activez votre accès ${club}`;
 
   const html = `
 <!DOCTYPE html>
@@ -222,12 +222,11 @@ export async function sendWelcomeEmail(params: {
       </div>
 
       <div class="creds-box">
-        <div class="creds-label">🔑 Vos identifiants de connexion</div>
-        <div class="creds-value">Login : ${email}</div>
-        <div class="creds-value">Mot de passe temporaire : ${tempPassword}</div>
+        <div class="creds-label">🔑 Activez votre accès</div>
+        <div class="creds-value" style="font-family:sans-serif;font-size:13px;">Cliquez sur le bouton ci-dessous pour créer votre mot de passe.<br>Ce lien est valable <strong style="color:#C9A84C">72 heures</strong>.</div>
       </div>
 
-      <a href="${siteUrl}/admin" class="cta-btn">Accéder à mon backoffice →</a>
+      <a href="${setupUrl}" class="cta-btn">Créer mon mot de passe →</a>
 
       <div class="section-title">Prochaines étapes</div>
 
@@ -275,10 +274,11 @@ Votre site DashClub est maintenant en ligne ! 🚀
 
 🌐 URL de votre site : ${siteUrl}
 🔐 Accès backoffice : ${siteUrl}/admin
-   Login : ${email}
-   Mot de passe temporaire : ${tempPassword}
 
-⚡ Votre site est en ligne. Vous pouvez le personnaliser dès maintenant.
+🔑 Créez votre mot de passe (lien valable 72h) :
+   ${setupUrl}
+
+⚡ Votre site est en ligne. Vous pouvez le personnaliser dès votre première connexion.
 
 --- Prochaines étapes ---
 
@@ -386,15 +386,15 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
 
   try {
     // C. Create admin user credentials
-    const { tempPassword } = await createAdminUser({ clubId, email, nom, prenom });
+    const { setupToken } = await createAdminUser({ clubId, email, nom, prenom });
     console.log(`[onboarding] admin user created`);
 
     // D. Provision club site (pages + domain record)
     await provisionClubSite({ clubId, slug, club, sport, ville });
     console.log(`[onboarding] site provisioned`);
 
-    // E. Send welcome email
-    await sendWelcomeEmail({ email, nom, prenom, club, slug, tempPassword });
+    // E. Send welcome email with magic link
+    await sendWelcomeEmail({ email, nom, prenom, club, slug, setupToken });
     console.log(`[onboarding] welcome email sent`);
 
     // E2. Schedule follow-up email sequence (J+1, J+3, J+5)
