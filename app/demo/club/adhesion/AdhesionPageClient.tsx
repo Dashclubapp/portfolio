@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { usmMembershipOptions } from "../../usm-data";
 
 export type LicenceId = (typeof usmMembershipOptions)[number]["id"];
@@ -76,11 +77,13 @@ export default function AdhesionPageClient({ initialLicence }: { initialLicence:
 
       <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
         <div className="space-y-6">
-          <div className="relative overflow-hidden rounded-[2rem] bg-[#0D1F3C] shadow-[0_28px_60px_rgba(13,31,60,0.18)]">
-            <img
+          <div className="relative h-[260px] overflow-hidden rounded-[2rem] bg-[#0D1F3C] shadow-[0_28px_60px_rgba(13,31,60,0.18)] sm:h-[320px]">
+            <Image
               src="/club-membership-visual.jpg"
               alt="Athlète de triathlon pendant une séance en extérieur"
-              className="h-[260px] w-full object-cover sm:h-[320px]"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 60vw"
             />
             <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(13,31,60,0.18),rgba(13,31,60,0.88)_78%)]" />
             <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
