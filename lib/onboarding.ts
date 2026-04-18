@@ -4,6 +4,7 @@ import { createNeonProject } from './provisioning/neon';
 import { createSubdomain } from './provisioning/cloudflare';
 import { createVercelProject } from './provisioning/vercel';
 import { logClubEvent } from './logger';
+import { scrapeClubWebsite } from './scraper';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -140,8 +141,16 @@ export async function provisionClubSite(params: {
   prenom: string;
   formule: string;
   adminTempPassword: string;
+  website_url?: string;
+  instagram_url?: string;
+  facebook_url?: string;
+  logoUrl?: string;
+  bannerUrl?: string;
+  colorPrimary?: string;
+  description?: string;
 }): Promise<{ siteUrl: string }> {
-  const { clubId, slug, suggestedSubdomain, club, sport, ville, email, nom, prenom, formule, adminTempPassword } = params;
+  const { clubId, slug, suggestedSubdomain, club, sport, ville, email, nom, prenom, formule, adminTempPassword,
+          website_url, instagram_url, facebook_url, logoUrl, bannerUrl, colorPrimary, description } = params;
   const domain = `${slug}.dashclub.app`;
   const siteUrl = `https://${domain}`;
 
@@ -181,6 +190,14 @@ export async function provisionClubSite(params: {
       { key: 'ADMIN_NAME',            value: `${prenom} ${nom}`, type: 'plain' },
       { key: 'ADMIN_TEMP_PASSWORD',   value: adminTempPassword },
       { key: 'DASHCLUB_FORMULE',      value: formule, type: 'plain' },
+      // Social links & branding scraped from existing website
+      { key: 'CLUB_WEBSITE_URL',      value: website_url ?? '', type: 'plain' },
+      { key: 'CLUB_INSTAGRAM_URL',    value: instagram_url ?? '', type: 'plain' },
+      { key: 'CLUB_FACEBOOK_URL',     value: facebook_url ?? '', type: 'plain' },
+      ...(logoUrl       ? [{ key: 'CLUB_LOGO_URL',     value: logoUrl,       type: 'plain' as const }] : []),
+      ...(bannerUrl     ? [{ key: 'CLUB_BANNER_URL',   value: bannerUrl,     type: 'plain' as const }] : []),
+      ...(colorPrimary  ? [{ key: 'CLUB_COLOR_PRIMARY',value: colorPrimary,  type: 'plain' as const }] : []),
+      ...(description   ? [{ key: 'CLUB_DESCRIPTION',  value: description,   type: 'plain' as const }] : []),
     ],
   });
   console.log(`[provision] Vercel project created, url=${vercel.projectUrl}`);
@@ -528,6 +545,32 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
     metadata: { formule, stripeSubscriptionId, stripeCustomerId },
   });
 
+  // B2. Scrape the club's existing website for branding (non-blocking)
+  let branding: { logoUrl?: string; bannerUrl?: string; colorPrimary?: string; description?: string } = {};
+  if (website_url) {
+    try {
+      await logClubEvent(clubId, 'scraping_started', `Analyse du site existant : ${website_url}`, { level: 'info' });
+      branding = await scrapeClubWebsite(website_url);
+      if (branding.logoUrl || branding.colorPrimary || branding.bannerUrl) {
+        await query(
+          `UPDATE clubs SET logo_url = COALESCE($1, logo_url),
+                            couleur_primaire = COALESCE($2, couleur_primaire),
+                            description_courte = COALESCE($3, description_courte)
+           WHERE id = $4`,
+          [branding.logoUrl ?? null, branding.colorPrimary ?? null, branding.description ?? null, clubId]
+        );
+        await logClubEvent(clubId, 'scraping_completed', `Branding extrait — logo: ${branding.logoUrl ? 'oui' : 'non'}, couleur: ${branding.colorPrimary ?? 'non'}`, {
+          level: 'success',
+          metadata: { logoUrl: branding.logoUrl, bannerUrl: branding.bannerUrl, colorPrimary: branding.colorPrimary },
+        });
+      } else {
+        await logClubEvent(clubId, 'scraping_no_data', `Aucun élément de branding trouvé sur ${website_url}`, { level: 'info' });
+      }
+    } catch (scrapeErr) {
+      await logClubEvent(clubId, 'scraping_error', `Échec de l'analyse du site : ${(scrapeErr as Error).message}`, { level: 'warning' });
+    }
+  }
+
   try {
     // C. Create admin user credentials
     const { setupToken } = await createAdminUser({ clubId, email, nom, prenom });
@@ -543,6 +586,13 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
       await logClubEvent(clubId, 'provisioning_started', `Provisionnement de l'infrastructure — slug temporaire ${slug}`, { level: 'info' });
       const result = await provisionClubSite({
         clubId, slug, suggestedSubdomain, club, sport, ville, email, nom, prenom, formule, adminTempPassword,
+        website_url: website_url ?? '',
+        instagram_url: instagram_url ?? '',
+        facebook_url: facebook_url ?? '',
+        logoUrl: branding.logoUrl,
+        bannerUrl: branding.bannerUrl,
+        colorPrimary: branding.colorPrimary,
+        description: branding.description,
       });
       siteUrl = result.siteUrl;
       console.log(`[onboarding] infrastructure provisioned, siteUrl=${siteUrl}`);
