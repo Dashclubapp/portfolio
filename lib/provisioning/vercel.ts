@@ -115,3 +115,19 @@ export async function createVercelProject(params: {
     projectUrl: `https://${params.domain}`,
   };
 }
+
+export async function addDomainToProject(projectId: string, domain: string): Promise<void> {
+  const token = process.env.VERCEL_TOKEN;
+  if (!token) throw new Error('VERCEL_TOKEN non configuré');
+
+  const res = await fetch(`${VERCEL_API}/v10/projects/${projectId}/domains`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: domain }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Vercel add domain error ${res.status}: ${body}`);
+  }
+}

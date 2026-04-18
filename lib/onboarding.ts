@@ -26,30 +26,45 @@ export interface ClubData {
 
 // ─── Slug generation ─────────────────────────────────────────────────────────
 
-export async function generateUniqueSubdomain(clubName: string): Promise<string> {
-  const slug = clubName
+function sanitizeSlug(name: string): string {
+  return name
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // remove accents
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9\s-]/g, '')
     .trim()
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .slice(0, 50);
+}
 
+export async function generateTempSubdomain(): Promise<string> {
+  const suffix = randomBytes(3).toString('hex'); // 6 chars hex
+  let slug = `tmp-${suffix}`;
+  while (await subdomainExists(slug)) {
+    slug = `tmp-${randomBytes(3).toString('hex')}`;
+  }
+  return slug;
+}
+
+export function generateSuggestedSubdomain(clubName: string): string {
+  return sanitizeSlug(clubName);
+}
+
+export async function generateUniqueSubdomain(clubName: string): Promise<string> {
+  const base = sanitizeSlug(clubName);
   let counter = 1;
-  let finalSlug = slug;
+  let finalSlug = base;
   while (await subdomainExists(finalSlug)) {
-    finalSlug = `${slug}-${counter}`;
+    finalSlug = `${base}-${counter}`;
     counter++;
   }
-
   return finalSlug;
 }
 
 async function subdomainExists(slug: string): Promise<boolean> {
   const rows = await query<{ count: string }>(
-    'SELECT COUNT(*) as count FROM club_domains WHERE subdomain = $1',
+    'SELECT COUNT(*) as count FROM club_domains WHERE subdomain = $1 OR temp_subdomain = $1',
     [slug]
   );
   return parseInt(rows[0].count, 10) > 0;
@@ -115,6 +130,7 @@ export async function createAdminUser(params: {
 export async function provisionClubSite(params: {
   clubId: number;
   slug: string;
+  suggestedSubdomain: string;
   club: string;
   sport: string;
   ville: string;
@@ -124,7 +140,7 @@ export async function provisionClubSite(params: {
   formule: string;
   adminTempPassword: string;
 }): Promise<{ siteUrl: string }> {
-  const { clubId, slug, club, sport, ville, email, nom, prenom, formule, adminTempPassword } = params;
+  const { clubId, slug, suggestedSubdomain, club, sport, ville, email, nom, prenom, formule, adminTempPassword } = params;
   const domain = `${slug}.dashclub.app`;
   const siteUrl = `https://${domain}`;
 
@@ -164,14 +180,17 @@ export async function provisionClubSite(params: {
   });
   console.log(`[provision] Vercel project created, url=${vercel.projectUrl}`);
 
-  // 4. Save domain record in Portfolio DB
+  // 4. Save domain record in Portfolio DB (temp subdomain, pending validation)
   await query(
-    `INSERT INTO club_domains (club_id, subdomain, custom_domain, created_at, activated_at, vercel_project_id, neon_project_id)
-     VALUES ($1, $2, NULL, NOW(), NOW(), $3, $4)
+    `INSERT INTO club_domains (club_id, subdomain, temp_subdomain, suggested_subdomain, subdomain_status, custom_domain, created_at, activated_at, vercel_project_id, neon_project_id)
+     VALUES ($1, $2, $2, $3, 'pending_validation', NULL, NOW(), NOW(), $4, $5)
      ON CONFLICT (subdomain) DO UPDATE SET
-       vercel_project_id = EXCLUDED.vercel_project_id,
-       neon_project_id   = EXCLUDED.neon_project_id`,
-    [clubId, slug, vercel.projectId, neon.projectId]
+       vercel_project_id    = EXCLUDED.vercel_project_id,
+       neon_project_id      = EXCLUDED.neon_project_id,
+       temp_subdomain       = EXCLUDED.temp_subdomain,
+       suggested_subdomain  = EXCLUDED.suggested_subdomain,
+       subdomain_status     = EXCLUDED.subdomain_status`,
+    [clubId, slug, suggestedSubdomain, vercel.projectId, neon.projectId]
   );
 
   return { siteUrl };
@@ -186,13 +205,16 @@ export async function sendWelcomeEmail(params: {
   setupToken: string;
   siteUrl?: string;
   adminTempPassword?: string;
+  isTempUrl?: boolean;
 }): Promise<void> {
-  const { email, prenom, club, setupToken, siteUrl, adminTempPassword } = params;
+  const { email, prenom, club, setupToken, siteUrl, adminTempPassword, isTempUrl } = params;
   const backOfficeUrl = siteUrl ? `${siteUrl}/admin` : undefined;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dashclub.app';
   const setupUrl = `${baseUrl}/setup-password/${setupToken}`;
 
-  const subject = `🎉 Bienvenue sur DashClub — activez votre accès ${club}`;
+  const subject = isTempUrl
+    ? `🎉 Bienvenue sur DashClub — votre site ${club} est en ligne !`
+    : `🎉 Bienvenue sur DashClub — activez votre accès ${club}`;
 
   const html = `
 <!DOCTYPE html>
@@ -235,11 +257,47 @@ export async function sendWelcomeEmail(params: {
       <div class="greeting">Bonjour ${prenom},</div>
       <p class="intro">
         Merci pour votre confiance ! Votre paiement a bien été reçu.<br><br>
-        Votre site <strong>${club}</strong> est maintenant en cours de préparation par l'équipe DashClub. Voici ce qui va se passer dans les prochaines heures.
+        ${isTempUrl && siteUrl
+          ? `Votre site <strong>${club}</strong> est déjà en ligne ! Il est accessible dès maintenant sur une adresse temporaire, le temps que nous validions votre adresse définitive.`
+          : `Votre site <strong>${club}</strong> est maintenant en cours de préparation par l'équipe DashClub. Voici ce qui va se passer dans les prochaines heures.`
+        }
       </p>
 
-      <div class="section-title">Ce que nous préparons pour vous</div>
+      ${isTempUrl && siteUrl ? `
+      <div class="info-box" style="border-left-color:#C9A84C;background:#fffbf0;">
+        <div class="label">🌐 Adresse temporaire de votre site</div>
+        <div class="value"><a href="${siteUrl}" style="color:#0D1F3C;">${siteUrl}</a></div>
+        <div style="font-size:13px;color:#888;margin-top:4px;">
+          ⚠️ Cette adresse est <strong>temporaire</strong>. Votre adresse définitive (ex&nbsp;: <em>${club.toLowerCase().replace(/\s+/g,'-')}.dashclub.app</em>) vous sera communiquée sous peu, après validation par notre équipe.
+        </div>
+      </div>
+      ` : ''}
 
+      <div class="section-title">${isTempUrl ? 'Prochaines étapes' : 'Ce que nous préparons pour vous'}</div>
+
+      ${isTempUrl ? `
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Créez votre mot de passe</strong><br>
+          Accédez à votre backoffice pour personnaliser votre site dès maintenant.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Votre adresse définitive</strong><br>
+          Notre équipe valide votre nom de domaine <em>${club.toLowerCase().replace(/\s+/g,'-')}.dashclub.app</em> et vous envoie un email de confirmation. <em style="color:#888">Sous 24–48h</em>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Mise en ligne publique</strong><br>
+          Votre site passe sur son adresse définitive et est prêt à être partagé.
+        </div>
+      </div>
+      ` : `
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-content">
@@ -268,6 +326,7 @@ export async function sendWelcomeEmail(params: {
           Activation de votre domaine et ouverture publique de votre site. <em style="color:#888">Sous 5 jours</em>
         </div>
       </div>
+      `}
 
       ${backOfficeUrl ? `
       <div class="creds-box" style="margin-top:28px;">
@@ -443,9 +502,10 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
 
   console.log(`[onboarding] Starting for club="${club}" email="${email}"`);
 
-  // A. Generate unique subdomain slug
-  const slug = await generateUniqueSubdomain(club);
-  console.log(`[onboarding] slug=${slug}`);
+  // A. Generate temp subdomain (tmp-xxxxxx) + suggested final subdomain
+  const slug = await generateTempSubdomain();
+  const suggestedSubdomain = generateSuggestedSubdomain(club);
+  console.log(`[onboarding] tempSlug=${slug} suggested=${suggestedSubdomain}`);
 
   // B. Create club in DB
   const clubId = await createClubInDB({
@@ -467,7 +527,7 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
     let siteUrl: string | undefined;
     try {
       const result = await provisionClubSite({
-        clubId, slug, club, sport, ville, email, nom, prenom, formule, adminTempPassword,
+        clubId, slug, suggestedSubdomain, club, sport, ville, email, nom, prenom, formule, adminTempPassword,
       });
       siteUrl = result.siteUrl;
       console.log(`[onboarding] infrastructure provisioned, siteUrl=${siteUrl}`);
@@ -477,7 +537,7 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
     }
 
     // F. Send welcome email with magic link + back office URL
-    await sendWelcomeEmail({ email, prenom, club, setupToken, siteUrl, adminTempPassword });
+    await sendWelcomeEmail({ email, prenom, club, setupToken, siteUrl, adminTempPassword, isTempUrl: !!siteUrl });
     console.log(`[onboarding] welcome email sent`);
 
     // E2. Schedule follow-up email sequence (J+1, J+3, J+5)
