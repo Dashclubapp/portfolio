@@ -552,13 +552,6 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
       await logClubEvent(clubId, 'scraping_started', `Analyse du site existant : ${website_url}`, { level: 'info' });
       branding = await scrapeClubWebsite(website_url);
       if (branding.logoUrl || branding.colorPrimary || branding.bannerUrl) {
-        await query(
-          `UPDATE clubs SET logo_url = COALESCE($1, logo_url),
-                            couleur_primaire = COALESCE($2, couleur_primaire),
-                            description_courte = COALESCE($3, description_courte)
-           WHERE id = $4`,
-          [branding.logoUrl ?? null, branding.colorPrimary ?? null, branding.description ?? null, clubId]
-        );
         await logClubEvent(clubId, 'scraping_completed', `Branding extrait — logo: ${branding.logoUrl ? 'oui' : 'non'}, couleur: ${branding.colorPrimary ?? 'non'}`, {
           level: 'success',
           metadata: { logoUrl: branding.logoUrl, bannerUrl: branding.bannerUrl, colorPrimary: branding.colorPrimary },
