@@ -615,6 +615,12 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
     await updateOnboardingStatus(clubId, 'completed');
     console.log(`[onboarding] completed for clubId=${clubId}`);
     await logClubEvent(clubId, 'onboarding_completed', 'Onboarding terminé avec succès', { level: 'success' });
+
+    // Clean up provisioning-only fields from Portfolio DB — data now lives in the club's own Neon DB
+    await query(
+      `UPDATE clubs SET website_url = NULL, instagram_url = NULL, facebook_url = NULL WHERE id = $1`,
+      [clubId]
+    );
   } catch (err) {
     console.error(`[onboarding] Error for clubId=${clubId}:`, err);
     await logClubEvent(clubId, 'onboarding_error', `Erreur critique : ${(err as Error).message}`, {

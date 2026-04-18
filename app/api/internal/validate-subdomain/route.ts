@@ -66,12 +66,16 @@ export async function POST(req: NextRequest) {
   await addDomainToProject(vercel_project_id, finalDomain);
   await logClubEvent(clubId, 'vercel_domain_added', `Domaine final ajouté sur Vercel : ${finalDomain}`, { level: 'success' });
 
-  // 3. Update DB
+  // 3. Update DB — validate domain + clear provisioning-only fields
   await query(
     `UPDATE club_domains
      SET subdomain = $1, final_subdomain = $1, subdomain_status = 'validated'
      WHERE club_id = $2`,
     [finalSubdomain, clubId]
+  );
+  await query(
+    `UPDATE clubs SET website_url = NULL, instagram_url = NULL, facebook_url = NULL WHERE id = $1`,
+    [clubId]
   );
 
   // 4. Send confirmation email to club
