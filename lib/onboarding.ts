@@ -3,6 +3,7 @@ import { randomBytes } from 'crypto';
 import { createNeonProject } from './provisioning/neon';
 import { createSubdomain } from './provisioning/cloudflare';
 import { createVercelProject } from './provisioning/vercel';
+import { logClubEvent } from './logger';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -148,10 +149,14 @@ export async function provisionClubSite(params: {
   console.log(`[provision] Creating Neon DB for slug=${slug}`);
   const neon = await createNeonProject(slug);
   console.log(`[provision] Neon projectId=${neon.projectId}`);
+  await logClubEvent(clubId, 'neon_db_created', `Base de données Neon créée (projet ${neon.projectId})`, {
+    level: 'success', metadata: { neonProjectId: neon.projectId },
+  });
 
   // 2. Create Cloudflare subdomain
   console.log(`[provision] Creating Cloudflare CNAME ${slug}.dashclub.app`);
   await createSubdomain(slug);
+  await logClubEvent(clubId, 'cloudflare_cname_created', `CNAME Cloudflare créé : ${slug}.dashclub.app`, { level: 'success' });
 
   // 3. Deploy club-starter on Vercel
   const jwtSecret = randomBytes(32).toString('hex');
@@ -179,6 +184,9 @@ export async function provisionClubSite(params: {
     ],
   });
   console.log(`[provision] Vercel project created, url=${vercel.projectUrl}`);
+  await logClubEvent(clubId, 'vercel_project_created', `Projet Vercel déployé — ${vercel.projectUrl}`, {
+    level: 'success', metadata: { vercelProjectId: vercel.projectId, projectUrl: vercel.projectUrl },
+  });
 
   // 4. Save domain record in Portfolio DB (temp subdomain, pending validation)
   await query(
@@ -515,10 +523,16 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
   });
   console.log(`[onboarding] clubId=${clubId}`);
 
+  await logClubEvent(clubId, 'subscription_created', `Paiement Stripe confirmé — formule ${formule}`, {
+    level: 'success',
+    metadata: { formule, stripeSubscriptionId, stripeCustomerId },
+  });
+
   try {
     // C. Create admin user credentials
     const { setupToken } = await createAdminUser({ clubId, email, nom, prenom });
     console.log(`[onboarding] admin user created`);
+    await logClubEvent(clubId, 'admin_user_created', `Compte administrateur créé pour ${email}`, { level: 'info' });
 
     // D. Generate temp password for the club-starter seed
     const adminTempPassword = randomBytes(10).toString('base64url') + 'A1!';
@@ -526,29 +540,44 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
     // E. Provision infrastructure (Neon + Vercel + Cloudflare)
     let siteUrl: string | undefined;
     try {
+      await logClubEvent(clubId, 'provisioning_started', `Provisionnement de l'infrastructure — slug temporaire ${slug}`, { level: 'info' });
       const result = await provisionClubSite({
         clubId, slug, suggestedSubdomain, club, sport, ville, email, nom, prenom, formule, adminTempPassword,
       });
       siteUrl = result.siteUrl;
       console.log(`[onboarding] infrastructure provisioned, siteUrl=${siteUrl}`);
+      await logClubEvent(clubId, 'provisioning_completed', `Infrastructure prête — site accessible sur ${siteUrl}`, {
+        level: 'success',
+        metadata: { siteUrl, slug, suggestedSubdomain },
+      });
     } catch (provErr) {
       console.error(`[onboarding] Infrastructure provisioning failed (non-blocking):`, provErr);
-      // Continue — the welcome email is sent regardless, team will provision manually
+      await logClubEvent(clubId, 'provisioning_error', `Échec du provisionnement : ${(provErr as Error).message}`, {
+        level: 'error',
+        metadata: { error: String(provErr) },
+      });
     }
 
     // F. Send welcome email with magic link + back office URL
     await sendWelcomeEmail({ email, prenom, club, setupToken, siteUrl, adminTempPassword, isTempUrl: !!siteUrl });
     console.log(`[onboarding] welcome email sent`);
+    await logClubEvent(clubId, 'welcome_email_sent', `Email de bienvenue envoyé à ${email}`, { level: 'info' });
 
     // E2. Schedule follow-up email sequence (J+1, J+3, J+5)
     await scheduleEmailSequence({ clubId, email });
     console.log(`[onboarding] email sequence scheduled`);
+    await logClubEvent(clubId, 'email_sequence_scheduled', 'Séquence email programmée (J+1, J+3, J+5)', { level: 'info' });
 
     // F. Mark onboarding as completed
     await updateOnboardingStatus(clubId, 'completed');
     console.log(`[onboarding] completed for clubId=${clubId}`);
+    await logClubEvent(clubId, 'onboarding_completed', 'Onboarding terminé avec succès', { level: 'success' });
   } catch (err) {
     console.error(`[onboarding] Error for clubId=${clubId}:`, err);
+    await logClubEvent(clubId, 'onboarding_error', `Erreur critique : ${(err as Error).message}`, {
+      level: 'error',
+      metadata: { error: String(err) },
+    });
     await updateOnboardingStatus(clubId, 'error').catch(() => {});
     throw err;
   }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { createSubdomain } from '@/lib/provisioning/cloudflare';
 import { addDomainToProject } from '@/lib/provisioning/vercel';
+import { logClubEvent } from '@/lib/logger';
 
 function authorized(req: NextRequest) {
   const secret = process.env.INTERNAL_API_SECRET;
@@ -55,11 +56,15 @@ export async function POST(req: NextRequest) {
   const finalDomain = `${finalSubdomain}.dashclub.app`;
   const siteUrl = `https://${finalDomain}`;
 
+  await logClubEvent(clubId, 'subdomain_validation_started', `Validation du sous-domaine : ${finalSubdomain}.dashclub.app`, { level: 'info' });
+
   // 1. Create Cloudflare CNAME for final domain
   await createSubdomain(finalSubdomain);
+  await logClubEvent(clubId, 'cloudflare_cname_created', `CNAME Cloudflare créé : ${finalDomain}`, { level: 'success' });
 
   // 2. Add final domain to Vercel project
   await addDomainToProject(vercel_project_id, finalDomain);
+  await logClubEvent(clubId, 'vercel_domain_added', `Domaine final ajouté sur Vercel : ${finalDomain}`, { level: 'success' });
 
   // 3. Update DB
   await query(
@@ -72,6 +77,10 @@ export async function POST(req: NextRequest) {
   // 4. Send confirmation email to club
   const hasManagedDomain = formule === 'illimite';
   await sendValidationEmail({ email, prenom, club: club_nom, siteUrl, hasManagedDomain });
+  await logClubEvent(clubId, 'subdomain_validated', `Sous-domaine définitif activé — ${siteUrl}`, {
+    level: 'success', metadata: { finalSubdomain, siteUrl },
+  });
+  await logClubEvent(clubId, 'validation_email_sent', `Email de confirmation envoyé à ${email}`, { level: 'info' });
 
   return NextResponse.json({ ok: true, siteUrl });
 }
