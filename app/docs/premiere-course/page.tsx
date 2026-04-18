@@ -18,12 +18,12 @@ export default function DocsPremiereEpreuve() {
       <h2>Étape 1 — Accéder à la création d&apos;événement</h2>
       <p>
         Depuis votre backoffice, cliquez sur <strong>Événements</strong> dans le menu de gauche,
-        puis sur le bouton <strong>"+ Nouvel événement"</strong>.
+        puis sur le bouton <strong>&ldquo;+ Nouvel événement&rdquo;</strong>.
       </p>
 
       <h2>Étape 2 — Remplir les informations de base</h2>
       <Steps items={[
-        'Donnez un nom à votre course (ex : "Triathlon de printemps 2025")',
+        'Donnez un nom à votre course (ex : \u201cTriathlon de printemps 2025\u201d)',
         'Choisissez la date et l\'heure de départ',
         'Ajoutez le lieu (ville, adresse ou nom du site)',
         'Rédigez une description (présentation de la course, parcours, etc.)',
@@ -36,7 +36,7 @@ export default function DocsPremiereEpreuve() {
         (ex : Sprint, Olympique, Longue distance). Pour chaque épreuve :
       </p>
       <ul>
-        <li>Nommez l&apos;épreuve (ex : "Sprint — 750m / 20km / 5km")</li>
+        <li>Nommez l&apos;épreuve (ex : &ldquo;Sprint — 750m / 20km / 5km&rdquo;)</li>
         <li>Définissez le prix d&apos;inscription (HT ou TTC)</li>
         <li>Fixez la date limite d&apos;inscription</li>
         <li>Optionnel : limitez le nombre de participants</li>
@@ -61,7 +61,7 @@ export default function DocsPremiereEpreuve() {
 
       <h2>Étape 5 — Publier l&apos;événement</h2>
       <p>
-        Une fois toutes les informations renseignées, cliquez sur <strong>"Publier l&apos;événement"</strong>.
+        Une fois toutes les informations renseignées, cliquez sur <strong>&ldquo;Publier l&apos;événement&rdquo;</strong>.
         Votre course sera immédiatement visible sur votre site club et les inscriptions seront ouvertes.
       </p>
 

@@ -41,7 +41,7 @@ export default function DocsStripe() {
       <h2>Étape 2 — Lancer l&apos;onboarding depuis DashClub</h2>
       <p>
         Dans votre backoffice DashClub, allez dans <strong>Paramètres → Paiements Stripe</strong> et cliquez sur
-        <strong> "Connecter Stripe"</strong>. Vous serez redirigé vers Stripe pour compléter la configuration.
+        <strong> &ldquo;Connecter Stripe&rdquo;</strong>. Vous serez redirigé vers Stripe pour compléter la configuration.
       </p>
 
       <Steps items={[
