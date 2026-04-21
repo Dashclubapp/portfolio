@@ -450,15 +450,53 @@ L'équipe DashClub
   if (process.env.RESEND_API_KEY) {
     const { Resend } = await import('resend');
     const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
-      from: 'DashClub <hello@dashclub.app>',
-      to: email,
-      subject,
-      html,
-      text,
-    });
+
+    const billingNotifHtml = `
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f5f5f4;font-family:system-ui,sans-serif">
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 16px">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e7e5e4">
+        <tr><td style="background:#0D1F3C;padding:32px 40px">
+          <p style="margin:0;color:#C9A84C;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase">DashClub · Nouvel abonné</p>
+          <h1 style="margin:8px 0 0;color:#fff;font-size:24px;font-weight:700">Nouveau club abonné</h1>
+        </td></tr>
+        <tr><td style="padding:32px 40px">
+          <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e7e5e4;border-radius:12px;overflow:hidden">
+            <tr style="background:#fafaf9"><td colspan="2" style="padding:12px 16px;font-size:12px;color:#78716c;font-weight:600;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #e7e5e4">Détails</td></tr>
+            <tr><td style="padding:12px 16px;font-size:14px;color:#78716c;border-bottom:1px solid #e7e5e4">Club</td><td style="padding:12px 16px;font-size:14px;color:#1c1917;font-weight:600;border-bottom:1px solid #e7e5e4">${club}</td></tr>
+            <tr style="background:#fafaf9"><td style="padding:12px 16px;font-size:14px;color:#78716c;border-bottom:1px solid #e7e5e4">Contact</td><td style="padding:12px 16px;font-size:14px;color:#1c1917;font-weight:500;border-bottom:1px solid #e7e5e4">${prenom} — ${email}</td></tr>
+            <tr><td style="padding:12px 16px;font-size:14px;color:#78716c">Formule</td><td style="padding:12px 16px;font-size:14px;color:#1c1917;font-weight:600">${subject}</td></tr>
+          </table>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+
+    const [clientResult, billingResult] = await Promise.allSettled([
+      resend.emails.send({
+        from: 'DashClub <hello@dashclub.app>',
+        to: email,
+        subject,
+        html,
+        text,
+      }),
+      resend.emails.send({
+        from: 'DashClub <hello@dashclub.app>',
+        to: 'billing@dashclub.app',
+        subject: `[DashClub] Nouvel abonné — ${club}`,
+        html: billingNotifHtml,
+      }),
+    ]);
+
+    if (clientResult.status === 'rejected') {
+      console.error('[onboarding] Failed to send welcome email to client:', clientResult.reason);
+    }
+    if (billingResult.status === 'rejected') {
+      console.error('[onboarding] Failed to send billing notification:', billingResult.reason);
+    }
   } else {
-    // Fallback: log (in production, configure RESEND_API_KEY)
     console.log('[onboarding] RESEND_API_KEY not set — email would be sent to:', email);
     console.log('[onboarding] Subject:', subject);
   }
