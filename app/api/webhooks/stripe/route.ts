@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { waitUntil } from '@vercel/functions';
 import { handleSuccessfulSubscription } from '@/lib/onboarding';
 
 export async function POST(req: NextRequest) {
@@ -68,27 +69,30 @@ export async function POST(req: NextRequest) {
   const subscription = fullSession.subscription as Stripe.Subscription | null;
 
   console.log(`[webhook/stripe] calling handleSuccessfulSubscription for email="${email}" club="${metadata.club ?? ''}"`);
-  await handleSuccessfulSubscription({
-    nom: metadata.nom ?? '',
-    prenom: metadata.prenom ?? '',
-    email,
-    telephone: metadata.telephone ?? '',
-    club: metadata.club ?? email.split('@')[0],
-    sport: metadata.sport ?? '',
-    ville: metadata.ville ?? '',
-    formule: metadata.formule ?? 'essentiel',
-    website_url: metadata.website_url ?? '',
-    instagram_url: metadata.instagram_url ?? '',
-    facebook_url: metadata.facebook_url ?? '',
-    social_placement: metadata.social_placement ?? 'footer',
-    stripeSubscriptionId:
-      typeof subscription === 'object' && subscription !== null ? subscription.id : undefined,
-    stripeCustomerId:
-      typeof fullSession.customer === 'string' ? fullSession.customer : undefined,
-  }).catch((err) => {
-    console.error('[webhook/stripe] Onboarding failed:', err);
-  });
-  console.log(`[webhook/stripe] handleSuccessfulSubscription completed for email="${email}"`);
+  waitUntil(
+    handleSuccessfulSubscription({
+      nom: metadata.nom ?? '',
+      prenom: metadata.prenom ?? '',
+      email,
+      telephone: metadata.telephone ?? '',
+      club: metadata.club ?? email.split('@')[0],
+      sport: metadata.sport ?? '',
+      ville: metadata.ville ?? '',
+      formule: metadata.formule ?? 'essentiel',
+      website_url: metadata.website_url ?? '',
+      instagram_url: metadata.instagram_url ?? '',
+      facebook_url: metadata.facebook_url ?? '',
+      social_placement: metadata.social_placement ?? 'footer',
+      stripeSubscriptionId:
+        typeof subscription === 'object' && subscription !== null ? subscription.id : undefined,
+      stripeCustomerId:
+        typeof fullSession.customer === 'string' ? fullSession.customer : undefined,
+    }).then(() => {
+      console.log(`[webhook/stripe] handleSuccessfulSubscription completed for email="${email}"`);
+    }).catch((err) => {
+      console.error('[webhook/stripe] Onboarding failed:', err);
+    })
+  );
 
   return NextResponse.json({ ok: true });
 }
