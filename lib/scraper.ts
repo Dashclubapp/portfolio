@@ -114,7 +114,7 @@ export async function scrapeClubWebsite(rawUrl: string): Promise<ScrapedBranding
   // ── Colors ────────────────────────────────────────────────────────────────
   const themeColor = extractMeta(html, 'theme-color');
 
-  const styleBlocks = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)]
+  const styleBlocks = Array.from(html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi))
     .map(m => m[1])
     .join('\n');
   const cssColor = extractCssColor(styleBlocks);
