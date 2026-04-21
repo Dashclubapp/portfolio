@@ -6,30 +6,35 @@ import { useEffect, useState } from "react";
 
 interface SessionData {
   email?: string;
-  clubName?: string;
+  club?: string;
   formule?: string;
+  wantDomain?: boolean;
 }
 
-const TASKS = [
+const ALL_TASKS = [
   {
+    key: "domain",
     icon: "🌐",
     title: "Mise en place du domaine personnalisé",
     desc: "Configuration et activation de votre nom de domaine dédié.",
     delay: "Sous 24h",
   },
   {
+    key: "stripe",
     icon: "💳",
     title: "Connexion Stripe",
     desc: "Intégration de votre compte de paiement pour recevoir les inscriptions sans commission.",
     delay: "Sous 48h",
   },
   {
+    key: "site",
     icon: "🎨",
     title: "Génération de votre site",
     desc: "Mise en place du modèle de site aux couleurs de votre club, avec vos pages par défaut.",
     delay: "Sous 72h",
   },
   {
+    key: "backoffice",
     icon: "🔐",
     title: "Création de votre backoffice",
     desc: "Configuration de votre espace d'administration pour gérer membres, événements et paiements.",
@@ -40,11 +45,17 @@ const TASKS = [
 export default function BienvenueClient() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
-  const [data] = useState<SessionData>({});
+  const [data, setData] = useState<SessionData>({});
 
   useEffect(() => {
-    void sessionId;
+    if (!sessionId) return;
+    fetch(`/api/session-info?session_id=${sessionId}`)
+      .then(r => r.json())
+      .then(d => setData(d))
+      .catch(() => {});
   }, [sessionId]);
+
+  const tasks = ALL_TASKS.filter(t => t.key !== "domain" || data.wantDomain);
 
   return (
     <div className="min-h-screen bg-[#0a1628] flex items-center justify-center p-4 py-12">
@@ -86,14 +97,14 @@ export default function BienvenueClient() {
             Ce que l&apos;équipe DashClub fait pour vous
           </p>
           <div className="space-y-0">
-            {TASKS.map((task, i) => (
-              <div key={i} className="flex gap-4 group">
+            {tasks.map((task, i) => (
+              <div key={task.key} className="flex gap-4 group">
                 {/* Timeline line */}
                 <div className="flex flex-col items-center">
                   <div className="w-9 h-9 rounded-xl bg-[#0a1628] border border-white/10 flex items-center justify-center text-lg shrink-0 group-first:border-[#C9A84C]/30">
                     {task.icon}
                   </div>
-                  {i < TASKS.length - 1 && (
+                  {i < tasks.length - 1 && (
                     <div className="w-px flex-1 bg-white/[0.06] my-1" />
                   )}
                 </div>
