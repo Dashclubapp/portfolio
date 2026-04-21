@@ -447,6 +447,8 @@ Nous répondons sous 24h ouvrées.
 L'équipe DashClub
   `.trim();
 
+  console.log(`[onboarding/email] sendWelcomeEmail — to="${email}" subject="${subject}" resend_configured=${!!process.env.RESEND_API_KEY}`);
+
   if (process.env.RESEND_API_KEY) {
     const { Resend } = await import('resend');
     const resend = new Resend(process.env.RESEND_API_KEY);
@@ -490,11 +492,15 @@ L'équipe DashClub
       }),
     ]);
 
-    if (clientResult.status === 'rejected') {
-      console.error('[onboarding] Failed to send welcome email to client:', clientResult.reason);
+    if (clientResult.status === 'fulfilled') {
+      console.log(`[onboarding/email] client email sent — id=${(clientResult.value as { id?: string }).id}`);
+    } else {
+      console.error('[onboarding/email] client email FAILED:', clientResult.reason);
     }
-    if (billingResult.status === 'rejected') {
-      console.error('[onboarding] Failed to send billing notification:', billingResult.reason);
+    if (billingResult.status === 'fulfilled') {
+      console.log(`[onboarding/email] billing email sent — id=${(billingResult.value as { id?: string }).id}`);
+    } else {
+      console.error('[onboarding/email] billing email FAILED:', billingResult.reason);
     }
   } else {
     console.log('[onboarding] RESEND_API_KEY not set — email would be sent to:', email);
@@ -640,8 +646,9 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
     }
 
     // F. Send welcome email with magic link + back office URL
+    console.log(`[onboarding] calling sendWelcomeEmail for email="${email}"`);
     await sendWelcomeEmail({ email, prenom, club, setupToken, siteUrl, adminTempPassword, isTempUrl: !!siteUrl });
-    console.log(`[onboarding] welcome email sent`);
+    console.log(`[onboarding] sendWelcomeEmail returned`);
     await logClubEvent(clubId, 'welcome_email_sent', `Email de bienvenue envoyé à ${email}`, { level: 'info' });
 
     // E2. Schedule follow-up email sequence (J+1, J+3, J+5)

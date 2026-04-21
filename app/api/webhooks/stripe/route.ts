@@ -46,6 +46,8 @@ export async function POST(req: NextRequest) {
   const metadata = session.metadata ?? {};
   const email = session.customer_email ?? metadata.email ?? '';
 
+  console.log(`[webhook/stripe] checkout.session.completed — session=${session.id} email="${email}" metadata=${JSON.stringify(metadata)}`);
+
   if (!email) {
     console.error('[webhook/stripe] No customer email found');
     return NextResponse.json({ error: 'Missing customer email' }, { status: 400 });
@@ -65,6 +67,7 @@ export async function POST(req: NextRequest) {
 
   const subscription = fullSession.subscription as Stripe.Subscription | null;
 
+  console.log(`[webhook/stripe] calling handleSuccessfulSubscription for email="${email}" club="${metadata.club ?? ''}"`);
   await handleSuccessfulSubscription({
     nom: metadata.nom ?? '',
     prenom: metadata.prenom ?? '',
@@ -85,6 +88,7 @@ export async function POST(req: NextRequest) {
   }).catch((err) => {
     console.error('[webhook/stripe] Onboarding failed:', err);
   });
+  console.log(`[webhook/stripe] handleSuccessfulSubscription completed for email="${email}"`);
 
   return NextResponse.json({ ok: true });
 }
