@@ -109,7 +109,7 @@ export default function BienvenueClient() {
                   )}
                 </div>
                 {/* Content */}
-                <div className={`pb-5 flex-1 ${i === TASKS.length - 1 ? "pb-0" : ""}`}>
+                <div className={`pb-5 flex-1 ${i === tasks.length - 1 ? "pb-0" : ""}`}>
                   <div className="flex items-center justify-between gap-2 mb-0.5">
                     <p className="text-sm font-semibold text-white">{task.title}</p>
                     <span className="shrink-0 text-[11px] text-[#C9A84C]/70 bg-[#C9A84C]/10 px-2 py-0.5 rounded-full border border-[#C9A84C]/10">
