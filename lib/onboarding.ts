@@ -227,12 +227,13 @@ export async function sendWelcomeEmail(params: {
   email: string;
   prenom: string;
   club: string;
+  formule: string;
   setupToken: string;
   siteUrl?: string;
   adminTempPassword?: string;
   isTempUrl?: boolean;
 }): Promise<void> {
-  const { email, prenom, club, setupToken, siteUrl, adminTempPassword, isTempUrl } = params;
+  const { email, prenom, club, formule, setupToken, siteUrl, adminTempPassword, isTempUrl } = params;
   const backOfficeUrl = siteUrl ? `${siteUrl}/admin` : undefined;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dashclub.app';
   const setupUrl = `${baseUrl}/setup-password/${setupToken}`;
@@ -468,7 +469,7 @@ L'équipe DashClub
             <tr style="background:#fafaf9"><td colspan="2" style="padding:12px 16px;font-size:12px;color:#78716c;font-weight:600;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #e7e5e4">Détails</td></tr>
             <tr><td style="padding:12px 16px;font-size:14px;color:#78716c;border-bottom:1px solid #e7e5e4">Club</td><td style="padding:12px 16px;font-size:14px;color:#1c1917;font-weight:600;border-bottom:1px solid #e7e5e4">${club}</td></tr>
             <tr style="background:#fafaf9"><td style="padding:12px 16px;font-size:14px;color:#78716c;border-bottom:1px solid #e7e5e4">Contact</td><td style="padding:12px 16px;font-size:14px;color:#1c1917;font-weight:500;border-bottom:1px solid #e7e5e4">${prenom} — ${email}</td></tr>
-            <tr><td style="padding:12px 16px;font-size:14px;color:#78716c">Formule</td><td style="padding:12px 16px;font-size:14px;color:#1c1917;font-weight:600">${subject}</td></tr>
+            <tr><td style="padding:12px 16px;font-size:14px;color:#78716c">Formule</td><td style="padding:12px 16px;font-size:14px;color:#1c1917;font-weight:600">${formule}</td></tr>
           </table>
         </td></tr>
       </table>
@@ -647,7 +648,7 @@ export async function handleSuccessfulSubscription(payload: OnboardingPayload): 
 
     // F. Send welcome email with magic link + back office URL
     console.log(`[onboarding] calling sendWelcomeEmail for email="${email}"`);
-    await sendWelcomeEmail({ email, prenom, club, setupToken, siteUrl, adminTempPassword, isTempUrl: !!siteUrl });
+    await sendWelcomeEmail({ email, prenom, club, formule, setupToken, siteUrl, adminTempPassword, isTempUrl: !!siteUrl });
     console.log(`[onboarding] sendWelcomeEmail returned`);
     await logClubEvent(clubId, 'welcome_email_sent', `Email de bienvenue envoyé à ${email}`, { level: 'info' });
 
