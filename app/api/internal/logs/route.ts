@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import { getClubLogs, getRecentLogsAllClubs } from '@/lib/logger';
+import { getClubLogs } from '@/lib/logger';
 
 function authorized(req: NextRequest) {
   const secret = process.env.INTERNAL_API_SECRET;
