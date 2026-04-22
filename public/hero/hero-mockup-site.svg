@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" width="600" height="340">
+  <defs>
+    <filter id="s" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.09"/>
+    </filter>
+  </defs>
+
+  <!-- Page background -->
+  <rect width="600" height="340" fill="#f8f6f1"/>
+
+  <!-- Hero banner -->
+  <rect width="600" height="128" fill="#0D1F3C"/>
+
+  <!-- Logo + nav -->
+  <rect x="24" y="18" width="28" height="28" rx="5" fill="rgba(201,168,76,0.35)"/>
+  <rect x="58" y="25" width="55" height="8" rx="2" fill="rgba(255,255,255,0.85)"/>
+  <rect x="374" y="27" width="34" height="6" rx="2" fill="rgba(255,255,255,0.45)"/>
+  <rect x="416" y="27" width="38" height="6" rx="2" fill="rgba(255,255,255,0.45)"/>
+  <rect x="466" y="22" width="64" height="18" rx="9" fill="#C9A84C"/>
+
+  <!-- Hero text -->
+  <rect x="24" y="60" width="210" height="18" rx="3" fill="rgba(255,255,255,0.95)"/>
+  <rect x="24" y="84" width="270" height="11" rx="2" fill="rgba(255,255,255,0.45)"/>
+  <rect x="24" y="104" width="95" height="17" rx="8" fill="#C9A84C"/>
+
+  <!-- Section heading -->
+  <rect x="24" y="146" width="115" height="11" rx="3" fill="#0D1F3C" opacity="0.85"/>
+  <rect x="24" y="163" width="190" height="7" rx="2" fill="#4a5568" opacity="0.45"/>
+
+  <!-- Event card 1 -->
+  <rect x="24" y="184" width="170" height="142" rx="10" fill="white" filter="url(#s)"/>
+  <rect x="24" y="184" width="170" height="72" rx="10" fill="#1a3a6b"/>
+  <rect x="24" y="226" width="170" height="30" fill="#1a3a6b"/>
+  <rect x="37" y="197" width="62" height="7" rx="2" fill="#C9A84C"/>
+  <rect x="37" y="212" width="124" height="10" rx="3" fill="white"/>
+  <rect x="37" y="272" width="58" height="6" rx="2" fill="#8a96a8"/>
+  <rect x="37" y="285" width="44" height="6" rx="2" fill="#8a96a8"/>
+  <rect x="37" y="305" width="82" height="16" rx="8" fill="#C9A84C" opacity="0.9"/>
+
+  <!-- Event card 2 -->
+  <rect x="206" y="184" width="170" height="142" rx="10" fill="white" filter="url(#s)"/>
+  <rect x="206" y="184" width="170" height="72" rx="10" fill="#152e55"/>
+  <rect x="206" y="226" width="170" height="30" fill="#152e55"/>
+  <rect x="219" y="197" width="62" height="7" rx="2" fill="#C9A84C"/>
+  <rect x="219" y="212" width="124" height="10" rx="3" fill="white"/>
+  <rect x="219" y="272" width="58" height="6" rx="2" fill="#8a96a8"/>
+  <rect x="219" y="285" width="44" height="6" rx="2" fill="#8a96a8"/>
+  <rect x="219" y="305" width="82" height="16" rx="8" fill="#C9A84C" opacity="0.9"/>
+
+  <!-- Event card 3 -->
+  <rect x="388" y="184" width="170" height="142" rx="10" fill="white" filter="url(#s)"/>
+  <rect x="388" y="184" width="170" height="72" rx="10" fill="#0d2a52"/>
+  <rect x="388" y="226" width="170" height="30" fill="#0d2a52"/>
+  <rect x="401" y="197" width="62" height="7" rx="2" fill="#C9A84C"/>
+  <rect x="401" y="212" width="124" height="10" rx="3" fill="white"/>
+  <rect x="401" y="272" width="58" height="6" rx="2" fill="#8a96a8"/>
+  <rect x="401" y="285" width="44" height="6" rx="2" fill="#8a96a8"/>
+  <rect x="401" y="305" width="82" height="16" rx="8" fill="#C9A84C" opacity="0.9"/>
+</svg>

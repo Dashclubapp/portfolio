@@ -44,8 +44,12 @@ const FAQ_ITEMS = [
     a: "Oui, via un backoffice simple, sans aucune compétence technique.",
   },
   {
-    q: "Est-ce que mon club garde son nom de domaine ?",
-    a: "Oui, et mieux encore : si vous avez déjà un domaine (monclub.fr), vous pouvez le connecter en quelques minutes — inclus dans toutes nos formules. DashClub s'occupe de la configuration technique complète. Si vous n'avez pas encore de domaine, vous disposez d'un sous-domaine gratuit (monclub.dashclub.app).",
+    q: "Le domaine est-il inclus ?",
+    a: "Tout dépend de votre situation. Vous avez déjà un domaine : nous le connectons gratuitement à votre site, quelle que soit la formule. Vous n'avez pas encore de domaine : soit vous le gérez vous-même (10-15€/an chez un registrar comme OVH ou Gandi), soit nous le gérons pour vous (20€/an tout compris, inclus dans la formule Illimité).",
+  },
+  {
+    q: "C'est quoi \"configurer les DNS\" ?",
+    a: "Les DNS relient votre domaine à votre site. Si vous gérez votre domaine vous-même, il faut créer 2-3 enregistrements chez votre registrar — opération simple de 10 minutes, avec les valeurs exactes à copier-coller que nous fournissons. Sinon, optez pour la gestion déléguée (+20€/an, ou inclus en formule Illimité).",
   },
   {
     q: "DashClub fonctionne-t-il pour tous les sports ?",

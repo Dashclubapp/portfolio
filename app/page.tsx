@@ -1,9 +1,11 @@
 import Link from "next/link";
-import Image from "next/image";
 import { hasNavyPricingCard, plans } from "./pricing-data";
 import { buildPageMetadata, homeDescription, homeTitle, siteName, siteUrl } from "./seo";
 import { MobileNav } from "@/components/mobile-nav";
 import { FaqSection } from "@/components/faq-section";
+import { Hero } from "@/components/marketing/Hero";
+import { PainPoints } from "@/components/marketing/PainPoints";
+import { BeforeAfter } from "@/components/marketing/BeforeAfter";
 
 export const metadata = buildPageMetadata({
   title: homeTitle,
@@ -127,189 +129,90 @@ export default function Home() {
         </header>
 
         {/* ── 1. HERO ── */}
-        <section
-          className="relative grid gap-10 overflow-hidden rounded-[2rem] py-10 lg:grid-cols-[1.04fr_0.96fr] lg:items-center lg:gap-16 lg:py-14"
-          style={{
-            backgroundColor: "#0D1F3C",
-            backgroundImage:
-              "linear-gradient(135deg, rgba(13,31,60,0.72) 0%, rgba(21,46,85,0.55) 60%, rgba(13,31,60,0.78) 100%), url('/triathlon-hero.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center center",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          <div className="relative z-10 px-5 sm:px-8 lg:pl-12 lg:pr-0">
-            <h1 className="mt-6 font-display text-[3.2rem] leading-[0.92] text-white sm:text-[4.4rem] lg:text-[5.2rem]">
-              Votre club sportif mérite un vrai site
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
-              DashClub crée votre site, gère vos inscriptions et organise vos événements — sans développeur, dès 19€/mois.
-            </p>
-            <ul className="mt-6 flex flex-col gap-2.5">
-              {[
-                { text: "Site du club créé et hébergé" },
-                { text: "Domaine personnalisé (monclub.fr) inclus" },
-                { text: "1ère épreuve organisée sans supplément" },
-                { text: "Paiement en ligne via Stripe" },
-              ].map((item) => (
-                <li key={item.text} className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm">
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#C9A84C] text-[11px] font-bold text-stone-950">✓</span>
-                  {item.text}
-                </li>
-              ))}
-            </ul>
-            {/* CTA mobile only — sur desktop les boutons sont sous le screenshot */}
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row lg:hidden">
-              <LaunchCTA />
-              <a
-                className="inline-flex items-center justify-center rounded-full border border-stone-950/10 bg-white/80 px-7 py-4 text-base font-medium text-stone-800 transition hover:border-stone-950/20 hover:bg-white"
-                href={demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Voir le site démo →
-              </a>
-            </div>
-          </div>
+        <Hero />
 
-          <div className="relative px-5 pb-8 sm:px-8 lg:pl-0 lg:pr-12 lg:pb-0">
-            {/* Glow behind screenshot */}
-            <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.18),_transparent_70%)]" />
-            <div className="relative overflow-hidden rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.45)] ring-1 ring-white/10">
-              <Image
-                src="/dashboard-screenshot.svg"
-                alt="Backoffice DashClub — tableau de bord club sportif"
-                className="w-full"
-                width={1200}
-                height={780}
-                priority
-                style={{ display: "block" }}
-              />
-            </div>
-            {/* CTA desktop — sous le screenshot */}
-            <div className="mt-5 hidden lg:flex justify-center">
-              <a
-                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-7 py-4 text-base font-medium text-white transition hover:bg-white/16"
-                href={demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Voir le site démo →
-              </a>
-            </div>
-          </div>
-        </section>
+        {/* ── 2. DOULEURS ── */}
+        <PainPoints />
 
-        {/* ── 2. SECTION PROBLÈME ── */}
-        <section className="problem-section border-t border-stone-900/10 py-8">
-          <div className="rounded-[2rem] border border-stone-900/10 bg-stone-50/80 px-6 py-7 sm:px-8">
-            <h2 className="text-center font-display text-4xl leading-tight text-stone-950 sm:text-5xl">
-              Aujourd&apos;hui, gérer votre club c&apos;est...
-            </h2>
-            <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              <div className="problem-card flex flex-col items-center gap-3 rounded-[1.5rem] border border-stone-900/8 bg-white p-5 text-center shadow-[0_8px_24px_rgba(41,37,36,0.05)]">
-                <span className="text-3xl" role="img" aria-label="Outil">🛠️</span>
-                <h3 className="problem-card-title text-lg font-sans">
-                  Un site fragile
-                </h3>
-                <p className="problem-card-description">
-                  Un site WordPress planté que personne ne sait maintenir
-                </p>
-              </div>
-              <div className="problem-card flex flex-col items-center gap-3 rounded-[1.5rem] border border-stone-900/8 bg-white p-5 text-center shadow-[0_8px_24px_rgba(41,37,36,0.05)]">
-                <span className="text-3xl" role="img" aria-label="Formulaire">📋</span>
-                <h3 className="problem-card-title text-lg font-sans">
-                  Des inscriptions bricolées
-                </h3>
-                <p className="problem-card-description">
-                  Des inscriptions gérées par email ou Google Form
-                </p>
-              </div>
-              <div className="problem-card flex flex-col items-center gap-3 rounded-[1.5rem] border border-stone-900/8 bg-white p-5 text-center shadow-[0_8px_24px_rgba(41,37,36,0.05)]">
-                <span className="text-3xl" role="img" aria-label="Annonce">📣</span>
-                <h3 className="problem-card-title text-lg font-sans">
-                  Une communication dispersée
-                </h3>
-                <p className="problem-card-description">
-                  Des événements annoncés sur Facebook faute de mieux
-                </p>
-              </div>
-            </div>
-            <p className="mt-8 text-center text-lg font-semibold text-stone-900">
-              DashClub règle les trois en quelques jours.
-            </p>
-          </div>
-        </section>
+        {/* ── 3. AVANT / APRÈS ── */}
+        <BeforeAfter />
 
         {/* ── 6. SECTION ÉTAPES / PRODUIT ── */}
         <section id="produit" className="border-t border-stone-900/10 py-8">
-          <div className="mb-10 max-w-2xl">
-            <p className="font-sans text-sm uppercase tracking-[0.34em] text-orange-700">
-              Comment ça marche
-            </p>
-            <h2 className="mt-3 font-display text-4xl leading-none text-stone-950 sm:text-5xl">
-              Un club sportif en ligne en quelques jours.
-            </h2>
-          </div>
-          <div className="grid gap-5 lg:grid-cols-3">
-            <article className="rounded-[1.9rem] border border-stone-900/10 bg-white/82 p-6 shadow-[0_20px_50px_rgba(41,37,36,0.06)]">
-              <div className="inline-flex rounded-2xl border border-orange-100 bg-orange-50 p-3 text-orange-700">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6">
-                  <rect x="3" y="4" width="18" height="12" rx="2.5" />
-                  <path d="M8 20h8M12 16v4" />
-                </svg>
-              </div>
-              <p className="mt-3 font-sans text-xs uppercase tracking-[0.28em] text-stone-400">Étape 01</p>
-              <h3 className="mt-2 font-display text-2xl leading-tight text-stone-950">
-                Site moderne en quelques clics
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-stone-600">
-                Votre club en ligne, clair sur mobile, prêt à recevoir vos actus, vos événements et vos membres. Connectez votre domaine existant en quelques clics — DashClub gère la configuration technique complète.
+          <div className="rounded-[2rem] border border-stone-900/10 bg-stone-50/80 px-6 py-10 sm:px-8">
+            <div className="mb-10 max-w-2xl">
+              <p className="font-sans text-sm uppercase tracking-[0.34em]" style={{ color: "#C9A84C" }}>
+                Comment ça marche
               </p>
-              <p className="mt-4 rounded-xl bg-orange-50 px-4 py-3 text-sm font-medium text-orange-800">
-                ⏱ Votre site est créé et en ligne sous 5 jours ouvrés
-              </p>
-            </article>
+              <h2 className="mt-3 font-display text-4xl leading-none sm:text-5xl" style={{ color: "#ffffff" }}>
+                Un club sportif en ligne en quelques jours.
+              </h2>
+            </div>
+            <div className="grid gap-5 lg:grid-cols-3">
+              <article className="rounded-[1.9rem] bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)]" style={{ border: "1px solid rgba(201,168,76,0.2)" }}>
+                <div className="inline-flex rounded-2xl p-3" style={{ backgroundColor: "rgba(201,168,76,0.15)" }}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth={1.5} className="h-6 w-6">
+                    <rect x="3" y="4" width="18" height="12" rx="2.5" />
+                    <path d="M8 20h8M12 16v4" />
+                  </svg>
+                </div>
+                <p className="mt-3 font-sans text-xs uppercase tracking-[0.28em]" style={{ color: "#C9A84C" }}>Étape 01</p>
+                <h3 className="mt-2 font-display text-2xl leading-tight" style={{ color: "#0D1F3C" }}>
+                  Site moderne en quelques clics
+                </h3>
+                <ul className="mt-3 space-y-1.5 text-sm leading-7" style={{ color: "#4a5568" }}>
+                  <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "#C9A84C" }}>✓</span>Votre club en ligne, clair sur mobile, prêt à recevoir vos actus et événements</li>
+                  <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "#C9A84C" }}>✓</span>Votre domaine personnalisé connecté au site</li>
+                  <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "#C9A84C" }}>✓</span>Configuration technique guidée ou prise en charge par DashClub</li>
+                </ul>
+                <p className="mt-3 text-xs italic leading-6" style={{ color: "#8a96a8" }}>
+                  Déjà un domaine ? Nous le connectons. Besoin d&apos;un domaine ? Vous le gérez vous-même, ou nous nous en chargeons pour 20€/an (inclus en formule Illimité).
+                </p>
+                <p className="mt-4 rounded-xl px-4 py-3 text-sm font-medium" style={{ backgroundColor: "rgba(201,168,76,0.12)", color: "#C9A84C" }}>
+                  ⏱ Votre site est créé et en ligne sous 5 jours ouvrés
+                </p>
+              </article>
 
-            <article className="rounded-[1.9rem] border border-stone-900/10 bg-white/82 p-6 shadow-[0_20px_50px_rgba(41,37,36,0.06)]">
-              <div className="inline-flex rounded-2xl border border-orange-100 bg-orange-50 p-3 text-orange-700">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6">
-                  <path d="M7 3v4M17 3v4M4 9h16" />
-                  <rect x="4" y="5" width="16" height="15" rx="2.5" />
-                  <path d="M8 13h3M8 16h6" />
-                </svg>
-              </div>
-              <p className="mt-3 font-sans text-xs uppercase tracking-[0.28em] text-stone-400">Étape 02</p>
-              <h3 className="mt-2 font-display text-2xl leading-tight text-stone-950">
-                Événements prêts à ouvrir
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-stone-600">
-                Ouvrez vos inscriptions à la date exacte que vous choisissez. File d&apos;attente automatique, 5 emails automatiques par événement (J-7, J-1, débrief, satisfaction, teaser) — zéro gestion manuelle.
-              </p>
-              <p className="mt-4 rounded-xl bg-orange-50 px-4 py-3 text-sm font-medium text-orange-800">
-                ⏱ Votre 1er événement sportif est prêt à accueillir des inscrits
-              </p>
-            </article>
+              <article className="rounded-[1.9rem] bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)]" style={{ border: "1px solid rgba(201,168,76,0.2)" }}>
+                <div className="inline-flex rounded-2xl p-3" style={{ backgroundColor: "rgba(201,168,76,0.15)" }}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth={1.5} className="h-6 w-6">
+                    <path d="M7 3v4M17 3v4M4 9h16" />
+                    <rect x="4" y="5" width="16" height="15" rx="2.5" />
+                    <path d="M8 13h3M8 16h6" />
+                  </svg>
+                </div>
+                <p className="mt-3 font-sans text-xs uppercase tracking-[0.28em]" style={{ color: "#C9A84C" }}>Étape 02</p>
+                <h3 className="mt-2 font-display text-2xl leading-tight" style={{ color: "#0D1F3C" }}>
+                  Événements prêts à ouvrir
+                </h3>
+                <p className="mt-3 text-sm leading-7" style={{ color: "#4a5568" }}>
+                  Ouvrez vos inscriptions à la date exacte que vous choisissez. File d&apos;attente automatique, 5 emails automatiques par événement (J-7, J-1, débrief, satisfaction, teaser) — zéro gestion manuelle.
+                </p>
+                <p className="mt-4 rounded-xl px-4 py-3 text-sm font-medium" style={{ backgroundColor: "rgba(201,168,76,0.12)", color: "#C9A84C" }}>
+                  ⏱ Votre 1er événement sportif est prêt à accueillir des inscrits
+                </p>
+              </article>
 
-            <article className="rounded-[1.9rem] border border-stone-900/10 bg-white/82 p-6 shadow-[0_20px_50px_rgba(41,37,36,0.06)]">
-              <div className="inline-flex rounded-2xl border border-orange-100 bg-orange-50 p-3 text-orange-700">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6">
-                  <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
-                  <path d="M5 21a7 7 0 0 1 14 0" />
-                  <path d="M18 17h3M19.5 15.5v3" />
-                </svg>
-              </div>
-              <p className="mt-3 font-sans text-xs uppercase tracking-[0.28em] text-stone-400">Étape 03</p>
-              <h3 className="mt-2 font-display text-2xl leading-tight text-stone-950">
-                Adhérents et paiements intégrés
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-stone-600">
-                Stripe, licences, relances, exports et bilan de saison dans le même outil.
-              </p>
-              <p className="mt-4 rounded-xl bg-orange-50 px-4 py-3 text-sm font-medium text-orange-800">
-                ⏱ Changez de formule à tout moment selon votre saison
-              </p>
-            </article>
+              <article className="rounded-[1.9rem] bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)]" style={{ border: "1px solid rgba(201,168,76,0.2)" }}>
+                <div className="inline-flex rounded-2xl p-3" style={{ backgroundColor: "rgba(201,168,76,0.15)" }}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth={1.5} className="h-6 w-6">
+                    <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+                    <path d="M5 21a7 7 0 0 1 14 0" />
+                    <path d="M18 17h3M19.5 15.5v3" />
+                  </svg>
+                </div>
+                <p className="mt-3 font-sans text-xs uppercase tracking-[0.28em]" style={{ color: "#C9A84C" }}>Étape 03</p>
+                <h3 className="mt-2 font-display text-2xl leading-tight" style={{ color: "#0D1F3C" }}>
+                  Adhérents et paiements intégrés
+                </h3>
+                <p className="mt-3 text-sm leading-7" style={{ color: "#4a5568" }}>
+                  Stripe, licences, relances, exports et bilan de saison dans le même outil.
+                </p>
+                <p className="mt-4 rounded-xl px-4 py-3 text-sm font-medium" style={{ backgroundColor: "rgba(201,168,76,0.12)", color: "#C9A84C" }}>
+                  ⏱ Changez de formule à tout moment selon votre saison
+                </p>
+              </article>
+            </div>
           </div>
 
         </section>
@@ -327,7 +230,7 @@ export default function Home() {
               Trois formules. Un seul outil. Zéro commission.
             </h2>
             <p className="mt-5 text-lg leading-8 text-stone-700">
-              Choisissez la formule qui correspond à votre club. Domaine personnalisé inclus dans toutes les formules.
+              Choisissez la formule qui correspond à votre club. Zéro commission sur tous vos paiements.
             </p>
           </div>
 
@@ -561,10 +464,16 @@ export default function Home() {
                           i: true,
                         },
                         {
-                          label: "Domaine personnalisé inclus",
+                          label: "Connexion domaine personnalisé",
                           e: true,
                           s: true,
                           i: true,
+                        },
+                        {
+                          label: "Gestion domaine par DashClub",
+                          e: "+20€/an",
+                          s: "+20€/an",
+                          i: "Inclus",
                         },
                         {
                           label: "Paiement en ligne via Stripe",

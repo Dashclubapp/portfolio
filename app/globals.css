@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -32,8 +32,6 @@ html {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: "DM Sans", sans-serif;
   min-height: 100vh;
   padding-top: 0;
@@ -453,3 +451,4 @@ button[class~="border"][class~="rounded-full"]:hover,
 .demo-cta-btn:hover {
   background-color: #D4B860;
 }
+

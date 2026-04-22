@@ -35,7 +35,7 @@ export const plans: Plan[] = [
     landingBullets: [
       "Paiement en ligne via Stripe",
       "Site du club créé et hébergé",
-      "Domaine custom (monclub.fr) inclus",
+      "Connexion de votre domaine (ou géré par DashClub : +20€/an)",
       "1ère épreuve organisée sans supplément",
     ],
     landingCta: "Démarrer",
@@ -61,6 +61,7 @@ export const plans: Plan[] = [
     landingHook: "Pour les clubs avec un calendrier.",
     landingBullets: [
       "Tout Essentiel, plus :",
+      "Connexion de votre domaine (ou domaine géré par DashClub : +20€/an)",
       "Jusqu'à 3 événements par saison",
       "File d'attente automatique",
       "Remboursement en 1 clic",
@@ -100,6 +101,7 @@ export const plans: Plan[] = [
     landingHook: "Pour les clubs qui veulent tout automatiser.",
     landingBullets: [
       "Tout Compétition, plus :",
+      "Domaine .fr géré par DashClub inclus (valeur 20€/an)",
       "Épreuves illimitées",
       "Gestion des adhérents et licences",
       "Bilan de saison exportable en PDF",
@@ -148,20 +150,20 @@ export const comparisonRows: ComparisonRow[] = [
     values: [true, true, true],
   },
   {
-    feature: "Domaine personnalisé inclus",
+    feature: "Connexion domaine personnalisé",
     values: [true, true, true],
   },
   {
-    feature: "1er événement inclus",
-    values: [true, true, true],
-  },
-  {
-    feature: "Paiement en ligne Stripe inclus",
+    feature: "Paiement en ligne Stripe",
     values: [true, true, true],
   },
   {
     feature: "Nombre d'événements par saison",
     values: ["1", "3", "Illimité"],
+  },
+  {
+    feature: "Gestion domaine par DashClub",
+    values: ["+20€/an", "+20€/an", "Inclus"],
   },
   {
     feature: "Pages événement réutilisables",

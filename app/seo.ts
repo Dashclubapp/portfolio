@@ -5,9 +5,9 @@ export const siteUrl = "https://dashclub.app";
 export const ogImagePath = "/opengraph-image";
 export const ogImageUrl = new URL(ogImagePath, siteUrl).toString();
 
-export const homeTitle = "DashClub — Dashboard pour clubs sportifs";
+export const homeTitle = "DashClub — Site web, inscriptions et gestion pour clubs sportifs";
 export const homeDescription =
-  "Gérez votre club, votre site et vos inscriptions en un seul dashboard. À partir de 19€/mois, zéro commission.";
+  "Site public, back-office et inscriptions Stripe dans un seul outil. En ligne en 5 jours, dès 19€/mois, zéro commission.";
 
 const baseOpenGraph = {
   siteName,
