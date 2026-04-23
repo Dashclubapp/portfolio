@@ -114,42 +114,42 @@ export function Hero() {
         <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.14),_transparent_70%)]" />
 
         {/* Double mockup — desktop uniquement */}
-        <div className="relative hidden lg:block" style={{ height: "340px" }}>
+        <div className="relative hidden lg:block" style={{ height: "360px" }}>
 
-          {/* Arrière-plan : site public (bas-gauche, z=1) */}
+          {/* Arrière-plan : back-office (haut-droite, z=10) — ombre subtile */}
           <div
-            className="absolute bottom-0 left-0 overflow-hidden rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.55)] ring-1 ring-white/10"
-            style={{ width: "74%", zIndex: 1 }}
+            className="absolute top-0 right-0 overflow-hidden rounded-xl shadow-[0_8px_28px_rgba(0,0,0,0.38)] ring-1 ring-white/10"
+            style={{ width: "60%", zIndex: 10 }}
           >
-            <Image
-              src="/hero/screenshot-site-desktop.png"
-              alt="Site public d'un club de triathlon — powered by DashClub"
-              width={600}
-              height={340}
-              className="w-full"
-              style={{ display: "block" }}
-            />
-          </div>
-          <div className="absolute" style={{ top: 10, left: 10, zIndex: 2 }}>
-            <MockupPill>Site public</MockupPill>
-          </div>
-
-          {/* Premier plan : back-office (haut-droite, z=3) */}
-          <div
-            className="absolute top-0 right-0 overflow-hidden rounded-xl shadow-[0_28px_80px_rgba(0,0,0,0.70)] ring-1 ring-white/15"
-            style={{ width: "71%", zIndex: 3 }}
-          >
+            <span className="absolute top-3 right-3" style={{ zIndex: 15 }}>
+              <MockupPill>Back-office</MockupPill>
+            </span>
             <Image
               src="/hero/screenshot-backoffice-desktop.png"
-              alt="Back-office DashClub — tableau de bord club sportif"
+              alt="Back-office DashClub — tableau de bord du club"
               width={560}
               height={320}
               className="w-full"
               style={{ display: "block" }}
             />
           </div>
-          <div className="absolute" style={{ bottom: 12, right: 10, zIndex: 4 }}>
-            <MockupPill>Back-office</MockupPill>
+
+          {/* Premier plan : site public Yerres Triathlon (bas-gauche, z=20) — ombre forte */}
+          <div
+            className="absolute bottom-0 left-0 overflow-hidden rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.62)] ring-1 ring-white/15"
+            style={{ width: "66%", zIndex: 20 }}
+          >
+            <span className="absolute top-3 left-3" style={{ zIndex: 25 }}>
+              <MockupPill>Site public</MockupPill>
+            </span>
+            <Image
+              src="/hero/screenshot-site-desktop.png"
+              alt="Site public Yerres Triathlon — propulsé par DashClub"
+              width={600}
+              height={340}
+              className="w-full"
+              style={{ display: "block" }}
+            />
           </div>
         </div>
 
