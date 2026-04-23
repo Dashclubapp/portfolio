@@ -16,9 +16,8 @@ function MockupPill({ children }: { children: string }) {
     <span
       className="rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.16em]"
       style={{
-        backgroundColor: "rgba(201,168,76,0.22)",
-        border: "1px solid rgba(201,168,76,0.5)",
-        color: "#C9A84C",
+        backgroundColor: "#C9A84C",
+        color: "#0D1F3C",
       }}
     >
       {children}
