@@ -121,7 +121,7 @@ export function Hero() {
             className="absolute top-0 right-0 overflow-hidden rounded-xl shadow-[0_8px_28px_rgba(0,0,0,0.38)] ring-1 ring-white/10"
             style={{ width: "60%", zIndex: 10 }}
           >
-            <span className="absolute top-3 right-3" style={{ zIndex: 15 }}>
+            <span className="absolute bottom-3 right-3" style={{ zIndex: 15 }}>
               <MockupPill>Back-office</MockupPill>
             </span>
             <Image
@@ -139,7 +139,7 @@ export function Hero() {
             className="absolute bottom-0 left-0 overflow-hidden rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.62)] ring-1 ring-white/15"
             style={{ width: "66%", zIndex: 20 }}
           >
-            <span className="absolute top-3 left-3" style={{ zIndex: 25 }}>
+            <span className="absolute top-3 right-3" style={{ zIndex: 25 }}>
               <MockupPill>Site public</MockupPill>
             </span>
             <Image
