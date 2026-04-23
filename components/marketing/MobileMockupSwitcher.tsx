@@ -43,7 +43,7 @@ export function MobileMockupSwitcher() {
           src={
             active === "site"
               ? "/hero/screenshot-site-mobile.png"
-              : "/hero/screenshot-backoffice-mobile.png"
+              : "/hero/screenshot-backoffice-desktop.png"
           }
           alt={
             active === "site"
