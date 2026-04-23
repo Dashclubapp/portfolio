@@ -42,7 +42,7 @@ export function MobileMockupSwitcher() {
         <Image
           src={
             active === "site"
-              ? "/hero/screenshot-site-mobile.png"
+              ? "/hero/screenshot-site-desktop.png"
               : "/hero/screenshot-backoffice-desktop.png"
           }
           alt={
