@@ -6,9 +6,10 @@ const demoUrl = "https://demo.dashclub.app";
 
 const REASSURANCE = [
   "Sans engagement",
+  "Démo libre",
   "Stripe direct",
   "Dès 19€/mois",
-  "En ligne en 5j",
+  "Site en ligne en 5 jours",
 ];
 
 function MockupPill({ children }: { children: string }) {
@@ -83,29 +84,12 @@ export function Hero() {
             href={demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-16 w-full flex-col items-center justify-center rounded-full border-2 border-[#C9A84C] px-10 transition hover:-translate-y-0.5 hover:bg-[#C9A84C]/10 sm:w-auto"
+            className="inline-flex h-16 w-full items-center justify-center rounded-full border-2 border-[#C9A84C] px-7 text-base font-bold text-[#C9A84C] transition hover:-translate-y-0.5 hover:bg-[#C9A84C]/10 sm:w-auto"
           >
-            <span className="text-base font-bold text-[#C9A84C]">Voir la démo →</span>
-            <span className="text-[0.7rem] font-normal" style={{ color: "rgba(201,168,76,0.6)" }}>En 2 minutes, sans inscription</span>
+            Voir démo en 2 minutes →
           </a>
         </div>
 
-        {/* Puces de réassurance — grille 2×2 mobile, flex desktop */}
-        <div className="relative z-20 mt-5 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-1.5">
-          {REASSURANCE.map((item) => (
-            <span
-              key={item}
-              className="inline-flex items-center justify-center gap-1 rounded-full border px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.16em]"
-              style={{
-                borderColor: "rgba(201,168,76,0.4)",
-                color: "#C9A84C",
-                backgroundColor: "rgba(201,168,76,0.1)",
-              }}
-            >
-              ✓ {item}
-            </span>
-          ))}
-        </div>
       </div>
 
       {/* Colonne visuel */}
@@ -154,6 +138,23 @@ export function Hero() {
 
         {/* Mobile : tab switcher Site public / Back-office */}
         <MobileMockupSwitcher />
+      </div>
+
+      {/* Badges de réassurance — pleine largeur, centrés */}
+      <div className="col-span-full flex flex-wrap justify-center gap-2 px-4 pb-4">
+        {REASSURANCE.map((item) => (
+          <span
+            key={item}
+            className="inline-flex items-center justify-center gap-1 rounded-full border px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.16em]"
+            style={{
+              borderColor: "rgba(201,168,76,0.4)",
+              color: "#C9A84C",
+              backgroundColor: "rgba(201,168,76,0.1)",
+            }}
+          >
+            ✓ {item}
+          </span>
+        ))}
       </div>
     </section>
   );
