@@ -36,7 +36,7 @@ export function PainPoints() {
         {/* Grid de cartes */}
         <div className="mt-8 grid gap-5 sm:grid-cols-3">
           {CARDS.map(({ icon: Icon, title, body, result }) => (
-            <div key={title} className="rounded-[1.5rem] bg-white p-6 shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
+            <div key={title} className="flex flex-col rounded-[1.5rem] bg-white p-6 shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
               style={{ border: "1px solid rgba(201,168,76,0.2)" }}>
               <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl"
                 style={{ backgroundColor: "rgba(201,168,76,0.12)" }}>
@@ -48,7 +48,7 @@ export function PainPoints() {
               <p className="mt-3 text-sm leading-7" style={{ color: "#4a5568" }}>
                 {body}
               </p>
-              <p className="mt-4 text-sm italic" style={{ color: "#8a96a8" }}>
+              <p className="mt-auto pt-4 text-sm italic" style={{ color: "#8a96a8" }}>
                 {result}
               </p>
             </div>
