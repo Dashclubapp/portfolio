@@ -10,7 +10,7 @@ const CARDS = [
   {
     icon: Wallet,
     title: "Des commissions qui rongent vos recettes",
-    body: "Les plateformes classiques d'inscription prélèvent une commission sur chaque inscrit. Sur 300 inscrits à 25€, c'est plusieurs centaines d'euros qui n'arrivent jamais sur le compte du club.",
+    body: "Les plateformes classiques d'inscription prélèvent 2% à 6% sur chaque inscrit. Pour un club qui organise 3 épreuves par an à 300 inscrits, ce sont jusqu'à 1 350€ qui n'arrivent jamais sur le compte du club. Chaque saison.",
     result: "Résultat : vous travaillez pour leur plateforme, pas pour votre club.",
   },
   {
