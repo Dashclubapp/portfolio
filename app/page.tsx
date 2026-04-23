@@ -6,6 +6,7 @@ import { FaqSection } from "@/components/faq-section";
 import { Hero } from "@/components/marketing/Hero";
 import { PainPoints } from "@/components/marketing/PainPoints";
 import { BeforeAfter } from "@/components/marketing/BeforeAfter";
+import { StickyCTAMobile } from "@/components/marketing/StickyCTAMobile";
 
 export const metadata = buildPageMetadata({
   title: homeTitle,
@@ -86,6 +87,7 @@ export default function Home() {
       <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(28,25,23,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(28,25,23,0.05)_1px,transparent_1px)] [background-size:92px_92px]" />
 
       <MobileNav />
+      <StickyCTAMobile />
 
       <div className="relative mx-auto w-full max-w-7xl px-5 pb-10 pt-6 sm:px-8 lg:px-12 lg:pb-16">
 

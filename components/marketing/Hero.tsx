@@ -6,14 +6,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { MobileMockupSwitcher } from "./MobileMockupSwitcher";
 
 const demoUrl = "https://demo.dashclub.app";
 
 const REASSURANCE = [
-  "Site + gestion dans un seul écran",
-  "Stripe direct sur votre compte",
-  "En ligne en 5 jours",
-  "Dès 19€/mois, sans engagement",
+  "0% commission",
+  "Stripe direct",
+  "Dès 19€/mois",
+  "En ligne en 5j",
 ];
 
 function BrowserChrome({ url, dark }: { url: string; dark?: boolean }) {
@@ -79,20 +80,27 @@ export function Hero() {
 
       {/* Colonne texte */}
       <div className="relative z-10 px-5 sm:px-8 lg:pl-12 lg:pr-0">
-        <h1 className="mt-3 font-display text-[2.4rem] leading-[1.05] text-white sm:text-[3rem] lg:text-[3.6rem]">
+        <h1
+          className="mt-3 font-display leading-[1.05] text-white"
+          style={{ fontSize: "clamp(2rem, 8vw, 3.5rem)" }}
+        >
           Le club, le site, les inscriptions.<br />
           <em style={{ color: "#C9A84C", fontStyle: "italic" }}>Un seul outil.</em>
         </h1>
 
-        <p className="mt-4 max-w-xl text-lg leading-8" style={{ color: "rgba(255,255,255,0.8)" }}>
-          Site public, back-office de gestion, inscriptions en ligne et paiements Stripe directs sur le compte du club. DashClub centralise tout ce dont votre club a besoin. En ligne en 5 jours, dès 19€/mois.
+        <p
+          className="mt-4 max-w-xl text-base leading-7 sm:text-lg sm:leading-8"
+          style={{ color: "rgba(255,255,255,0.8)" }}
+        >
+          Site pro, inscriptions et paiements Stripe — sans commission.{" "}
+          En ligne en 5 jours, dès 19€/mois.
         </p>
 
         {/* CTAs */}
-        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-5 flex flex-col gap-3">
           <Link
             href="/register"
-            className="inline-flex items-center justify-center rounded-full px-7 py-4 text-base font-bold transition hover:-translate-y-0.5"
+            className="inline-flex w-full items-center justify-center rounded-full px-7 py-4 text-base font-bold transition hover:-translate-y-0.5 sm:w-auto sm:self-start"
             style={{ backgroundColor: "#C9A84C", color: "#0D1F3C" }}
           >
             Lancer mon site club →
@@ -101,23 +109,19 @@ export function Hero() {
             href={demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-full border px-7 py-4 text-base font-medium transition hover:-translate-y-0.5"
-            style={{
-              borderColor: "rgba(201,168,76,0.5)",
-              backgroundColor: "rgba(201,168,76,0.08)",
-              color: "#ffffff",
-            }}
+            className="text-center text-sm font-medium underline underline-offset-4 transition hover:opacity-80 sm:text-left"
+            style={{ color: "rgba(255,255,255,0.75)" }}
           >
             Voir la démo en 2 min
           </a>
         </div>
 
-        {/* Puces de réassurance */}
-        <div className="relative z-20 mt-5 flex flex-nowrap justify-center gap-1.5">
+        {/* Puces de réassurance — grille 2×2 mobile, flex desktop */}
+        <div className="relative z-20 mt-5 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-1.5">
           {REASSURANCE.map((item) => (
             <span
               key={item}
-              className="inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.16em]"
+              className="inline-flex items-center justify-center gap-1 rounded-full border px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.16em]"
               style={{
                 borderColor: "rgba(201,168,76,0.4)",
                 color: "#C9A84C",
@@ -176,18 +180,8 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Mobile : back-office seul */}
-        <div className="relative overflow-hidden rounded-xl shadow-[0_24px_60px_rgba(0,0,0,0.55)] ring-1 ring-white/15 lg:hidden">
-          <BrowserChrome url="app.dashclub.fr/back" dark />
-          <Image
-            src="/hero/hero-mockup-backoffice.svg"
-            alt="Back-office DashClub — tableau de bord club sportif"
-            width={560}
-            height={320}
-            className="w-full"
-            style={{ display: "block" }}
-          />
-        </div>
+        {/* Mobile : tab switcher Site public / Back-office */}
+        <MobileMockupSwitcher />
       </div>
     </section>
   );
