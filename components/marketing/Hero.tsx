@@ -58,8 +58,8 @@ export function Hero() {
           className="mt-3 font-display leading-[1.05] text-white"
           style={{ fontSize: "clamp(2rem, 8vw, 3.5rem)" }}
         >
-          Le club, le site, les inscriptions.<br />
-          <em style={{ color: "#C9A84C", fontStyle: "italic" }}>Un seul outil.</em>
+          Le site pro de votre club.<br />
+          <strong style={{ color: "#C9A84C", fontStyle: "normal" }}>Zéro commission sur vos inscriptions.</strong>
         </h1>
 
         <p
