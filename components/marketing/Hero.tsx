@@ -5,7 +5,7 @@ import { MobileMockupSwitcher } from "./MobileMockupSwitcher";
 const demoUrl = "https://demo.dashclub.app";
 
 const REASSURANCE = [
-  "0% commission",
+  "Sans engagement",
   "Stripe direct",
   "Dès 19€/mois",
   "En ligne en 5j",
@@ -71,10 +71,10 @@ export function Hero() {
         </p>
 
         {/* CTAs */}
-        <div className="mt-5 flex flex-col gap-3">
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:flex-wrap">
           <Link
             href="/register"
-            className="inline-flex w-full items-center justify-center rounded-full px-7 py-4 text-base font-bold transition hover:-translate-y-0.5 sm:w-auto sm:self-start"
+            className="inline-flex h-16 w-full items-center justify-center rounded-full px-7 text-base font-bold transition hover:-translate-y-0.5 sm:w-auto"
             style={{ backgroundColor: "#C9A84C", color: "#0D1F3C" }}
           >
             Lancer mon site club →
@@ -83,10 +83,10 @@ export function Hero() {
             href={demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-center text-sm font-medium underline underline-offset-4 transition hover:opacity-80 sm:text-left"
-            style={{ color: "rgba(255,255,255,0.75)" }}
+            className="inline-flex h-16 w-full flex-col items-center justify-center rounded-full border-2 border-[#C9A84C] px-10 transition hover:-translate-y-0.5 hover:bg-[#C9A84C]/10 sm:w-auto"
           >
-            Voir la démo en 2 min
+            <span className="text-base font-bold text-[#C9A84C]">Voir la démo →</span>
+            <span className="text-[0.7rem] font-normal" style={{ color: "rgba(201,168,76,0.6)" }}>En 2 minutes, sans inscription</span>
           </a>
         </div>
 
