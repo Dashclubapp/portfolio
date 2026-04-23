@@ -10,7 +10,7 @@ const CARDS = [
   {
     icon: Wallet,
     title: "Des commissions qui rongent vos recettes",
-    body: "HelloAsso, Weezevent, Sportips — à chaque inscription, une commission part. Sur 300 inscrits à 25€, c'est plusieurs centaines d'euros qui n'arrivent jamais sur le compte du club.",
+    body: "Les plateformes classiques d'inscription prélèvent une commission sur chaque inscrit. Sur 300 inscrits à 25€, c'est plusieurs centaines d'euros qui n'arrivent jamais sur le compte du club.",
     result: "Résultat : vous travaillez pour leur plateforme, pas pour votre club.",
   },
   {

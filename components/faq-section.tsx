@@ -25,7 +25,7 @@ function PlusIcon() {
 const FAQ_ITEMS = [
   {
     q: "Quelle commission prend DashClub sur mes inscriptions ?",
-    a: "Zéro. DashClub ne prend aucune commission. Seuls les frais Stripe standard s'appliquent (2,9% + 0,30€ par transaction).",
+    a: "Zéro. DashClub ne prend aucune commission. Seuls les frais Stripe standard s'appliquent (1,5% + 0,25€ par transaction pour les cartes européennes).",
   },
   {
     q: "Puis-je annuler à tout moment ?",

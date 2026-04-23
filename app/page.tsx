@@ -160,13 +160,8 @@ export default function Home() {
                 <h3 className="mt-2 font-display text-2xl leading-tight" style={{ color: "#0D1F3C" }}>
                   Site moderne en quelques clics
                 </h3>
-                <ul className="mt-3 space-y-1.5 text-sm leading-7" style={{ color: "#4a5568" }}>
-                  <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "#C9A84C" }}>✓</span>Votre club en ligne, clair sur mobile, prêt à recevoir vos actus et événements</li>
-                  <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "#C9A84C" }}>✓</span>Votre domaine personnalisé connecté au site</li>
-                  <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "#C9A84C" }}>✓</span>Configuration technique guidée ou prise en charge par DashClub</li>
-                </ul>
-                <p className="mt-3 text-xs italic leading-6" style={{ color: "#8a96a8" }}>
-                  Déjà un domaine ? Nous le connectons. Besoin d&apos;un domaine ? Vous le gérez vous-même, ou nous nous en chargeons pour 20€/an (inclus en formule Illimité).
+                <p className="mt-3 text-sm leading-7" style={{ color: "#4a5568" }}>
+                  Un site clair et mobile-first, prêt à accueillir vos actus, événements et adhérents. Votre domaine personnalisé connecté au site, configuration prise en charge par DashClub.
                 </p>
                 <p className="mt-4 rounded-xl px-4 py-3 text-sm font-medium" style={{ backgroundColor: "rgba(201,168,76,0.12)", color: "#C9A84C" }}>
                   ⏱ Votre site est créé et en ligne sous 5 jours ouvrés
@@ -206,10 +201,10 @@ export default function Home() {
                   Adhérents et paiements intégrés
                 </h3>
                 <p className="mt-3 text-sm leading-7" style={{ color: "#4a5568" }}>
-                  Stripe, licences, relances, exports et bilan de saison dans le même outil.
+                  Adhésions en ligne, relances automatiques, gestion des licences fédérales et exports comptables dans le même outil. Vos recettes arrivent directement sur le compte du club, sans commission ni intermédiaire.
                 </p>
                 <p className="mt-4 rounded-xl px-4 py-3 text-sm font-medium" style={{ backgroundColor: "rgba(201,168,76,0.12)", color: "#C9A84C" }}>
-                  ⏱ Changez de formule à tout moment selon votre saison
+                  ⏱ Votre saison gérée sans fichiers Excel
                 </p>
               </article>
             </div>

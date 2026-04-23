@@ -12,7 +12,7 @@ const planBullets: Record<string, string[]> = {
     'Paiement en ligne via Stripe',
     'Création de site web pour votre club',
     'Hébergement inclus',
-    'Connectez votre propre domaine (monclub.fr) en quelques minutes — inclus dans votre abonnement.',
+    'Connexion de votre domaine existant (DNS gérés par le club) — ou gestion déléguée par DashClub : +20€/an',
     'Base éditoriale (pages, articles, agenda)',
     '1 événement inclus',
     'Zéro commission sur les inscriptions',
@@ -21,14 +21,14 @@ const planBullets: Record<string, string[]> = {
     'Tout Essentiel, plus :',
     "Jusqu'à 3 événements par saison",
     "Ouverture des inscriptions programmée + file d'attente virtuelle",
-    'Connectez votre propre domaine (monclub.fr) en quelques minutes — inclus dans votre abonnement.',
+    'Connexion de votre domaine existant (DNS gérés par le club) — ou gestion déléguée par DashClub : +20€/an',
     'Emails automatiques (J-7, J-1, débrief, satisfaction J+3, teaser J+7)',
     'Dashboard temps réel + pages événement réutilisables',
   ],
   illimite: [
     'Tout Compétition, plus :',
     'Événements illimités',
-    'Connectez votre propre domaine (monclub.fr) en quelques minutes — inclus dans votre abonnement.',
+    'Domaine .fr géré par DashClub inclus (valeur 20€/an)',
     'Gestion des membres + adhésions en ligne',
     'Export comptable mensuel + rapport de fin de saison PDF',
     'Accès anticipé aux nouvelles fonctionnalités',
@@ -323,19 +323,22 @@ export default function FormulasContent() {
           </div>
         </section>
 
-        {/* Competitor differentiation block */}
+        {/* Domain info block */}
         <section className="mt-8 rounded-[2rem] border border-stone-900/10 bg-white/84 px-6 py-6 shadow-[0_8px_32px_rgba(41,37,36,0.06)] sm:px-8 sm:py-7">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-6">
             <div className="shrink-0 text-2xl">🌐</div>
             <div>
               <p className="font-sans text-[11px] uppercase tracking-[0.3em] text-orange-700">
-                Domaine personnalisé — inclus dès 19€/mois
+                Votre domaine personnalisé
               </p>
               <p className="mt-2 text-base leading-7 text-stone-700">
-                Connectez votre domaine existant (monclub.fr) — inclus dans toutes les formules, sans frais supplémentaires. DashClub s&apos;occupe de la configuration technique complète.
+                Vous avez déjà un domaine (ex : monclub.fr) ? Nous le connectons à votre site, quelle que soit la formule. Vous gardez la main sur vos enregistrements DNS, avec notre guide pas-à-pas pour la configuration.
               </p>
               <p className="mt-3 text-sm leading-6 text-stone-500">
-                Wix et WordPress proposent le domaine custom en supplément. DashClub l&apos;inclut dès 19€/mois avec en plus la gestion des inscriptions, Stripe intégré et zéro commission.
+                Pas encore de domaine ? Vous le gérez vous-même : achat chez un registrar (OVH, Gandi…) pour 10 à 15€/an. Ou nous nous en chargeons : 20€/an tout compris (achat, configuration, renouvellement) — inclus sans surcoût dans la formule Illimité.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-stone-400 italic">
+                Aucune marge cachée sur le domaine. Vous savez exactement ce que vous payez.
               </p>
             </div>
           </div>
