@@ -31,31 +31,30 @@ const VIEWPORTS = {
 
 // ── Sensitive-data masking ────────────────────────────────────────────────────
 
-const MASK_SCRIPT = /* js */ `
+// Applied to demo.dashclub.app (club-starter public site)
+const SITE_MASK_SCRIPT = /* js */ `
   (() => {
-    const hide = (el) => { if (el) el.style.visibility = 'hidden'; };
-    const blur = (el) => { if (el) { el.style.filter = 'blur(6px)'; el.style.userSelect = 'none'; } };
+    // "Site propulsé par DashClub" badge — le data-cta est sur la div racine du badge
+    const badge = document.querySelector('div[data-cta="demo-badge"]');
+    if (badge) badge.style.display = 'none';
+  })();
+`;
 
-    // Top-bar username label (span[class*="max-w-[120px]"])
-    document.querySelectorAll('span').forEach(s => {
-      if (s.className && s.className.includes && s.className.includes('max-w-[120px]')) hide(s);
+// Applied to dashclub.app/demo/admin (Portfolio back-office demo)
+const BACK_MASK_SCRIPT = /* js */ `
+  (() => {
+    // Bandeau vert DemoBanner Portfolio — ciblé par zIndex 9999 + position fixed
+    document.querySelectorAll('div').forEach(el => {
+      if (el.style.zIndex === '9999' && el.style.position === 'fixed') {
+        el.style.display = 'none';
+      }
     });
-
-    // Top-bar avatar initials (small rounded-full span inside a button)
-    document.querySelectorAll('button span').forEach(s => {
-      if (
-        s.className && s.className.includes &&
-        s.className.includes('rounded-full') &&
-        s.className.includes('font-bold') &&
-        (s.textContent ?? '').trim().length <= 2
-      ) hide(s);
-    });
-
-    // Dashboard greeting (h1/h2 containing user name or 👋)
-    document.querySelectorAll('h1, h2').forEach(el => {
-      const t = el.textContent ?? '';
-      if (t.includes('👋') || t.includes('Laurent') || t.includes('Dupont') || t.includes('Admin')) {
-        blur(el);
+    // Bandeau sombre "Mode démo DashClub" dans le layout admin
+    // Longueur < 150 pour éviter de masquer les divs parents qui contiennent tout le contenu
+    document.querySelectorAll('div').forEach(el => {
+      const text = (el.textContent ?? '').trim();
+      if (text.startsWith('🎯 Mode démo') && text.length < 150 && !el.querySelector('main, aside, nav, table')) {
+        el.style.display = 'none';
       }
     });
   })();
@@ -86,7 +85,8 @@ async function capturePublicSite(browser: Awaited<ReturnType<typeof chromium.lau
     page.setDefaultTimeout(30_000);
 
     await page.goto(SITE_URL, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(1500);
+    await page.evaluate(SITE_MASK_SCRIPT);
 
     const buffer = await page.screenshot({ type: 'png' });
     await saveOptimized(Buffer.from(buffer), `screenshot-site-${label}.png`);
@@ -103,7 +103,7 @@ async function captureBackoffice(browser: Awaited<ReturnType<typeof chromium.lau
   desktopPage.setDefaultTimeout(30_000);
   await desktopPage.goto(BACK_URL, { waitUntil: 'networkidle' });
   await desktopPage.waitForTimeout(2500);
-  await desktopPage.evaluate(MASK_SCRIPT);
+  await desktopPage.evaluate(BACK_MASK_SCRIPT);
   const desktopBuf = await desktopPage.screenshot({ type: 'png' });
   await saveOptimized(Buffer.from(desktopBuf), 'screenshot-backoffice-desktop.png');
   await desktopCtx.close();
@@ -114,7 +114,7 @@ async function captureBackoffice(browser: Awaited<ReturnType<typeof chromium.lau
   mobilePage.setDefaultTimeout(30_000);
   await mobilePage.goto(BACK_URL, { waitUntil: 'networkidle' });
   await mobilePage.waitForTimeout(2500);
-  await mobilePage.evaluate(MASK_SCRIPT);
+  await mobilePage.evaluate(BACK_MASK_SCRIPT);
   const mobileBuf = await mobilePage.screenshot({ type: 'png' });
   await saveOptimized(Buffer.from(mobileBuf), 'screenshot-backoffice-mobile.png');
   await mobileCtx.close();

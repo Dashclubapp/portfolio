@@ -130,7 +130,7 @@ export function Hero() {
               style={{ display: "block" }}
             />
           </div>
-          <div className="absolute" style={{ bottom: 12, left: 10, zIndex: 2 }}>
+          <div className="absolute" style={{ top: 10, left: 10, zIndex: 2 }}>
             <MockupPill>Site public</MockupPill>
           </div>
 
@@ -148,7 +148,7 @@ export function Hero() {
               style={{ display: "block" }}
             />
           </div>
-          <div className="absolute" style={{ top: 10, right: 10, zIndex: 4 }}>
+          <div className="absolute" style={{ bottom: 12, right: 10, zIndex: 4 }}>
             <MockupPill>Back-office</MockupPill>
           </div>
         </div>

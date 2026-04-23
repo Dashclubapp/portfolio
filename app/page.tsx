@@ -632,7 +632,7 @@ export default function Home() {
               Vous voulez voir à quoi ressemble votre futur site ?
             </p>
             <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-white/70">
-              Découvrez l&apos;exemple de l&apos;USM Triathlon — un vrai site club construit avec DashClub.
+              Découvrez l&apos;exemple du Yerres Triathlon — un vrai site club construit avec DashClub.
             </p>
             <a
               href={demoUrl}
