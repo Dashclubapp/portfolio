@@ -1,9 +1,3 @@
-// TODO:
-// - Remplacer /hero/hero-mockup-site.svg et /hero/hero-mockup-backoffice.svg
-//   par les visuels finaux (PNG/WebP optimisés AVIF)
-// - Ajouter animation d'entrée subtile en v2 (fade + translateY depuis le bas)
-// - A/B test v2 : variante titre "Gérez votre club. Sans galère."
-
 import Image from "next/image";
 import Link from "next/link";
 import { MobileMockupSwitcher } from "./MobileMockupSwitcher";
@@ -16,25 +10,6 @@ const REASSURANCE = [
   "Dès 19€/mois",
   "En ligne en 5j",
 ];
-
-function BrowserChrome({ url, dark }: { url: string; dark?: boolean }) {
-  return (
-    <div
-      className="flex items-center gap-1.5 px-3 py-2"
-      style={{ backgroundColor: dark ? "#0d1f3c" : "#1e2433" }}
-    >
-      <span className="h-2 w-2 rounded-full" style={{ backgroundColor: "#ff5f57" }} />
-      <span className="h-2 w-2 rounded-full" style={{ backgroundColor: "#febc2e" }} />
-      <span className="h-2 w-2 rounded-full" style={{ backgroundColor: "#28c840" }} />
-      <div
-        className="ml-2 flex-1 truncate rounded px-2 py-0.5 text-[9px]"
-        style={{ backgroundColor: dark ? "#152e55" : "#2a3142", color: "#8a96a8" }}
-      >
-        {url}
-      </div>
-    </div>
-  );
-}
 
 function MockupPill({ children }: { children: string }) {
   return (
@@ -146,9 +121,8 @@ export function Hero() {
             className="absolute bottom-0 left-0 overflow-hidden rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.55)] ring-1 ring-white/10"
             style={{ width: "74%", zIndex: 1 }}
           >
-            <BrowserChrome url="clubtri-cotedazur.fr" />
             <Image
-              src="/hero/hero-mockup-site.svg"
+              src="/hero/screenshot-site-desktop.png"
               alt="Site public d'un club de triathlon — powered by DashClub"
               width={600}
               height={340}
@@ -165,9 +139,8 @@ export function Hero() {
             className="absolute top-0 right-0 overflow-hidden rounded-xl shadow-[0_28px_80px_rgba(0,0,0,0.70)] ring-1 ring-white/15"
             style={{ width: "71%", zIndex: 3 }}
           >
-            <BrowserChrome url="app.dashclub.fr/back" dark />
             <Image
-              src="/hero/hero-mockup-backoffice.svg"
+              src="/hero/screenshot-backoffice-desktop.png"
               alt="Back-office DashClub — tableau de bord club sportif"
               width={560}
               height={320}

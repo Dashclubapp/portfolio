@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
+import { SimpleMobileHeader } from "@/components/marketing/SimpleMobileHeader";
+import { CompareAccordionMobile } from "@/components/marketing/CompareAccordionMobile";
+import { SiteFooter } from "@/components/marketing/SiteFooter";
 import { comparisonRows, type ComparisonValue } from "../pricing-data";
 import { buildPageMetadata } from "../seo";
 
@@ -49,10 +52,13 @@ function renderValue(value: ComparisonValue) {
 export default function ComparePage() {
   return (
     <main className="relative overflow-hidden text-stone-950" style={{ backgroundColor: '#f6f1e8' }}>
+      <SimpleMobileHeader />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(223,111,54,0.14),_transparent_26%),linear-gradient(180deg,_rgba(255,255,255,0.86),_rgba(246,241,232,1))]" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 pb-24 pt-5 sm:px-8 lg:px-12">
-        <SiteHeader />
+        <div className="hidden md:block">
+          <SiteHeader />
+        </div>
 
         {/* Page title */}
         <div className="mt-8 mb-8">
@@ -67,8 +73,19 @@ export default function ComparePage() {
           </p>
         </div>
 
-        {/* Comparison table */}
-        <div className="relative">
+        {/* Mobile: accordéons vs concurrents */}
+        <div className="md:hidden">
+          <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.22em]" style={{ color: "#C9A84C" }}>
+            DashClub vs la concurrence
+          </p>
+          <CompareAccordionMobile />
+          <p className="mt-5 text-center text-xs" style={{ color: "#8a96a8" }}>
+            Détail des formules Essentiel / Compétition / Illimité sur desktop →
+          </p>
+        </div>
+
+        {/* Desktop: tableau comparatif des formules */}
+        <div className="relative hidden md:block">
           <div className="pointer-events-none absolute inset-y-0 right-0 z-30 w-10 rounded-r-[1.8rem] bg-gradient-to-l from-[#f6f1e8] via-[#f6f1e8]/95 to-transparent md:hidden" />
           <div
             className="overflow-x-auto rounded-[1.8rem] border border-stone-900/10 bg-white shadow-[0_28px_80px_rgba(41,37,36,0.08)]"
@@ -131,9 +148,6 @@ export default function ComparePage() {
               </tbody>
             </table>
           </div>
-          <p className="mt-3 text-center text-xs text-stone-500 md:hidden">
-            ← Faites glisser pour voir →
-          </p>
         </div>
 
         {/* Domaine block */}
@@ -170,6 +184,7 @@ export default function ComparePage() {
           </Link>
         </div>
       </div>
+      <SiteFooter />
     </main>
   );
 }

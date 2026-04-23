@@ -94,13 +94,6 @@ export function MobileNav() {
             </button>
 
             <div className="flex flex-col pt-12">
-              <a
-                className="border-b border-white/10 px-[18px] py-[18px] text-center text-base text-white"
-                href="#produit"
-                onClick={closeMenu}
-              >
-                Le produit
-              </a>
               <Link
                 className="border-b border-white/10 px-[18px] py-[18px] text-center text-base text-white"
                 href="/pricing"

@@ -16,9 +16,6 @@ export function SiteHeader() {
         </span>
       </Link>
       <nav className="flex flex-wrap items-center gap-3 text-sm text-stone-700">
-        <Link className="rounded-full px-3 py-2 transition hover:bg-stone-900/5" href="/#produit">
-          Le produit
-        </Link>
         <Link className="rounded-full px-3 py-2 transition hover:bg-stone-900/5" href="/pricing">
           Tarifs
         </Link>
