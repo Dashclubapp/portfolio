@@ -219,15 +219,15 @@ export const comparisonRows: ComparisonRow[] = [
   },
   {
     feature: "Gestion des adhérents et licences",
-    values: [false, false, true],
+    values: [false, true, true],
   },
   {
     feature: "Formulaire d'adhésion en ligne",
-    values: [false, false, true],
+    values: [false, true, true],
   },
   {
     feature: "Relances renouvellement automatiques",
-    values: [false, false, true],
+    values: [false, true, true],
   },
   {
     feature: "Newsletter de saison",
