@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
-import { SimpleMobileHeader } from "@/components/marketing/SimpleMobileHeader";
-import { CompareAccordionMobile } from "@/components/marketing/CompareAccordionMobile";
+import { MobileNav } from "@/components/mobile-nav";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
 import { comparisonRows, type ComparisonValue } from "../pricing-data";
 import { buildPageMetadata } from "../seo";
@@ -51,11 +50,11 @@ function renderValue(value: ComparisonValue) {
 
 export default function ComparePage() {
   return (
-    <main className="relative overflow-hidden text-stone-950" style={{ backgroundColor: '#f6f1e8' }}>
-      <SimpleMobileHeader />
+    <main className="relative overflow-x-hidden overflow-y-visible text-stone-950" style={{ backgroundColor: '#f6f1e8' }}>
+      <MobileNav />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(223,111,54,0.14),_transparent_26%),linear-gradient(180deg,_rgba(255,255,255,0.86),_rgba(246,241,232,1))]" />
 
-      <div className="relative mx-auto w-full max-w-7xl px-4 pb-24 pt-5 sm:px-8 lg:px-12">
+      <div className="relative mx-auto w-full max-w-7xl px-4 pb-24 pt-20 sm:px-8 sm:pt-5 lg:px-12">
         <div className="hidden md:block">
           <SiteHeader />
         </div>
@@ -68,24 +67,13 @@ export default function ComparePage() {
           <h1 className="mt-3 font-display text-4xl leading-none text-stone-950 sm:text-5xl">
             Tout ce qui change d&apos;une formule à l&apos;autre.
           </h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-stone-700">
-            Domaine personnalisé, Stripe et hébergement inclus dans toutes les formules — sans commission sur vos inscriptions.
+          <p className="mt-4 text-base leading-7 text-stone-700 whitespace-nowrap">
+            Domaine personnalisé, Stripe et hébergement inclus dans toutes les formules&nbsp;—&nbsp;sans commission sur vos inscriptions.
           </p>
         </div>
 
-        {/* Mobile: accordéons vs concurrents */}
-        <div className="md:hidden">
-          <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.22em]" style={{ color: "#C9A84C" }}>
-            DashClub vs la concurrence
-          </p>
-          <CompareAccordionMobile />
-          <p className="mt-5 text-center text-xs" style={{ color: "#8a96a8" }}>
-            Détail des formules Essentiel / Compétition / Illimité sur desktop →
-          </p>
-        </div>
-
-        {/* Desktop: tableau comparatif des formules */}
-        <div className="relative hidden md:block">
+        {/* Tableau comparatif des formules — toutes tailles */}
+        <div className="relative">
           <div className="pointer-events-none absolute inset-y-0 right-0 z-30 w-10 rounded-r-[1.8rem] bg-gradient-to-l from-[#f6f1e8] via-[#f6f1e8]/95 to-transparent md:hidden" />
           <div
             className="overflow-x-auto rounded-[1.8rem] border border-stone-900/10 bg-white shadow-[0_28px_80px_rgba(41,37,36,0.08)]"
@@ -162,7 +150,7 @@ export default function ComparePage() {
                 Connectez votre domaine existant (monclub.fr) — inclus dans toutes les formules, sans frais supplémentaires. DashClub s&apos;occupe de la configuration technique complète.
               </p>
               <p className="mt-3 text-sm leading-6 text-stone-500">
-                Wix et WordPress proposent le domaine custom en supplément. DashClub l&apos;inclut dès 19€/mois avec en plus la gestion des inscriptions, Stripe intégré et zéro commission.
+                Pas encore de domaine ? Achetez-le chez un registrar (OVH, Gandi…) pour 10 à 15€/an, ou déléguez-nous la gestion complète pour 20€/an — inclus sans surcoût dans la formule Illimité.
               </p>
             </div>
           </div>

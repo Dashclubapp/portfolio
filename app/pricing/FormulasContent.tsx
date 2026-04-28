@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { SiteHeader } from '@/components/site-header';
+import { MobileNav } from '@/components/mobile-nav';
 import {
   plans,
   hasNavyPricingCard,
@@ -216,11 +217,14 @@ export default function FormulasContent() {
   }, []);
 
   return (
-    <main className="relative overflow-hidden bg-[#f6f1e8] text-stone-950">
+    <main className="relative overflow-x-hidden overflow-y-visible bg-[#f6f1e8] text-stone-950">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(223,111,54,0.14),_transparent_26%),linear-gradient(180deg,_rgba(255,255,255,0.86),_rgba(246,241,232,1))]" />
 
-      <div className="relative mx-auto w-full max-w-7xl px-4 pb-36 pt-5 sm:px-8 lg:px-12">
-        <SiteHeader />
+      <MobileNav />
+      <div className="relative mx-auto w-full max-w-7xl px-4 pb-36 pt-20 sm:px-8 sm:pt-5 lg:px-12">
+        <div className="hidden md:block">
+          <SiteHeader />
+        </div>
 
         {/* Page title */}
         <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
