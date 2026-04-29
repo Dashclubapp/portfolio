@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
-import { SimpleMobileHeader } from "@/components/marketing/SimpleMobileHeader";
+import { MobileNav } from "@/components/mobile-nav";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <main className="relative min-h-screen" style={{ backgroundColor: "#f8f6f1" }}>
-      <SimpleMobileHeader />
+      <MobileNav />
       <div className="mx-auto w-full max-w-7xl px-5 pt-6 pb-16 sm:px-8 lg:px-12">
         <div className="hidden md:block">
           <SiteHeader />

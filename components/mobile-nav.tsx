@@ -35,8 +35,8 @@ export function MobileNav() {
     <>
       <div className="mobile-site-header fixed inset-x-0 top-0 z-[60] h-14 border-b border-white/10 bg-[#0D1F3C]">
         <div className="flex h-full items-center justify-between px-4">
-          <a
-            href="#top"
+          <Link
+            href="/"
             className="inline-block"
             onClick={closeMenu}
           >
@@ -46,7 +46,7 @@ export function MobileNav() {
               alt="DashClub"
               style={{ height: "36px", width: "auto" }}
             />
-          </a>
+          </Link>
           <button
             type="button"
             aria-expanded={isOpen}
@@ -108,13 +108,13 @@ export function MobileNav() {
               >
                 Comparer
               </Link>
-              <a
-                href="#offres"
+              <Link
+                href="/register"
                 className="mx-auto my-4 inline-flex w-[90%] items-center justify-center rounded-full bg-[#C9A84C] px-5 py-4 text-base font-bold text-[#0D1F3C]"
                 onClick={closeMenu}
               >
                 Lancer mon site club →
-              </a>
+              </Link>
             </div>
           </div>
         </>

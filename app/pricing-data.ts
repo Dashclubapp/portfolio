@@ -139,114 +139,51 @@ export const featuredPlanCheckoutHref =
 
 export type ComparisonValue = boolean | string;
 
+export type ComparisonCategory = "site" | "events" | "members" | "commerce" | "serenity";
+
 export type ComparisonRow = {
   feature: string;
   values: [ComparisonValue, ComparisonValue, ComparisonValue];
+  category: ComparisonCategory;
 };
 
 export const comparisonRows: ComparisonRow[] = [
-  {
-    feature: "Site du club créé et hébergé",
-    values: [true, true, true],
-  },
-  {
-    feature: "Connexion domaine personnalisé",
-    values: [true, true, true],
-  },
-  {
-    feature: "Paiement en ligne Stripe",
-    values: [true, true, true],
-  },
-  {
-    feature: "Nombre d'événements par saison",
-    values: ["1", "3", "Illimité"],
-  },
-  {
-    feature: "Gestion domaine par DashClub",
-    values: ["+20€/an", "+20€/an", "Inclus"],
-  },
-  {
-    feature: "Pages événement réutilisables",
-    values: [false, true, true],
-  },
-  {
-    feature: "Ouverture des inscriptions programmée",
-    values: [false, true, true],
-  },
-  {
-    feature: "File d'attente virtuelle",
-    values: [false, true, true],
-  },
-  {
-    feature: "Gestion liste d'attente automatique",
-    values: [false, true, true],
-  },
-  {
-    feature: "Emails automatiques aux inscrits (J-7, J-1)",
-    values: [false, true, true],
-  },
-  {
-    feature: "Débrief post-événement automatique",
-    values: [false, true, true],
-  },
-  {
-    feature: "Formulaire de satisfaction J+3",
-    values: [false, true, true],
-  },
-  {
-    feature: "Tableau de bord temps réel",
-    values: [false, true, true],
-  },
-  {
-    feature: "Boutique en ligne",
-    values: [false, false, true],
-  },
-  {
-    feature: "Tarifs différenciés membres / non-membres",
-    values: [false, false, true],
-  },
-  {
-    feature: "Codes promo",
-    values: [false, false, true],
-  },
-  {
-    feature: "Remboursement automatique",
-    values: [false, false, true],
-  },
-  {
-    feature: "Export comptable mensuel",
-    values: [false, false, true],
-  },
-  {
-    feature: "Gestion des adhérents et licences",
-    values: [false, true, true],
-  },
-  {
-    feature: "Formulaire d'adhésion en ligne",
-    values: [false, true, true],
-  },
-  {
-    feature: "Relances renouvellement automatiques",
-    values: [false, true, true],
-  },
-  {
-    feature: "Newsletter de saison",
-    values: [false, false, true],
-  },
-  {
-    feature: "Page partenaires + rapport sponsors",
-    values: [false, false, true],
-  },
-  {
-    feature: "Bilan de saison PDF automatique",
-    values: [false, false, true],
-  },
-  {
-    feature: "Nouvelles fonctionnalités en avant-première",
-    values: [false, false, true],
-  },
-  {
-    feature: "Commission sur les dossards",
-    values: ["Zéro", "Zéro", "Zéro"],
-  },
+  // ── Bloc 1 — Site & paiements ──────────────────────────────────────────────
+  { category: "site", feature: "Site du club créé et hébergé",    values: [true,       true,       true]         },
+  { category: "site", feature: "Connexion domaine personnalisé",   values: [true,       true,       true]         },
+  { category: "site", feature: "Paiement en ligne Stripe",         values: [true,       true,       true]         },
+  { category: "site", feature: "Commission sur les dossards",      values: ["Zéro",    "Zéro",     "Zéro"]       },
+
+  // ── Bloc 2 — Événements & inscriptions ─────────────────────────────────────
+  { category: "events", feature: "Nombre d'événements par saison",           values: ["1",  "3",   "Illimité"]   },
+  { category: "events", feature: "Pages événement réutilisables",             values: [false, true,  true]        },
+  { category: "events", feature: "Ouverture des inscriptions programmée",     values: [false, true,  true]        },
+  { category: "events", feature: "File d'attente virtuelle",                  values: [false, true,  true]        },
+  { category: "events", feature: "Gestion liste d'attente automatique",       values: [false, true,  true]        },
+  { category: "events", feature: "Emails automatiques aux inscrits (J-7, J-1)", values: [false, true, true]       },
+  { category: "events", feature: "Débrief post-événement automatique",        values: [false, true,  true]        },
+  { category: "events", feature: "Formulaire de satisfaction J+3",            values: [false, true,  true]        },
+  { category: "events", feature: "Multi-événements simultanés",               values: [false, false, true]        },
+
+  // ── Bloc 3 — Adhérents & saison ────────────────────────────────────────────
+  { category: "members", feature: "Gestion des adhérents et licences",        values: [false, true,  true]        },
+  { category: "members", feature: "Formulaire d'adhésion en ligne",           values: [false, true,  true]        },
+  { category: "members", feature: "Relances renouvellement automatiques",     values: [false, true,  true]        },
+  { category: "members", feature: "Tarifs différenciés membres / non-membres", values: [false, true, true]         },
+  { category: "members", feature: "Import CSV licenciés FFTRI",               values: [false, true,  true]        },
+  { category: "members", feature: "Bilan de saison PDF automatique",          values: [false, true,  true]        },
+  { category: "members", feature: "Newsletter de saison",                     values: [false, false, true]        },
+
+  // ── Bloc 4 — Commerce & reporting ──────────────────────────────────────────
+  { category: "commerce", feature: "Tableau de bord temps réel",              values: [false, true,  true]        },
+  { category: "commerce", feature: "Boutique en ligne",                       values: [false, false, true]        },
+  { category: "commerce", feature: "Codes promo",                             values: [false, false, true]        },
+  { category: "commerce", feature: "Remboursement automatique",               values: [false, false, true]        },
+  { category: "commerce", feature: "Export comptable mensuel",                values: [false, false, true]        },
+  { category: "commerce", feature: "Page partenaires + rapport sponsors",     values: [false, false, true]        },
+
+  // ── Bloc 5 — Sérénité & accompagnement ────────────────────────────────────
+  { category: "serenity", feature: "Gestion domaine par DashClub",            values: ["+20€/an", "+20€/an", "Inclus à vie"] },
+  { category: "serenity", feature: "Accompagnement dédié",                    values: [false, false, true]        },
+  { category: "serenity", feature: "Nouvelles fonctionnalités en avant-première", values: [false, false, true]   },
 ];

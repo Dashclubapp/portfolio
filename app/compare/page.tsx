@@ -1,9 +1,10 @@
+import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { MobileNav } from "@/components/mobile-nav";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
-import { comparisonRows, type ComparisonValue } from "../pricing-data";
+import { comparisonRows, type ComparisonValue, type ComparisonCategory } from "../pricing-data";
 import { buildPageMetadata } from "../seo";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -12,6 +13,16 @@ export const metadata: Metadata = buildPageMetadata({
     "Comparez en détail les fonctionnalités des formules Essentiel, Compétition et Illimité. Domaine inclus, Stripe intégré, zéro commission.",
   path: "/compare",
 });
+
+const CATEGORY_LABELS: Record<ComparisonCategory, string> = {
+  site:      "Site & paiements",
+  events:    "Événements & inscriptions",
+  members:   "Adhérents & saison",
+  commerce:  "Commerce & reporting",
+  serenity:  "Sérénité & accompagnement",
+};
+
+const CATEGORY_ORDER: ComparisonCategory[] = ["site", "events", "members", "commerce", "serenity"];
 
 function renderValue(value: ComparisonValue) {
   if (typeof value === "boolean") {
@@ -109,28 +120,50 @@ export default function ComparePage() {
                 </tr>
               </thead>
               <tbody>
-                {comparisonRows.map((row, idx) => {
-                  const isOdd = idx % 2 !== 0;
-                  const rowBg = isOdd ? "bg-stone-100/70" : "";
-                  const stickyBg = isOdd ? "bg-stone-100" : "bg-white";
+                {CATEGORY_ORDER.map((cat, catIdx) => {
+                  const rows = comparisonRows.filter(r => r.category === cat);
+                  if (rows.length === 0) return null;
                   return (
-                    <tr key={row.feature} className={`border-t border-stone-900/[0.08] ${rowBg}`}>
-                      <th className={`sticky left-0 z-10 min-w-[140px] border-r border-stone-900/[0.08] px-2.5 py-2 text-left text-[13px] font-medium leading-4 text-[#0D1F3C] shadow-[12px_0_24px_-20px_rgba(28,25,23,0.24)] md:min-w-[240px] md:px-4 md:py-4 md:text-sm md:leading-5 ${stickyBg}`}>
-                        {row.feature}
-                      </th>
-                      {row.values.map((value, valueIndex) => (
-                        <td
-                          key={valueIndex}
-                          className={`min-w-[80px] whitespace-nowrap px-2.5 py-2 text-center align-middle md:px-4 md:py-4 ${
-                            valueIndex === 1 ? "bg-orange-50/60" : ""
-                          }`}
+                    <React.Fragment key={cat}>
+                      {/* Section header */}
+                      <tr className={catIdx === 0 ? "" : "border-t-2 border-stone-900/[0.12]"}>
+                        <th
+                          colSpan={4}
+                          scope="rowgroup"
+                          className="sticky left-0 z-10 bg-stone-100 px-2.5 py-2.5 text-left md:px-4 md:py-3"
                         >
-                          <div className="flex min-h-8 items-center justify-center whitespace-nowrap md:min-h-10">
-                            {renderValue(value)}
-                          </div>
-                        </td>
-                      ))}
-                    </tr>
+                          <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.22em] text-stone-500 md:text-[11px]">
+                            {CATEGORY_LABELS[cat]}
+                          </span>
+                        </th>
+                      </tr>
+
+                      {/* Feature rows */}
+                      {rows.map((row, idx) => {
+                        const isOdd = idx % 2 !== 0;
+                        const rowBg = isOdd ? "bg-stone-100/70" : "";
+                        const stickyBg = isOdd ? "bg-stone-100" : "bg-white";
+                        return (
+                          <tr key={row.feature} className={`border-t border-stone-900/[0.06] ${rowBg}`}>
+                            <th className={`sticky left-0 z-10 min-w-[140px] border-r border-stone-900/[0.08] px-2.5 py-2 text-left text-[13px] font-medium leading-4 text-[#0D1F3C] shadow-[12px_0_24px_-20px_rgba(28,25,23,0.24)] md:min-w-[240px] md:px-4 md:py-4 md:text-sm md:leading-5 ${stickyBg}`}>
+                              {row.feature}
+                            </th>
+                            {row.values.map((value, valueIndex) => (
+                              <td
+                                key={valueIndex}
+                                className={`min-w-[80px] whitespace-nowrap px-2.5 py-2 text-center align-middle md:px-4 md:py-4 ${
+                                  valueIndex === 1 ? "bg-orange-50/60" : ""
+                                }`}
+                              >
+                                <div className="flex min-h-8 items-center justify-center whitespace-nowrap md:min-h-10">
+                                  {renderValue(value)}
+                                </div>
+                              </td>
+                            ))}
+                          </tr>
+                        );
+                      })}
+                    </React.Fragment>
                   );
                 })}
               </tbody>
@@ -144,13 +177,13 @@ export default function ComparePage() {
             <div className="shrink-0 text-2xl">🌐</div>
             <div>
               <p className="font-sans text-[11px] uppercase tracking-[0.3em] text-orange-700">
-                Domaine personnalisé — inclus dès 19€/mois
+                Domaine personnalisé — inclus dans toutes les formules
               </p>
               <p className="mt-2 text-base leading-7 text-stone-700">
                 Connectez votre domaine existant (monclub.fr) — inclus dans toutes les formules, sans frais supplémentaires. DashClub s&apos;occupe de la configuration technique complète.
               </p>
               <p className="mt-3 text-sm leading-6 text-stone-500">
-                Pas encore de domaine ? Achetez-le chez un registrar (OVH, Gandi…) pour 10 à 15€/an, ou déléguez-nous la gestion complète pour 20€/an — inclus sans surcoût dans la formule Illimité.
+                Pas encore de domaine&nbsp;? Achetez-le chez un registrar (OVH, Gandi…) pour 10 à 15&nbsp;€/an, ou laissez-nous gérer son renouvellement à vie&nbsp;— <strong className="text-stone-700">inclus sans surcoût dans la formule Illimité</strong>. Plus jamais de domaine qui expire au milieu d&apos;une saison.
               </p>
             </div>
           </div>
