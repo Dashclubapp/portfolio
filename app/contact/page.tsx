@@ -105,15 +105,8 @@ export default function ContactPage() {
               </div>
               <h2 className="text-xl font-bold" style={{ color: "#15803d" }}>Message envoyé !</h2>
               <p className="mt-2 text-sm" style={{ color: "#4a5568" }}>
-                Merci pour votre message. Nous vous répondrons dès que possible.
+                Merci pour votre message. Nous reviendrons vers vous dès que possible.
               </p>
-              <button
-                onClick={() => { setForm({ name: "", email: "", subject: "", message: "" }); setState("idle"); }}
-                className="mt-6 text-sm font-medium hover:underline"
-                style={{ color: "#C9A84C" }}
-              >
-                Envoyer un nouveau message
-              </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="mt-10 space-y-5">

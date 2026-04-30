@@ -52,7 +52,7 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
   return data.success;
 }
 
-const NOTIFICATION_EMAIL = "hello@dashclub.fr";
+const NOTIFICATION_EMAIL = "hello@dashclub.app";
 
 export async function POST(request: Request) {
   const ip = getClientIP(request);
@@ -140,7 +140,7 @@ export async function POST(request: Request) {
       </p>
       <p style="margin:0;font-size:14px;line-height:1.6;color:#57534e;">
         Si votre demande est urgente, vous pouvez aussi nous contacter directement à
-        <a href="mailto:hello@dashclub.fr" style="color:#C9A84C;">hello@dashclub.fr</a>.
+        <a href="mailto:hello@dashclub.app" style="color:#C9A84C;">hello@dashclub.app</a>.
       </p>
     </div>
     <p style="margin:14px 4px 0;color:#78716c;font-size:12px;text-align:center;">
@@ -161,21 +161,30 @@ export async function POST(request: Request) {
 
     const resend = new Resend(apiKey);
 
-    await Promise.all([
+    const [notif, confirm] = await Promise.all([
       resend.emails.send({
-        from: "DashClub <hello@dashclub.fr>",
+        from: "DashClub <hello@dashclub.app>",
         to: NOTIFICATION_EMAIL,
         replyTo: email,
         subject: `[Contact DashClub] ${subject} — ${name}`,
         html: notifHtml,
       }),
       resend.emails.send({
-        from: "DashClub <hello@dashclub.fr>",
+        from: "DashClub <hello@dashclub.app>",
         to: email,
         subject: `Votre message à DashClub — ${subject}`,
         html: confirmHtml,
       }),
     ]);
+
+    if (notif.error || confirm.error) {
+      const err = notif.error ?? confirm.error;
+      console.error("[contact] Resend error:", err);
+      return NextResponse.json(
+        { success: false, error: "Impossible d'envoyer le message pour le moment." },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
