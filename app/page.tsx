@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { hasNavyPricingCard, plans } from "./pricing-data";
 import { buildPageMetadata, homeDescription, homeTitle, siteName, siteUrl } from "./seo";
-import { SimpleMobileHeader } from "@/components/marketing/SimpleMobileHeader";
+import { MobileNav } from "@/components/mobile-nav";
 import { FaqSection } from "@/components/faq-section";
 import { Hero } from "@/components/marketing/Hero";
 import { PainPoints } from "@/components/marketing/PainPoints";
@@ -87,7 +87,7 @@ export default function Home() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(223,111,54,0.16),_transparent_28%),radial-gradient(circle_at_82%_18%,_rgba(38,84,124,0.16),_transparent_24%),linear-gradient(180deg,_rgba(250,246,240,0.98),_rgba(241,234,224,1))]" />
       <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(28,25,23,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(28,25,23,0.05)_1px,transparent_1px)] [background-size:92px_92px]" />
 
-      <SimpleMobileHeader />
+      <MobileNav />
       <StickyCTAMobile />
 
       <div className="relative mx-auto w-full max-w-7xl px-5 pb-10 pt-6 sm:px-8 lg:px-12 lg:pb-16">
