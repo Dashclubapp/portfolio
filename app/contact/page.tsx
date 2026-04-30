@@ -129,12 +129,13 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <label htmlFor="phone" className="mb-1.5 block text-sm font-medium" style={{ color: "#0D1F3C" }}>
-                    Téléphone
+                    Téléphone <span style={{ color: "#C9A84C" }}>*</span>
                   </label>
                   <input
                     id="phone"
                     name="phone"
                     type="tel"
+                    required
                     value={form.phone}
                     onChange={handleChange}
                     placeholder="06 12 34 56 78"
