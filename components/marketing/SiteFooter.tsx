@@ -4,12 +4,11 @@ const NAV_PRODUIT = [
   { label: "Tarifs", href: "/pricing" },
   { label: "Comparatif", href: "/compare" },
   { label: "Démo", href: "https://demo.dashclub.app", external: true },
-  { label: "FAQ", href: "/#faq" },
 ];
 
 const NAV_RESSOURCES = [
   { label: "Contact", href: "/contact" },
-  { label: "Blog", href: "/blog" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 const NAV_LEGAL = [
