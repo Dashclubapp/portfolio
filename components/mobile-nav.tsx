@@ -37,7 +37,7 @@ export function MobileNav() {
         <div className="flex h-full items-center justify-between px-4">
           <Link
             href="/"
-            className="inline-block"
+            className="inline-flex items-center gap-2"
             onClick={closeMenu}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -46,6 +46,9 @@ export function MobileNav() {
               alt="DashClub"
               style={{ height: "36px", width: "auto" }}
             />
+            <span className="text-lg font-bold tracking-[0.08em] text-[#C9A84C]">
+              DashClub
+            </span>
           </Link>
           <button
             type="button"
