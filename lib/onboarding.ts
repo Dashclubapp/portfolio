@@ -494,14 +494,18 @@ L'équipe DashClub
     ]);
 
     if (clientResult.status === 'fulfilled') {
-      console.log(`[onboarding/email] client email sent — id=${(clientResult.value as { id?: string }).id}`);
+      const { data, error } = clientResult.value as { data?: { id?: string } | null; error?: unknown };
+      if (error) console.error('[onboarding/email] client email FAILED (Resend error):', error);
+      else console.log(`[onboarding/email] client email sent — id=${data?.id}`);
     } else {
-      console.error('[onboarding/email] client email FAILED:', clientResult.reason);
+      console.error('[onboarding/email] client email FAILED (thrown):', clientResult.reason);
     }
     if (billingResult.status === 'fulfilled') {
-      console.log(`[onboarding/email] billing email sent — id=${(billingResult.value as { id?: string }).id}`);
+      const { data, error } = billingResult.value as { data?: { id?: string } | null; error?: unknown };
+      if (error) console.error('[onboarding/email] internal notif FAILED (Resend error):', error);
+      else console.log(`[onboarding/email] internal notif sent — id=${data?.id}`);
     } else {
-      console.error('[onboarding/email] billing email FAILED:', billingResult.reason);
+      console.error('[onboarding/email] internal notif FAILED (thrown):', billingResult.reason);
     }
   } else {
     console.log('[onboarding] RESEND_API_KEY not set — email would be sent to:', email);

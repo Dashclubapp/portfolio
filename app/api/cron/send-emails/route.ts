@@ -309,13 +309,14 @@ async function sendEmail(row: EmailQueueRow): Promise<void> {
   if (process.env.RESEND_API_KEY) {
     const { Resend } = await import('resend');
     const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: 'DashClub <hello@dashclub.app>',
       to: row.recipient_email,
       subject: emailContent.subject,
       html: emailContent.html,
       text: emailContent.text,
     });
+    if (error) throw new Error(`Resend error: ${JSON.stringify(error)}`);
   } else {
     console.log(`[cron/send-emails] RESEND_API_KEY not set — would send "${emailContent.subject}" to ${row.recipient_email}`);
   }
