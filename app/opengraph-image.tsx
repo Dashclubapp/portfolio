@@ -117,9 +117,9 @@ export default function OpenGraphImage() {
           <div
             style={{
               fontSize: 42,
-              fontWeight: 400,
+              fontWeight: 700,
               lineHeight: 1.25,
-              color: "rgba(255,255,255,0.80)",
+              color: "#C9A84C",
               display: "flex",
               marginBottom: 48,
             }}
