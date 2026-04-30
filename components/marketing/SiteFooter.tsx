@@ -8,7 +8,7 @@ const NAV_PRODUIT = [
 ];
 
 const NAV_RESSOURCES = [
-  { label: "Contact", href: "mailto:hello@dashclub.fr", external: true },
+  { label: "Contact", href: "/contact" },
   { label: "Blog", href: "/blog" },
 ];
 
