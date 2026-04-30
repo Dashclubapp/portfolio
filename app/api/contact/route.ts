@@ -67,6 +67,7 @@ export async function POST(request: Request) {
     const raw = await request.json();
     const name = normalize(raw.name);
     const email = normalize(raw.email);
+    const phone = normalize(raw.phone);
     const subject = normalize(raw.subject);
     const message = normalize(raw.message);
     const turnstileToken = normalize(raw.turnstileToken);
@@ -107,6 +108,10 @@ export async function POST(request: Request) {
           <td style="padding:12px 20px;border-bottom:1px solid #e7e5e4;color:#57534e;font-size:13px;font-weight:600;">Email</td>
           <td style="padding:12px 20px;border-bottom:1px solid #e7e5e4;color:#1c1917;font-size:14px;">${escapeHtml(email)}</td>
         </tr>
+        ${phone ? `<tr>
+          <td style="padding:12px 20px;border-bottom:1px solid #e7e5e4;color:#57534e;font-size:13px;font-weight:600;">Téléphone</td>
+          <td style="padding:12px 20px;border-bottom:1px solid #e7e5e4;color:#1c1917;font-size:14px;">${escapeHtml(phone)}</td>
+        </tr>` : ''}
         <tr>
           <td style="padding:12px 20px;border-bottom:1px solid #e7e5e4;color:#57534e;font-size:13px;font-weight:600;">Sujet</td>
           <td style="padding:12px 20px;border-bottom:1px solid #e7e5e4;color:#1c1917;font-size:14px;">${escapeHtml(subject)}</td>

@@ -18,7 +18,7 @@ const SUBJECTS = [
 type FormState = "idle" | "loading" | "success" | "error";
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [state, setState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -128,21 +128,36 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="mb-1.5 block text-sm font-medium" style={{ color: "#0D1F3C" }}>
-                    Email <span style={{ color: "#C9A84C" }}>*</span>
+                  <label htmlFor="phone" className="mb-1.5 block text-sm font-medium" style={{ color: "#0D1F3C" }}>
+                    Téléphone
                   </label>
                   <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={form.email}
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={form.phone}
                     onChange={handleChange}
-                    placeholder="jean@monclub.fr"
+                    placeholder="06 12 34 56 78"
                     className="w-full rounded-xl border px-4 py-3 text-base outline-none transition focus:ring-2"
                     style={{ borderColor: "#d6d3cd", backgroundColor: "#fff", color: "#1c1917" }}
                   />
                 </div>
+              </div>
+              <div>
+                <label htmlFor="email" className="mb-1.5 block text-sm font-medium" style={{ color: "#0D1F3C" }}>
+                  Email <span style={{ color: "#C9A84C" }}>*</span>
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="jean@monclub.fr"
+                  className="w-full rounded-xl border px-4 py-3 text-base outline-none transition focus:ring-2"
+                  style={{ borderColor: "#d6d3cd", backgroundColor: "#fff", color: "#1c1917" }}
+                />
               </div>
 
               <div>
