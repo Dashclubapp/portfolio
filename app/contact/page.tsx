@@ -6,14 +6,6 @@ import { SiteHeader } from "@/components/site-header";
 import { MobileNav } from "@/components/mobile-nav";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
 
-declare global {
-  interface Window {
-    turnstile?: {
-      render: (el: HTMLElement, opts: Record<string, unknown>) => string;
-      reset: (widgetId?: string) => void;
-    };
-  }
-}
 
 const SUBJECTS = [
   "Demande d'informations",
