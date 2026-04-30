@@ -1,32 +1,61 @@
 import { ImageResponse } from "next/og";
-import { homeTitle, siteName } from "./seo";
+import { readFileSync } from "fs";
+import { join } from "path";
 
-export const alt = homeTitle;
-export const size = {
-  width: 1200,
-  height: 630,
-};
+export const runtime = "nodejs";
+export const alt = "DashClub — Le site pro de votre club, zéro commissions sur vos inscriptions";
+export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OpenGraphImage() {
+  const heroBuffer = readFileSync(join(process.cwd(), "public", "triathlon-hero.jpg"));
+  const heroBg = `data:image/jpeg;base64,${heroBuffer.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
         style={{
           display: "flex",
-          height: "100%",
           width: "100%",
+          height: "100%",
           position: "relative",
           overflow: "hidden",
-          fontFamily: "sans-serif",
+          fontFamily: "system-ui, -apple-system, sans-serif",
         }}
       >
-        {/* Background gradient */}
+        {/* Hero photo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={heroBg}
+          alt=""
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
+        />
+
+        {/* Dark navy overlay — same as hero CSS */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(135deg, #0D1F3C 0%, #1E3F6E 60%, #0D1F3C 100%)",
+            background:
+              "linear-gradient(135deg, rgba(13,31,60,0.90) 0%, rgba(21,46,85,0.82) 55%, rgba(13,31,60,0.88) 100%)",
+            display: "flex",
+          }}
+        />
+
+        {/* Right-side radial glow */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "radial-gradient(ellipse at 75% 50%, rgba(201,168,76,0.18) 0%, transparent 60%)",
             display: "flex",
           }}
         />
@@ -34,64 +63,98 @@ export default function OpenGraphImage() {
         {/* Content */}
         <div
           style={{
+            position: "relative",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: "72px",
+            padding: "64px 80px",
             width: "100%",
-            position: "relative",
-            gap: 24,
+            gap: 0,
           }}
         >
           {/* Gold accent line */}
-          <div style={{ width: 180, height: 4, background: "#C9A84C", borderRadius: 2, display: "flex" }} />
-
-          {/* Site name */}
           <div
             style={{
-              fontSize: 80,
+              width: 64,
+              height: 4,
+              background: "#C9A84C",
+              borderRadius: 2,
+              marginBottom: 32,
+              display: "flex",
+            }}
+          />
+
+          {/* Brand name */}
+          <div
+            style={{
+              fontSize: 88,
               fontWeight: 900,
               lineHeight: 1,
-              color: "#FFFFFF",
+              color: "#C9A84C",
+              letterSpacing: "-2px",
               display: "flex",
+              marginBottom: 28,
             }}
           >
-            {siteName}
+            DashClub
           </div>
 
-          {/* Subtitle */}
+          {/* Tagline line 1 */}
           <div
             style={{
-              fontSize: 36,
-              lineHeight: 1.3,
-              color: "#BDD0E8",
-              fontWeight: 400,
-              maxWidth: 700,
+              fontSize: 42,
+              fontWeight: 700,
+              lineHeight: 1.25,
+              color: "#FFFFFF",
               display: "flex",
+              marginBottom: 8,
             }}
           >
-            Site web professionnel pour votre club sportif
+            Le site pro de votre club,
           </div>
 
-          {/* Pills */}
-          <div style={{ display: "flex", gap: 16, marginTop: 8 }}>
-            {["À partir de 19€/mois", "Zéro commission", "Paiements Stripe intégrés"].map((item) => (
-              <div
-                key={item}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: 999,
-                  border: "1px solid #C9A84C",
-                  color: "#C9A84C",
-                  fontSize: 22,
-                  padding: "10px 22px",
-                  fontWeight: 500,
-                }}
-              >
-                {item}
-              </div>
-            ))}
+          {/* Tagline line 2 */}
+          <div
+            style={{
+              fontSize: 42,
+              fontWeight: 400,
+              lineHeight: 1.25,
+              color: "rgba(255,255,255,0.80)",
+              display: "flex",
+              marginBottom: 48,
+            }}
+          >
+            zéro commissions sur vos inscriptions.
+          </div>
+
+          {/* URL badge */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            <div
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: "#C9A84C",
+                display: "flex",
+              }}
+            />
+            <div
+              style={{
+                fontSize: 24,
+                color: "rgba(201,168,76,0.85)",
+                fontWeight: 500,
+                letterSpacing: "0.04em",
+                display: "flex",
+              }}
+            >
+              dashclub.app
+            </div>
           </div>
         </div>
       </div>
