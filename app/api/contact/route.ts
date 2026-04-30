@@ -136,7 +136,7 @@ export async function POST(request: Request) {
       <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#1c1917;">Bonjour ${escapeHtml(name)},</p>
       <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#1c1917;">
         Nous avons bien reçu votre demande concernant <strong>${escapeHtml(subject)}</strong>.
-        Nous reviendrons vers vous dès que possible, en général sous 24 h (jours ouvrés).
+        Nous reviendrons vers vous dès que possible.
       </p>
       <p style="margin:0;font-size:14px;line-height:1.6;color:#57534e;">
         Si votre demande est urgente, vous pouvez aussi nous contacter directement à

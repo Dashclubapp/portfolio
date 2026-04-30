@@ -90,7 +90,7 @@ export default function ContactPage() {
           </h1>
           <p className="mt-4 text-base leading-7" style={{ color: "#4a5568" }}>
             Une question sur DashClub ? Envie d&apos;une démo personnalisée ? Écrivez-nous,
-            nous répondons sous 24 h (jours ouvrés).
+            nous vous répondrons dès que possible.
           </p>
 
           {state === "success" ? (
@@ -105,7 +105,7 @@ export default function ContactPage() {
               </div>
               <h2 className="text-xl font-bold" style={{ color: "#15803d" }}>Message envoyé !</h2>
               <p className="mt-2 text-sm" style={{ color: "#4a5568" }}>
-                Merci pour votre message. Nous vous répondrons dans les meilleurs délais.
+                Merci pour votre message. Nous vous répondrons dès que possible.
               </p>
               <button
                 onClick={() => { setForm({ name: "", email: "", subject: "", message: "" }); setState("idle"); }}
