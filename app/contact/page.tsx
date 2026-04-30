@@ -1,10 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { MobileNav } from "@/components/mobile-nav";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+      reset: (widgetId?: string) => void;
+    };
+  }
+}
 
 const SUBJECTS = [
   "Demande d'informations",
@@ -21,6 +30,29 @@ export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [state, setState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const widgetRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | undefined>(undefined);
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+  useEffect(() => {
+    if (!siteKey) return;
+    const script = document.createElement("script");
+    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+    script.onload = () => {
+      if (widgetRef.current && window.turnstile) {
+        widgetIdRef.current = window.turnstile.render(widgetRef.current, {
+          sitekey: siteKey,
+          callback: (t: string) => setTurnstileToken(t),
+          "expired-callback": () => setTurnstileToken(""),
+        });
+      }
+    };
+    return () => { document.head.removeChild(script); };
+  }, [siteKey]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -28,6 +60,11 @@ export default function ContactPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (siteKey && !turnstileToken) {
+      setErrorMsg("Veuillez compléter la vérification anti-robot.");
+      setState("error");
+      return;
+    }
     setState("loading");
     setErrorMsg("");
 
@@ -35,7 +72,7 @@ export default function ContactPage() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, turnstileToken }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -43,10 +80,14 @@ export default function ContactPage() {
       } else {
         setErrorMsg(data.error ?? "Une erreur est survenue.");
         setState("error");
+        if (window.turnstile) window.turnstile.reset(widgetIdRef.current);
+        setTurnstileToken("");
       }
     } catch {
       setErrorMsg("Impossible d'envoyer le message. Vérifiez votre connexion.");
       setState("error");
+      if (window.turnstile) window.turnstile.reset(widgetIdRef.current);
+      setTurnstileToken("");
     }
   }
 
@@ -165,6 +206,10 @@ export default function ContactPage() {
                   style={{ borderColor: "#d6d3cd", backgroundColor: "#fff", color: "#1c1917" }}
                 />
               </div>
+
+              {siteKey && (
+                <div ref={widgetRef} className="cf-turnstile" />
+              )}
 
               {state === "error" && (
                 <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
