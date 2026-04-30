@@ -109,6 +109,13 @@ export function MobileNav() {
                 Comparer
               </Link>
               <Link
+                className="border-b border-white/10 px-[18px] py-[18px] text-center text-base text-white"
+                href="/contact"
+                onClick={closeMenu}
+              >
+                Contact
+              </Link>
+              <Link
                 href="/register"
                 className="mx-auto my-4 inline-flex w-[90%] items-center justify-center rounded-full bg-[#C9A84C] px-5 py-4 text-base font-bold text-[#0D1F3C]"
                 onClick={closeMenu}

@@ -22,6 +22,9 @@ export function SiteHeader() {
         <Link className="rounded-full px-3 py-2 transition hover:bg-stone-900/5" href="/compare">
           Comparer
         </Link>
+        <Link className="rounded-full px-3 py-2 transition hover:bg-stone-900/5" href="/contact">
+          Contact
+        </Link>
         <Link
           href="/register"
           className="inline-flex items-center justify-center rounded-full bg-stone-950 px-5 py-3 font-medium text-white transition hover:-translate-y-0.5 hover:bg-stone-800"
