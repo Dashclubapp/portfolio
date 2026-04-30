@@ -104,8 +104,6 @@ export async function POST(request: Request) {
 </body>
 </html>`;
 
-    const text = `Nouveau message de contact DashClub\n\nNom : ${name}\nEmail : ${email}\nSujet : ${subject}\nMessage :\n${message}\n\nReçu le ${submittedAt}`;
-
     await sendNanoCorpEmail({
       to: NOTIFICATION_EMAIL,
       subject: `[Contact DashClub] ${subject} — ${name}`,
