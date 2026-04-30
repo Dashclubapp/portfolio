@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { rootMetadata } from "./seo";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = rootMetadata;
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className="antialiased">
         {children}
         <ScrollToTop />
+        <Analytics />
       </body>
     </html>
   );
