@@ -138,10 +138,6 @@ export async function POST(request: Request) {
         Nous avons bien reçu votre demande concernant <strong>${escapeHtml(subject)}</strong>.
         Nous reviendrons vers vous dès que possible.
       </p>
-      <p style="margin:0;font-size:14px;line-height:1.6;color:#57534e;">
-        Si votre demande est urgente, vous pouvez aussi nous contacter directement à
-        <a href="mailto:hello@dashclub.app" style="color:#C9A84C;">hello@dashclub.app</a>.
-      </p>
     </div>
     <p style="margin:14px 4px 0;color:#78716c;font-size:12px;text-align:center;">
       DashClub · <a href="https://dashclub.app" style="color:#C9A84C;">dashclub.app</a>
